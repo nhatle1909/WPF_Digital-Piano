@@ -1,0 +1,71 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:WPF_Piano">
+
+    <ControlTemplate x:Key="WhitePianoButton" TargetType="{x:Type local:CustomPianoButton}">
+        <Border Background="White" BorderBrush="Black" BorderThickness="1" CornerRadius="4">
+            <Button Background="White" >
+                <!-- The Grid now has its Height and Width removed -->
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  MinWidth="28">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{TemplateBinding KeyLabel}"
+                   FontSize="12" FontWeight="Bold"
+                   Margin="0,15,0,0"
+                   Foreground="Black"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Grid.Row="0"/>
+                    <TextBlock Text="{TemplateBinding NoteLabel}"
+                   FontSize="12"
+                   Margin="0,0,0,15"
+                   Foreground="Black"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Grid.Row="2"/>
+                </Grid>
+            </Button>
+        </Border>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="BlackPianoButton" TargetType="{x:Type local:CustomPianoButton}" >
+        <Border Background="Black" BorderBrush="Black" BorderThickness="1" CornerRadius="4">
+            <!-- The Grid now has its Height and Width removed -->
+            <Button Background="Black" >
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{TemplateBinding KeyLabel}"
+                 FontSize="12" FontWeight="Bold"
+                 Margin="0,15,0,0"
+                 Foreground="White"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center"
+                 Grid.Row="0"/>
+                    <TextBlock Text="{TemplateBinding NoteLabel}"
+                 FontSize="12"
+                 Margin="0,0,0,15"
+                 Foreground="White"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center"
+                 Grid.Row="2"/>
+                </Grid>
+            </Button>
+        </Border>
+    </ControlTemplate>
+    <ControlTemplate x:Key="NoteTile" TargetType="{x:Type Control}">
+        <Border BorderBrush="White" BorderThickness="1" CornerRadius="4">
+            <Rectangle x:Name="NoteTile" Fill="Black" />
+        </Border>
+        <ControlTemplate.Triggers>
+          
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+   
+</ResourceDictionary>

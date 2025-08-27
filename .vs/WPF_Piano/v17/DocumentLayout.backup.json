@@ -1,0 +1,99 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\DevTools\\Repository\\WPF_Piano\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\repository\\wpf_piano\\wpf_piano\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\repository\\wpf_piano\\wpf_piano\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\repository\\wpf_piano\\wpf_piano\\template.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\template.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\repository\\wpf_piano\\wpf_piano\\pianouirender.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\pianouirender.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\repository\\wpf_piano\\wpf_piano\\custompianobutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\custompianobutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PianoUIRender.cs",
+              "DocumentMoniker": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\PianoUIRender.cs",
+              "RelativeDocumentMoniker": "WPF_Piano\\PianoUIRender.cs",
+              "ToolTip": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\PianoUIRender.cs",
+              "RelativeToolTip": "WPF_Piano\\PianoUIRender.cs",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-25T07:00:43.052Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Template.xaml",
+              "DocumentMoniker": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\Template.xaml",
+              "RelativeDocumentMoniker": "WPF_Piano\\Template.xaml",
+              "ToolTip": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\Template.xaml",
+              "RelativeToolTip": "WPF_Piano\\Template.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-08-21T22:44:13.83Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "WPF_Piano\\MainWindow.xaml",
+              "ToolTip": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\MainWindow.xaml",
+              "RelativeToolTip": "WPF_Piano\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-08-20T08:21:08.68Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "WPF_Piano\\MainWindow.xaml.cs",
+              "ToolTip": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\MainWindow.xaml.cs",
+              "RelativeToolTip": "WPF_Piano\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAKMAAAAAAAAAAAAAALgAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-14T01:53:21.985Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CustomPianoButton.cs",
+              "DocumentMoniker": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\CustomPianoButton.cs",
+              "RelativeDocumentMoniker": "WPF_Piano\\CustomPianoButton.cs",
+              "ToolTip": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\CustomPianoButton.cs",
+              "RelativeToolTip": "WPF_Piano\\CustomPianoButton.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-19T16:23:52.555Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
