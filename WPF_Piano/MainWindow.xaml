@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPF_Piano"
         mc:Ignorable="d"
         Title="MainWindow" Height="900" Width="1600"
-        Loaded="Window_Loaded">
+        >
     <Window.Resources>
 
     </Window.Resources>
@@ -29,8 +29,9 @@
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <Border CornerRadius="4" BorderThickness="2" BorderBrush="Black">
-                            <Canvas x:Name="myCanvas"  Width="Auto" />
-
+                            <Viewbox Stretch="Fill" >
+                                <StackPanel x:Name="NoteTileFrame" Orientation="Horizontal" />
+                            </Viewbox>
                         </Border>
                     </Grid>
                     <Grid Grid.Row="1">
@@ -42,11 +43,22 @@
                     </Grid>
                 </Grid>
             </Grid>
-            <Button x:Name="D" Content="Button" Click="Button_Click" Margin="124,156,50,450"/>
-
+            <Button x:Name="D" Content="Choose Midi file" Click="Button_Click" Margin="50,33,50,787"/>
+            <Button x:Name="DCop" Content="Play Test" Click="PlayTest"  Margin="50,225,50,594"/>
+            <TextBox TextWrapping="Wrap" Name="NoteShow" Text="NoteShow" Margin="82,332,82,451"/>
+            <Border Margin="113,473,165,137" RenderTransformOrigin="0.5,0.5" BorderThickness="1" BorderBrush="Black" Background="LightBlue" CornerRadius="5">
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="-1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+            </Border>
 
             <!-- You can add other UI elements here -->
         </Grid>
-       
+
     </Grid>
 </Window>

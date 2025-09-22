@@ -1,5 +1,7 @@
-﻿using System;
+﻿using NAudio.Wave;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,5 +24,61 @@ namespace WPF_Piano
             { "C7", 2093.00f }, { "C#7", 2217.46f }, { "D7", 2349.32f }, { "D#7", 2489.02f }, { "E7", 2637.02f }, { "F7", 2793.83f }, { "F#7", 2959.96f }, { "G7", 3135.96f }, { "G#7", 3322.44f }, { "A7", 3520.00f }, { "A#7", 3729.31f }, { "B7", 3951.07f },
             { "C8", 4186.01f }
         };
+        public static readonly Dictionary<string,RawSourceWaveStream> ActiveNotes = new()
+        {
+        };
+        public static void InitActiveNotes(int durationInMiliSeconds, int sampleRate = 44000)
+        {
+          foreach (var note in NoteFrequencies)
+          {
+                int bytesPerSample = 2; // 16-bit audio
+                int totalSamples = (int)(sampleRate * durationInMiliSeconds / 1000);
+
+                double[] amplitudes = { 1.0, 0.6, 0.4, 0.3, 0.2, 0.15, 0.1, 0.08 };
+                byte[] buffer = new byte[totalSamples * bytesPerSample];
+                double decayRate = 3; // Higher = faster damping
+                                      // Generate the sound wave
+                for (int i = 0; i < totalSamples; i++)
+                {
+                    double time = (double)i / sampleRate;
+                    double envelope = Math.Exp(-decayRate * time);
+                    double sampleValue = amplitudes[0] * Math.Sin(2 * Math.PI * note.Value * time);
+                    //double sampleValue = 0.0;
+                    //for (int h = 1; h <= amplitudes.Length; h++)
+                    //{
+                    //    sampleValue += amplitudes[h - 1] * Math.Sin(2 * Math.PI * frequency * time);
+                    //}
+
+                    // Normalize to avoid clipping
+                    sampleValue *= envelope;
+                    sampleValue = Math.Clamp(sampleValue, -1.0, 1.0);
+
+                    short sample = (short)(sampleValue * short.MaxValue);
+                    buffer[i * bytesPerSample] = (byte)(sample & 0xFF);
+                    buffer[i * bytesPerSample + 1] = (byte)((sample >> 8) & 0xFF);
+                }
+
+                // Create wave file and play
+
+                var waveProvider = new RawSourceWaveStream(new MemoryStream(buffer), new NAudio.Wave.WaveFormat(sampleRate, 16, 1)); // 1 second duration, can be adjusted as needed
+                ActiveNotes.Add(note.Key, waveProvider);
+            }
+        }
+        public static float GetFrequency(string note)
+        {
+            if (NoteFrequencies.TryGetValue(note, out float frequency))
+            {
+                return frequency;
+            }
+            throw new ArgumentException($"Note {note} is not valid.");
+        }
+        public static RawSourceWaveStream GetNoteBuffer(string note)
+        {
+            if (ActiveNotes.TryGetValue(note, out RawSourceWaveStream buffer))
+            {
+                return buffer;
+            }
+            throw new ArgumentException($"Note {note} is not valid.");
+        }
     }
 }

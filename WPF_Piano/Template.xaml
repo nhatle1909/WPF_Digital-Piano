@@ -3,8 +3,8 @@
                     xmlns:local="clr-namespace:WPF_Piano">
 
     <ControlTemplate x:Key="WhitePianoButton" TargetType="{x:Type local:CustomPianoButton}">
-        <Border Background="White" BorderBrush="Black" BorderThickness="1" CornerRadius="4">
-            <Button Background="White" >
+        <Border  BorderBrush="Black" BorderThickness="1" CornerRadius="4">
+            <Button Background="White" Name="Background" >
                 <!-- The Grid now has its Height and Width removed -->
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  MinWidth="28">
                     <Grid.RowDefinitions>
@@ -34,7 +34,7 @@
     <ControlTemplate x:Key="BlackPianoButton" TargetType="{x:Type local:CustomPianoButton}" >
         <Border Background="Black" BorderBrush="Black" BorderThickness="1" CornerRadius="4">
             <!-- The Grid now has its Height and Width removed -->
-            <Button Background="Black" >
+            <Button Background="Black" Name="Background">
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -59,9 +59,12 @@
             </Button>
         </Border>
     </ControlTemplate>
-    <ControlTemplate x:Key="NoteTile" TargetType="{x:Type Control}">
-        <Border BorderBrush="White" BorderThickness="1" CornerRadius="4">
-            <Rectangle x:Name="NoteTile" Fill="Black" />
+    <ControlTemplate x:Key="NoteTile" TargetType="{x:Type Border}">
+        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="4">
+            <Border.RenderTransform>
+                <TranslateTransform x:Name="FallTransform"/>
+            </Border.RenderTransform>
+            <Rectangle x:Name="NoteTile" Fill="LightBlue" />
         </Border>
         <ControlTemplate.Triggers>
           

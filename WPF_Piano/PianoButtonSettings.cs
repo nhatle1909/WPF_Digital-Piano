@@ -27,7 +27,5 @@ namespace WPF_Piano
     {
         public string Key { get; set; }
         public string Note { get; set; }
-
-
     }
 }

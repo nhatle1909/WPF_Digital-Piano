@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="CSCore" Version="1.2.1.2" />
+    <PackageReference Include="Melanchall.DryWetMidi" Version="8.0.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.8" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.8" />
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="9.0.8" />
