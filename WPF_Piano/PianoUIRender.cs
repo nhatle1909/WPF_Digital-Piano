@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using WPF_Piano.Helper;
 using static WPF_Piano.MainWindow;
 
 namespace WPF_Piano
@@ -179,6 +180,7 @@ namespace WPF_Piano
             var keyList = pianoMapping.ToList();
             var keyName = pianoMapping.FirstOrDefault(x => x.Value == noteTileInfo.NoteName).Key;
             var frame = FindElementByName(NoteTilesFrame, $"NoteTile{keyName}") as Grid;
+            if (frame == null) return;
             var noteTile = new Rectangle
             {
                 RenderTransform = new TranslateTransform(),
@@ -191,18 +193,18 @@ namespace WPF_Piano
                 Stroke = Brushes.Black,
                 StrokeThickness = 0.5,
                 Fill = Brushes.LightGreen,
-                AllowDrop = false,
+                
                
                 VerticalAlignment = VerticalAlignment.Top,
                 HorizontalAlignment = HorizontalAlignment.Left // or Center if needed
             };
             
-           
+            
             var animation = new DoubleAnimation
             {
                 From = 0,
                 To = frame.ActualHeight,
-                Duration = TimeSpan.FromSeconds(3),
+                Duration = TimeSpan.FromSeconds(5),
                 FillBehavior = FillBehavior.HoldEnd
 
             };

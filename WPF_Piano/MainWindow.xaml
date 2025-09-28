@@ -5,60 +5,109 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Piano"
         mc:Ignorable="d"
-        Title="MainWindow" Height="900" Width="1600"
-        >
+        Title="Piano Studio" Height="900" Width="1600"
+      
+        FontFamily="Segoe UI">
     <Window.Resources>
+        <DropShadowEffect x:Key="DropShadow" Color="Black" BlurRadius="8" ShadowDepth="3" Opacity="0.3"/>
 
+        <Style x:Key="CompactListItemStyle" TargetType="ListViewItem">
+            <Setter Property="Padding" Value="4"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4">
+                            <ContentPresenter />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.25*" />
+            <ColumnDefinition Width="0.75*" />
+        </Grid.ColumnDefinitions>
 
+        <!-- Sidebar -->
+        <StackPanel Grid.Column="0" Margin="0,0,20,0">
+            <!-- Top Buttons -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,20" x:Name="InstrumentSettings">
+                
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,20">
+                <Button Click="Button_Click" Background="White" Width="40" Height="40"  BorderBrush="White" ToolTip="Browse midi file" Margin="0,0,20,0">
+                    <Image Source="/Resources/find.png" Stretch="Fill"/>
+                </Button>
+            
+                <Button Click="PlayTest" Width="40" Height="40" Background="White" BorderBrush="White" ToolTip="Play">
+                    <Image Source="/Resources/play-button.png" Stretch="Fill"/>
+                </Button>
+            </StackPanel>
 
-    <Grid>
-        <!-- Main content goes here -->
-        <Grid Margin="10" Grid.Row="0"  Grid.RowSpan="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.2*" />
-                <ColumnDefinition Width="0.8*" />
-            </Grid.ColumnDefinitions>
-            <Grid  Grid.Column="1">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="0.8*" />
-                        <!-- Main content -->
-                        <RowDefinition Height="0.2*" />
-                        <!-- Piano button area (1/6 of total height) -->
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <Border CornerRadius="4" BorderThickness="2" BorderBrush="Black">
-                            <Viewbox Stretch="Fill" >
-                                <StackPanel x:Name="NoteTileFrame" Orientation="Horizontal" />
-                            </Viewbox>
-                        </Border>
-                    </Grid>
-                    <Grid Grid.Row="1">
-                        <Border CornerRadius="4" BorderThickness="2,0,2,2" BorderBrush="Black">
-                            <Viewbox Stretch="Fill" >
-                                <StackPanel x:Name="PianoButtonOctave" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
-                            </Viewbox>
-                        </Border>
-                    </Grid>
-                </Grid>
-            </Grid>
-            <Button x:Name="D" Content="Choose Midi file" Click="Button_Click" Margin="50,33,50,787"/>
-            <Button x:Name="DCop" Content="Play Test" Click="PlayTest"  Margin="50,225,50,594"/>
-            <TextBox TextWrapping="Wrap" Name="NoteShow" Text="NoteShow" Margin="82,332,82,451"/>
-            <Border Margin="113,473,165,137" RenderTransformOrigin="0.5,0.5" BorderThickness="1" BorderBrush="Black" Background="LightBlue" CornerRadius="5">
-                <Border.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform ScaleX="-1"/>
-                        <SkewTransform/>
-                        <RotateTransform/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Border.RenderTransform>
+            <!-- Instrument List -->
+            <Border Background="White" CornerRadius="6" Padding="8" 
+        Effect="{DynamicResource DropShadow}" Margin="0,10,0,10">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ListView Name="SongList" BorderThickness="0" Background="Transparent"
+                  ItemContainerStyle="{StaticResource CompactListItemStyle }">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Song Info -->
+                                    <StackPanel Grid.Column="1" Margin="5,0" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Name}" FontWeight="SemiBold" FontSize="12" Foreground="#333"/>
+                                        <TextBlock Text="{Binding Description}" FontSize="10" Foreground="#888"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollViewer>
             </Border>
 
-            <!-- You can add other UI elements here -->
+
+        </StackPanel>
+
+        <!-- Main Content -->
+        <Grid  Grid.Column="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.8*" />
+                    <!-- Main content -->
+                    <RowDefinition Height="0.2*" />
+                    <!-- Piano button area (1/6 of total height) -->
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Border CornerRadius="4" BorderThickness="2" BorderBrush="Black">
+                        <Viewbox Stretch="Fill" >
+                            <StackPanel x:Name="NoteTileFrame" Orientation="Horizontal" />
+                        </Viewbox>
+                    </Border>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Border CornerRadius="4" BorderThickness="2,0,2,2" BorderBrush="Black">
+                        <Viewbox Stretch="Fill" >
+                            <StackPanel x:Name="PianoButtonOctave" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                        </Viewbox>
+                    </Border>
+                </Grid>
+            </Grid>
         </Grid>
 
     </Grid>
+
+    <!-- Drop Shadow Resource -->
+   
 </Window>

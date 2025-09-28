@@ -59,7 +59,7 @@
             </Button>
         </Border>
     </ControlTemplate>
-    <ControlTemplate x:Key="NoteTile" TargetType="{x:Type Border}">
+    <ControlTemplate x:Key="NoteTile" TargetType="{x:Type Control}">
         <Border BorderBrush="Black" BorderThickness="1" CornerRadius="4">
             <Border.RenderTransform>
                 <TranslateTransform x:Name="FallTransform"/>

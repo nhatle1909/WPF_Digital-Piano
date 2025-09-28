@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "ohkvabb9bG0=",
+  "dgSpecHash": "TjuJQvxzNCg=",
   "success": true,
   "projectFilePath": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\WPF_Piano.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nle75\\.nuget\\packages\\cscore\\1.2.1.2\\cscore.1.2.1.2.nupkg.sha512",
+    "C:\\Users\\nle75\\.nuget\\packages\\melanchall.drywetmidi\\8.0.2\\melanchall.drywetmidi.8.0.2.nupkg.sha512",
     "C:\\Users\\nle75\\.nuget\\packages\\microsoft.extensions.configuration\\9.0.8\\microsoft.extensions.configuration.9.0.8.nupkg.sha512",
     "C:\\Users\\nle75\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\9.0.8\\microsoft.extensions.configuration.abstractions.9.0.8.nupkg.sha512",
     "C:\\Users\\nle75\\.nuget\\packages\\microsoft.extensions.configuration.binder\\9.0.8\\microsoft.extensions.configuration.binder.9.0.8.nupkg.sha512",
