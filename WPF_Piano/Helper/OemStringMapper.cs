@@ -21,8 +21,10 @@ namespace WPF_Piano.Helper
         { "OemMinus", "-" },
         { "OemPlus", "=" },
         { "Oemtilde", "`" },
+        {"Oem1", ";" },
         {"LeftShift","LS" },
-        {"RightShift","RS" }
+        {"RightShift","RS" },
+            {"Oem5","\\" } // For some keyboards, Oem5 is backslash
     };
 
         public static string Convert(string keyName)

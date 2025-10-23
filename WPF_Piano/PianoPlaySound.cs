@@ -70,9 +70,9 @@ namespace WPF_Piano
         public MetricTimeSpan StartTime { get; set; }
         public int Velocity { get; set; }
         public MetricTimeSpan Duration { get; set; }
-        public static List<NoteTileInfo> ExtractNoteInfo(MidiFile midiFile)
+        public static Queue<NoteTileInfo> ExtractNoteInfo(MidiFile midiFile)
         {
-            var noteTiles = new List<NoteTileInfo>();
+            var noteTiles = new Queue<NoteTileInfo>();
             if (midiFile == null) return noteTiles;
 
             bool isSingleTrack = midiFile.Chunks.Count() == 1;
@@ -92,9 +92,14 @@ namespace WPF_Piano
                     Duration = duration,
                     Velocity = (int)(note.Length) / 10 // Scale velocity to fit in UI height (0-127 to 0-60)
                 };
-                noteTiles.Add(noteTile);
+                noteTiles.Enqueue(noteTile);
             }
             return noteTiles;
+        }
+        public static void ReleaseNote(MetricTimeSpan startTime)
+        {
+            bool isOverlapped = false;
+
         }
     }
 }

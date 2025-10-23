@@ -27,43 +27,7 @@ namespace WPF_Piano.StaticValue
         public static readonly Dictionary<string,RawSourceWaveStream> ActiveNotes = new()
         {
         };
-        public static void InitActiveNotes(int durationInMiliSeconds, int sampleRate = 44000)
-        {
-          foreach (var note in NoteFrequencies)
-          {
-                int bytesPerSample = 2; // 16-bit audio
-                int totalSamples = (int)(sampleRate * durationInMiliSeconds / 1000);
-
-                double[] amplitudes = { 1.0, 0.6, 0.4, 0.3, 0.2, 0.15, 0.1, 0.08 };
-                byte[] buffer = new byte[totalSamples * bytesPerSample];
-                double decayRate = 3; // Higher = faster damping
-                                      // Generate the sound wave
-                for (int i = 0; i < totalSamples; i++)
-                {
-                    double time = (double)i / sampleRate;
-                    double envelope = Math.Exp(-decayRate * time);
-                    double sampleValue = amplitudes[0] * Math.Sin(2 * Math.PI * note.Value * time);
-                    //double sampleValue = 0.0;
-                    //for (int h = 1; h <= amplitudes.Length; h++)
-                    //{
-                    //    sampleValue += amplitudes[h - 1] * Math.Sin(2 * Math.PI * frequency * time);
-                    //}
-
-                    // Normalize to avoid clipping
-                    sampleValue *= envelope;
-                    sampleValue = Math.Clamp(sampleValue, -1.0, 1.0);
-
-                    short sample = (short)(sampleValue * short.MaxValue);
-                    buffer[i * bytesPerSample] = (byte)(sample & 0xFF);
-                    buffer[i * bytesPerSample + 1] = (byte)((sample >> 8) & 0xFF);
-                }
-
-                // Create wave file and play
-
-                var waveProvider = new RawSourceWaveStream(new MemoryStream(buffer), new NAudio.Wave.WaveFormat(sampleRate, 16, 1)); // 1 second duration, can be adjusted as needed
-                ActiveNotes.Add(note.Key, waveProvider);
-            }
-        }
+     
         public static float GetFrequency(string note)
         {
             if (NoteFrequencies.TryGetValue(note, out float frequency))

@@ -41,10 +41,10 @@ namespace WPF_Piano
             PianoUIRender.RenderButton(this,PianoButtonOctave);
             PianoUIRender.RenderNoteTileFrame(this,NoteTileFrame,true);
             var songs = new List<Song>
-    {
-        new Song { Name = "Perfect Tears", Description = "Riryka - Emotional Ballad", Icon = "/Resources/song1.png" },
-        new Song { Name = "Night Drive", Description = "Lo-fi Chill Mix", Icon = "/Resources/song2.png" }
-    };
+            {
+                new Song { Name = "Perfect Tears", Description = "Riryka - Emotional Ballad", Icon = "/Resources/song1.png" },
+                new Song { Name = "Night Drive", Description = "Lo-fi Chill Mix", Icon = "/Resources/song2.png" }
+            };
 
             SongList.ItemsSource = songs;
         }
@@ -52,6 +52,7 @@ namespace WPF_Piano
         public void Key_Pressed(object sender, KeyEventArgs e)
         {
             string keyName = e.Key.ToString();
+
             // if keyname is number layout ( such as D1 ) , convert it to "1"
             if (keyName.StartsWith("D") && keyName.Length > 1 && char.IsDigit(keyName[1]))
             {
@@ -65,7 +66,12 @@ namespace WPF_Piano
                 return;
             }
             float noteFrequency = NoteValue.NoteFrequencies.ContainsKey(noteName) ? NoteValue.NoteFrequencies[noteName] : 0;
-            
+            Dispatcher.Invoke(() =>
+            {
+                // Slight delay to ensure UI updates smoothly
+                //NoteShow.Text = $" Note Name: {GetNoteName(noteOnEvent.NoteNumber)} Velocity: {noteOnEvent.Velocity}";
+                PianoUIRender.RenderNoteTile(this, NoteTileFrame, new NoteTileInfo { NoteName = noteName, Velocity = 70 });
+            });
             Task.Run(()=> PianoPlaySound.PlaySound(noteFrequency,1000));
 
         }
@@ -144,26 +150,29 @@ namespace WPF_Piano
                 playback.Dispose();
             }
             var noteTiles = NoteTileInfo.ExtractNoteInfo(midiFile);
-            var noteIndex = 0;
+            var firstEvent = noteTiles.Peek().StartTime;
             playback = midiFile.GetPlayback();
+            playback.AddSnapPoint(firstEvent);
             playback.MoveToFirstSnapPoint();
+
+
             playback.Speed = 1;
 
             playback.Start();
-            playback.EventPlayed += async (obj, args) =>
+            playback.EventPlayed += (obj, args) =>
             {
                 if (args.Event is NoteOnEvent noteOnEvent)
                 {
-                    Dispatcher.Invoke(() =>
+                    var noteTile = noteTiles.Dequeue();
+                    Dispatcher.Invoke( () =>
                     {
+                        // Slight delay to ensure UI updates smoothly
                         //NoteShow.Text = $" Note Name: {GetNoteName(noteOnEvent.NoteNumber)} Velocity: {noteOnEvent.Velocity}";
-                        PianoUIRender.RenderNoteTile(this, NoteTileFrame, noteTiles[noteIndex]);
+                       PianoUIRender.RenderNoteTile(this, NoteTileFrame, noteTile);
                     });
 
-                    _ = Task.Run(() => PianoPlaySound.PlaySound(NoteValue.GetFrequency(GetNoteName(noteOnEvent.NoteNumber)),
-                        1000));
-
-                    noteIndex++;
+                    //_ = Task.Run(() => PianoPlaySound.PlaySound(NoteValue.GetFrequency(GetNoteName(noteOnEvent.NoteNumber)),
+                    //    1000));
 
 
                 }

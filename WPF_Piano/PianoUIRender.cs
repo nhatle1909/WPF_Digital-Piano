@@ -18,6 +18,7 @@ namespace WPF_Piano
     {
         private Dictionary<string, string> pianoMapping;
         private PianoSettings pianoButtonSettings;
+ 
         public PianoUIRender() 
         {
             pianoButtonSettings = new PianoSettings();
@@ -72,7 +73,8 @@ namespace WPF_Piano
                             VerticalAlignment = VerticalAlignment.Center,
                             KeyLabel = displayKeyAndNote.Item1, // Set the key label
                             NoteLabel = displayKeyAndNote.Item2, // Set the note label
-                            Name = $"Black{keyName}"
+                            Name = $"Black{keyName}",
+                            FontSize = 12
                         };
                         newOctaveBlack.Children.Add(btn);
                     }
@@ -90,6 +92,7 @@ namespace WPF_Piano
                             KeyLabel = displayKeyAndNote.Item1, // Set the key label
                             NoteLabel = displayKeyAndNote.Item2, // Set the note label        
                             Name = $"White{keyName}",
+                            FontSize = 12
                         }; 
                         newOctaveWhite.Children.Add(btn);       
                     }
@@ -104,115 +107,139 @@ namespace WPF_Piano
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    var Grid = new Grid
+                    var octaveGrid = new Grid
                     {
                         Name = $"PianoOctave{i}",
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        VerticalAlignment = VerticalAlignment.Top,
-                        //Margin = new Thickness(0, 0, 10, 0),
+                  
                     };
-                    var newOctaveWhite = new StackPanel
+                    
+             
+                    var whiteKeysPanel = new StackPanel
                     {
                         Name = $"WhiteButtonLayout{i}",
                         Orientation = Orientation.Horizontal,
                         VerticalAlignment = VerticalAlignment.Top,
-                        HorizontalAlignment = HorizontalAlignment.Center
+                        HorizontalAlignment = HorizontalAlignment.Center,
+        
                     };
-                    var newOctaveBlack = new StackPanel
+                    
+                    var blackKeysPanel = new StackPanel
                     {
                         Name = $"BlackButtonLayout{i}",
                         Orientation = Orientation.Horizontal,
                         VerticalAlignment = VerticalAlignment.Top,
-                        HorizontalAlignment = HorizontalAlignment.Center
+                        HorizontalAlignment = HorizontalAlignment.Center,
+    
                     };
 
-                    Grid.SetColumn(newOctaveWhite, 0);
-                    Grid.SetColumn(newOctaveBlack, 1);
-                    NoteTileFrame.Children.Add(Grid);
-                    Grid.Children.Add(newOctaveWhite);
-                    Grid.Children.Add(newOctaveBlack);
+                    Grid.SetColumn(whiteKeysPanel, 0);
+                    Grid.SetColumn(blackKeysPanel, 1);
+                    
+                    octaveGrid.Children.Add(whiteKeysPanel);
+                    octaveGrid.Children.Add(blackKeysPanel);
+                    NoteTileFrame.Children.Add(octaveGrid);
+                    
+                    // Create note tiles for this octave
                     for (int i2 = 1; i2 <= 12; i2++)
                     {
+                        var mappingIndex = i2 - 1 + i * 12;
+                        if (mappingIndex >= pianoMapping.Count) break;
+                        
+                        var keyName = pianoMapping.ElementAt(mappingIndex).Key;
+                        var noteName = pianoMapping.ElementAt(mappingIndex).Value;
+                        var isBlackKey = noteName.Contains("#");
+                        
                         Grid noteTile;
-                        var displayKeyAndNote = GetDisplayKeyAndNote(i, i2 - 1);
-                        var keyName = pianoMapping.ElementAt(i2 - 1 + i * 12).Key;
-                        if (i2 == 2 || i2 == 4 || i2 == 7 || i2 == 9 || i2 == 11)
+                        if (isBlackKey)
                         {
-                            // Add a black key
+                            // Black key tile
                             noteTile = new Grid
                             {
-                                MinWidth = 30,
-                                MinHeight = 180,
-                                Margin = new Thickness (ReturnBlackButtonMargin(i2).Left,0,0,0),
-                                HorizontalAlignment = HorizontalAlignment.Center,
-                                VerticalAlignment = VerticalAlignment.Top,
+                                Width = 25,
+                                Height = 200,
+                                Margin = new Thickness(ReturnBlackButtonMargin(i2).Left, 0, 0, 0),
                                 Name = $"NoteTile{keyName}",
-                               
+                           
                             };
-                          
-                            newOctaveBlack.Children.Add(noteTile);
-
+                            blackKeysPanel.Children.Add(noteTile);
                         }
                         else
                         {
+                            // White key tile
                             noteTile = new Grid
                             {
-                                MinWidth = 60,
-                                MinHeight = 180,
+                                Width = 50,
+                                Height = 200,
                                 Margin = new Thickness(0, 0, 0, 0),
-                                HorizontalAlignment = HorizontalAlignment.Center,
-                                VerticalAlignment = VerticalAlignment.Top,
                                 Name = $"NoteTile{keyName}",
-                         
-                            };
-                           
-                            newOctaveWhite.Children.Add(noteTile);
 
+                            };
+                            whiteKeysPanel.Children.Add(noteTile);
                         }
                     }
                 }
             }
         }
-        public void RenderNoteTile(FrameworkElement Fe, StackPanel NoteTilesFrame, NoteTileInfo noteTileInfo)
+        public async void RenderNoteTile(FrameworkElement Fe, StackPanel NoteTilesFrame, NoteTileInfo noteTileInfo)
         {
-            
-            // Create storyboard
-            var keyList = pianoMapping.ToList();
             var keyName = pianoMapping.FirstOrDefault(x => x.Value == noteTileInfo.NoteName).Key;
+            if (keyName == null) return;
             var frame = FindElementByName(NoteTilesFrame, $"NoteTile{keyName}") as Grid;
-            if (frame == null) return;
-            var noteTile = new Rectangle
+            if(frame == null) return;
+            
+            var isBlackKey = noteTileInfo.NoteName.Contains("#");
+            var displayKeyName = keyName.StartsWith("Oem") || keyName.StartsWith("Left") || keyName.StartsWith("Right") ? OemStringMapper.Convert(keyName) : keyName;
+
+
+            var tile = new TextBlock
             {
+                Text = displayKeyName,
                 RenderTransform = new TranslateTransform(),
+                Width = isBlackKey ? 20 : 45, // Slightly smaller to fit better
+                Height = Math.Max(15, noteTileInfo.Velocity * 0.3), // Better height scaling
+                Background = Brushes.Black,
 
-                // Width: narrow for sharp notes, wider for naturals
-                Width = noteTileInfo.NoteName.Contains("#") ? 30 : 60,
-
-                // Height: scale velocity to a visible range (e.g., 0–127 → 10–100)
-                Height = Math.Max(10, noteTileInfo.Velocity * 0.4),
-                Stroke = Brushes.Black,
-                StrokeThickness = 0.5,
-                Fill = Brushes.LightGreen,
-                
-               
+                TextAlignment = TextAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Top,
-                HorizontalAlignment = HorizontalAlignment.Left // or Center if needed
+                FontSize = isBlackKey ? 8 : 10,
+                FontWeight = FontWeights.Bold,
+                Foreground = Brushes.White,
+
             };
-            
-            
+            // Enhanced animation with easing
             var animation = new DoubleAnimation
             {
-                From = 0,
-                To = frame.ActualHeight,
-                Duration = TimeSpan.FromSeconds(5),
-                FillBehavior = FillBehavior.HoldEnd
-
+                From = 0, // Start from above the frame
+                To = frame.Height, // Drop to bottom of frame
+                Duration = TimeSpan.FromMilliseconds(5000), // Slightly faster
+               
             };
-           
-            frame.Children.Add(noteTile);
-            var renderTransform = noteTile.RenderTransform as TranslateTransform;
-            renderTransform.BeginAnimation(TranslateTransform.YProperty, animation);
+            
+            // Fade out animation
+            var fadeAnimation = new DoubleAnimation
+            {
+                From = 1.0,
+                To = 0.0,
+                Duration = TimeSpan.FromSeconds(0.5),
+                BeginTime = TimeSpan.FromSeconds(3.5) // Start fading 0.5 seconds before completion
+            };
+            
+            animation.Completed += (s, e) =>
+            {
+                // Remove the tile after animation completes
+                if (frame != null && frame.Children.Contains(tile))
+                {
+                    frame.Children.Remove(tile);
+                }
+            };
+            
+            frame.Children.Add(tile);
+            var renderTransform = tile.RenderTransform as TranslateTransform;
 
+            // Start both animations
+            renderTransform.BeginAnimation(TranslateTransform.YProperty, animation);
+            //tile.BeginAnimation(UIElement.OpacityProperty, fadeAnimation);
         }
         private Tuple<string, string> GetDisplayKeyAndNote(int octave, int noteIndex)
         {
@@ -237,6 +264,24 @@ namespace WPF_Piano
                 case 11: return new Thickness(30, 0, 0, 20); // Default margin for other keys
                 default: return new Thickness(0, 0, 0, 0); // Default margin for other keys
             }
+        }
+        public Tuple<HorizontalAlignment,int> ReturnWhiteTileAlignment(int index)
+        {
+            var align = new Tuple<HorizontalAlignment, int>(HorizontalAlignment.Center,0);
+            if (index == 0 ) return new Tuple<HorizontalAlignment, int>(HorizontalAlignment.Left,45);
+            var modIndex = index % 12;
+            switch (modIndex)
+            {
+                case 0: align = new Tuple<HorizontalAlignment, int>(HorizontalAlignment.Left,45); break; // First black key
+                case 2: align = new Tuple<HorizontalAlignment, int>(HorizontalAlignment.Center,30); break; // Second black key
+                case 4: align = new Tuple<HorizontalAlignment, int>(HorizontalAlignment.Right,45); break; // Third black key
+                case 5: align = new Tuple<HorizontalAlignment, int>(HorizontalAlignment.Left,45); break; // Fourth black key
+                case 7: align = new Tuple<HorizontalAlignment, int>(HorizontalAlignment.Center,30); break; // Default margin for other keys
+                case 9: align = new Tuple<HorizontalAlignment, int>(HorizontalAlignment.Center,30); break; // Default margin for other keys
+                case 11: align = new Tuple<HorizontalAlignment, int>(HorizontalAlignment.Right,45); break; // Default margin for other keys
+                default: align = new Tuple<HorizontalAlignment, int>(HorizontalAlignment.Center,30); break; // Default margin for other keys
+            }
+            return align;
         }
     }
 }
