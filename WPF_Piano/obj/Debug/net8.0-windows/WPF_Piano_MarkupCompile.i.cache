@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-D:\DevTools\Repository\WPF_Piano\WPF_Piano\obj\Debug\net8.0-windows\
+D:\DevTools\WPF_Piano\WPF_Piano\obj\Debug\net8.0-windows\
 WPF_Piano
 none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
-D:\DevTools\Repository\WPF_Piano\WPF_Piano\App.xaml
+D:\DevTools\WPF_Piano\WPF_Piano\App.xaml
 2-334535628
 
-13782084136
-2281341754899
+201594771911
+2281820478904
 MainWindow.xaml;Template.xaml;
 
 False

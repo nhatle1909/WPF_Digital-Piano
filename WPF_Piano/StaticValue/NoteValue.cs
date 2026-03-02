@@ -1,18 +1,10 @@
-﻿using NAudio.Wave;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WPF_Piano.StaticValue
+﻿namespace WPF_Piano
 {
     public static class NoteValue
     {
         // Static value include all 88 standard piano keys and their correspondingfrequencies
-        
-        public static readonly Dictionary<string,float> NoteFrequencies = new Dictionary<string,float>
+
+        public static readonly Dictionary<string, float> NoteFrequencies = new Dictionary<string, float>
         {
             { "C0", 16.35f }, { "C#0", 17.32f }, { "D0", 18.35f }, { "D#0", 19.45f }, { "E0", 20.60f }, { "F0", 21.83f }, { "F#0", 23.12f }, { "G0", 24.50f }, { "G#0", 25.96f }, { "A0", 27.50f }, { "A#0", 29.14f }, { "B0", 30.87f },
             { "C1", 32.70f }, { "C#1", 34.65f }, { "D1", 36.71f }, { "D#1", 38.89f }, { "E1", 41.20f }, { "F1", 43.65f }, { "F#1", 46.25f }, { "G1", 49.00f }, { "G#1", 51.91f }, { "A1", 55.00f }, { "A#1", 58.27f }, { "B1", 61.74f },
@@ -24,23 +16,11 @@ namespace WPF_Piano.StaticValue
             { "C7", 2093.00f }, { "C#7", 2217.46f }, { "D7", 2349.32f }, { "D#7", 2489.02f }, { "E7", 2637.02f }, { "F7", 2793.83f }, { "F#7", 2959.96f }, { "G7", 3135.96f }, { "G#7", 3322.44f }, { "A7", 3520.00f }, { "A#7", 3729.31f }, { "B7", 3951.07f },
             { "C8", 4186.01f }
         };
-        public static readonly Dictionary<string,RawSourceWaveStream> ActiveNotes = new()
-        {
-        };
-     
         public static float GetFrequency(string note)
         {
             if (NoteFrequencies.TryGetValue(note, out float frequency))
             {
                 return frequency;
-            }
-            throw new ArgumentException($"Note {note} is not valid.");
-        }
-        public static RawSourceWaveStream GetNoteBuffer(string note)
-        {
-            if (ActiveNotes.TryGetValue(note, out RawSourceWaveStream buffer))
-            {
-                return buffer;
             }
             throw new ArgumentException($"Note {note} is not valid.");
         }

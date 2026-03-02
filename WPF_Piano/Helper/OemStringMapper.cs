@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WPF_Piano.Helper
+﻿namespace WPF_Piano.Helper
 {
     public static class OemStringMapper
     {
@@ -24,7 +18,7 @@ namespace WPF_Piano.Helper
         {"Oem1", ";" },
         {"LeftShift","LS" },
         {"RightShift","RS" },
-            {"Oem5","\\" } // For some keyboards, Oem5 is backslash
+        {"Oem5","\\" } // For some keyboards, Oem5 is backslash
     };
 
         public static string Convert(string keyName)
