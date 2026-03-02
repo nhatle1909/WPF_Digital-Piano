@@ -1,3 +1,11 @@
+D:\DevTools\Repository\WPF_Piano\WPF_Piano\obj\Debug\net8.0-windows\WPF_Piano.csproj.AssemblyReference.cache
+D:\DevTools\Repository\WPF_Piano\WPF_Piano\obj\Debug\net8.0-windows\UserControl1.baml
+D:\DevTools\Repository\WPF_Piano\WPF_Piano\obj\Debug\net8.0-windows\MainWindow.g.cs
+D:\DevTools\Repository\WPF_Piano\WPF_Piano\obj\Debug\net8.0-windows\UserControl1.g.cs
+D:\DevTools\Repository\WPF_Piano\WPF_Piano\obj\Debug\net8.0-windows\App.g.cs
+D:\DevTools\Repository\WPF_Piano\WPF_Piano\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.cs
+D:\DevTools\Repository\WPF_Piano\WPF_Piano\obj\Debug\net8.0-windows\WPF_Piano_MarkupCompile.cache
+D:\DevTools\Repository\WPF_Piano\WPF_Piano\obj\Debug\net8.0-windows\WPF_Piano_MarkupCompile.lref
 D:\DevTools\Repository\WPF_Piano\WPF_Piano\bin\Debug\net8.0-windows\Melanchall_DryWetMidi_Native32.dll
 D:\DevTools\Repository\WPF_Piano\WPF_Piano\bin\Debug\net8.0-windows\Melanchall_DryWetMidi_Native64.dll
 D:\DevTools\Repository\WPF_Piano\WPF_Piano\bin\Debug\net8.0-windows\Melanchall_DryWetMidi_Native64.dylib
@@ -17,6 +25,7 @@ D:\DevTools\Repository\WPF_Piano\WPF_Piano\bin\Debug\net8.0-windows\Microsoft.Ex
 D:\DevTools\Repository\WPF_Piano\WPF_Piano\bin\Debug\net8.0-windows\Microsoft.Extensions.FileProviders.Abstractions.dll
 D:\DevTools\Repository\WPF_Piano\WPF_Piano\bin\Debug\net8.0-windows\Microsoft.Extensions.FileProviders.Physical.dll
 D:\DevTools\Repository\WPF_Piano\WPF_Piano\bin\Debug\net8.0-windows\Microsoft.Extensions.FileSystemGlobbing.dll
+D:\DevTools\Repository\WPF_Piano\WPF_Piano\bin\Debug\net8.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
 D:\DevTools\Repository\WPF_Piano\WPF_Piano\bin\Debug\net8.0-windows\Microsoft.Extensions.Primitives.dll
 D:\DevTools\Repository\WPF_Piano\WPF_Piano\bin\Debug\net8.0-windows\NAudio.dll
 D:\DevTools\Repository\WPF_Piano\WPF_Piano\bin\Debug\net8.0-windows\NAudio.Asio.dll
@@ -26,15 +35,11 @@ D:\DevTools\Repository\WPF_Piano\WPF_Piano\bin\Debug\net8.0-windows\NAudio.Wasap
 D:\DevTools\Repository\WPF_Piano\WPF_Piano\bin\Debug\net8.0-windows\NAudio.WinForms.dll
 D:\DevTools\Repository\WPF_Piano\WPF_Piano\bin\Debug\net8.0-windows\NAudio.WinMM.dll
 D:\DevTools\Repository\WPF_Piano\WPF_Piano\bin\Debug\net8.0-windows\System.IO.Pipelines.dll
+D:\DevTools\Repository\WPF_Piano\WPF_Piano\bin\Debug\net8.0-windows\System.Reactive.dll
 D:\DevTools\Repository\WPF_Piano\WPF_Piano\bin\Debug\net8.0-windows\System.Text.Encodings.Web.dll
 D:\DevTools\Repository\WPF_Piano\WPF_Piano\bin\Debug\net8.0-windows\System.Text.Json.dll
+D:\DevTools\Repository\WPF_Piano\WPF_Piano\bin\Debug\net8.0-windows\XamlFlair.WPF.dll
 D:\DevTools\Repository\WPF_Piano\WPF_Piano\bin\Debug\net8.0-windows\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
-D:\DevTools\Repository\WPF_Piano\WPF_Piano\obj\Debug\net8.0-windows\WPF_Piano.csproj.AssemblyReference.cache
-D:\DevTools\Repository\WPF_Piano\WPF_Piano\obj\Debug\net8.0-windows\MainWindow.g.cs
-D:\DevTools\Repository\WPF_Piano\WPF_Piano\obj\Debug\net8.0-windows\App.g.cs
-D:\DevTools\Repository\WPF_Piano\WPF_Piano\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.cs
-D:\DevTools\Repository\WPF_Piano\WPF_Piano\obj\Debug\net8.0-windows\WPF_Piano_MarkupCompile.cache
-D:\DevTools\Repository\WPF_Piano\WPF_Piano\obj\Debug\net8.0-windows\WPF_Piano_MarkupCompile.lref
 D:\DevTools\Repository\WPF_Piano\WPF_Piano\obj\Debug\net8.0-windows\App.baml
 D:\DevTools\Repository\WPF_Piano\WPF_Piano\obj\Debug\net8.0-windows\MainWindow.baml
 D:\DevTools\Repository\WPF_Piano\WPF_Piano\obj\Debug\net8.0-windows\Template.baml

@@ -1,38 +1,74 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\DevTools\\Repository\\WPF_Piano\\",
+  "WorkspaceRootPath": "D:\\DevTools\\WPF_Piano\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\repository\\wpf_piano\\wpf_piano\\pianobuttonsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\pianobuttonsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\repository\\wpf_piano\\wpf_piano\\helper\\frameworkelementhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\helper\\frameworkelementhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\repository\\wpf_piano\\wpf_piano\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\repository\\wpf_piano\\wpf_piano\\template.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\template.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\repository\\wpf_piano\\wpf_piano\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\wpf_piano\\wpf_piano\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\repository\\wpf_piano\\wpf_piano\\pianoplaysound.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\pianoplaysound.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\wpf_piano\\wpf_piano\\helper\\frameworkelementhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\helper\\frameworkelementhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\repository\\wpf_piano\\wpf_piano\\pianouirender.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\pianouirender.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\wpf_piano\\wpf_piano\\helper\\pianoplaysound.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\helper\\pianoplaysound.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\repository\\wpf_piano\\wpf_piano\\staticvalue\\notevalue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\wpf_piano\\wpf_piano\\helper\\pianosettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\helper\\pianosettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\wpf_piano\\wpf_piano\\viewmodel\\pianobuttonvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\viewmodel\\pianobuttonvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\wpf_piano\\wpf_piano\\deprecated\\notetileinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\deprecated\\notetileinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\wpf_piano\\wpf_piano\\template.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\template.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\wpf_piano\\wpf_piano\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\wpf_piano\\wpf_piano\\viewmodel\\mainviewvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\viewmodel\\mainviewvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\wpf_piano\\wpf_piano\\model\\pianobutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\model\\pianobutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\wpf_piano\\wpf_piano\\helper\\pianouirender.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\helper\\pianouirender.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\wpf_piano\\wpf_piano\\viewmodel\\relaycommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\viewmodel\\relaycommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\wpf_piano\\wpf_piano\\staticvalue\\notevalue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\staticvalue\\notevalue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\wpf_piano\\wpf_piano\\viewmodel\\songvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\viewmodel\\songvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\wpf_piano\\wpf_piano\\helper\\oemstringmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\helper\\oemstringmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\wpf_piano\\wpf_piano\\model\\song.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\model\\song.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|d:\\devtools\\wpf_piano\\wpf_piano\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{201CD7BB-089D-4406-8796-02066449B4E9}|WPF_Piano\\WPF_Piano.csproj|solutionrelative:wpf_piano\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,103 +78,236 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MainWindow.xaml",
-              "DocumentMoniker": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\MainWindow.xaml",
-              "RelativeDocumentMoniker": "WPF_Piano\\MainWindow.xaml",
-              "ToolTip": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\MainWindow.xaml",
-              "RelativeToolTip": "WPF_Piano\\MainWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-08-20T08:21:08.68Z",
-              "IsPinned": true
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "WPF_Piano\\MainWindow.xaml.cs",
+              "ToolTip": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\MainWindow.xaml.cs",
+              "RelativeToolTip": "WPF_Piano\\MainWindow.xaml.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAAC4AAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-14T02:43:07.021Z",
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "PianoButtonSettings.cs",
-              "DocumentMoniker": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\PianoButtonSettings.cs",
-              "RelativeDocumentMoniker": "WPF_Piano\\PianoButtonSettings.cs",
-              "ToolTip": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\PianoButtonSettings.cs",
-              "RelativeToolTip": "WPF_Piano\\PianoButtonSettings.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACcAAAAYAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "Template.xaml",
+              "DocumentMoniker": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\Template.xaml",
+              "RelativeDocumentMoniker": "WPF_Piano\\Template.xaml",
+              "ToolTip": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\Template.xaml",
+              "RelativeToolTip": "WPF_Piano\\Template.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-11-14T02:35:30.923Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PianoButtonVM.cs",
+              "DocumentMoniker": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\ViewModel\\PianoButtonVM.cs",
+              "RelativeDocumentMoniker": "WPF_Piano\\ViewModel\\PianoButtonVM.cs",
+              "ToolTip": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\ViewModel\\PianoButtonVM.cs",
+              "RelativeToolTip": "WPF_Piano\\ViewModel\\PianoButtonVM.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwCkAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T06:42:50.006Z",
+              "WhenOpened": "2026-02-26T21:53:46.886Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PianoSettings.cs",
+              "DocumentMoniker": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\Helper\\PianoSettings.cs",
+              "RelativeDocumentMoniker": "WPF_Piano\\Helper\\PianoSettings.cs",
+              "ToolTip": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\Helper\\PianoSettings.cs",
+              "RelativeToolTip": "WPF_Piano\\Helper\\PianoSettings.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAAACYAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T02:18:02.415Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "MainViewVM.cs",
+              "DocumentMoniker": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\ViewModel\\MainViewVM.cs",
+              "RelativeDocumentMoniker": "WPF_Piano\\ViewModel\\MainViewVM.cs",
+              "ToolTip": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\ViewModel\\MainViewVM.cs",
+              "RelativeToolTip": "WPF_Piano\\ViewModel\\MainViewVM.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-01T20:56:51.408Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "NoteTileInfo.cs",
+              "DocumentMoniker": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\Deprecated\\NoteTileInfo.cs",
+              "RelativeDocumentMoniker": "WPF_Piano\\Deprecated\\NoteTileInfo.cs",
+              "ToolTip": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\Deprecated\\NoteTileInfo.cs",
+              "RelativeToolTip": "WPF_Piano\\Deprecated\\NoteTileInfo.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAACwAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T02:17:48.445Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PianoPlaySound.cs",
+              "DocumentMoniker": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\Helper\\PianoPlaySound.cs",
+              "RelativeDocumentMoniker": "WPF_Piano\\Helper\\PianoPlaySound.cs",
+              "ToolTip": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\Helper\\PianoPlaySound.cs",
+              "RelativeToolTip": "WPF_Piano\\Helper\\PianoPlaySound.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAgwEIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T02:17:56.957Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "PianoUIRender.cs",
+              "DocumentMoniker": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\Helper\\PianoUIRender.cs",
+              "RelativeDocumentMoniker": "WPF_Piano\\Helper\\PianoUIRender.cs",
+              "ToolTip": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\Helper\\PianoUIRender.cs",
+              "RelativeToolTip": "WPF_Piano\\Helper\\PianoUIRender.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T21:02:38.706Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "FrameworkElementHelper.cs",
-              "DocumentMoniker": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\Helper\\FrameworkElementHelper.cs",
+              "DocumentMoniker": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\Helper\\FrameworkElementHelper.cs",
               "RelativeDocumentMoniker": "WPF_Piano\\Helper\\FrameworkElementHelper.cs",
-              "ToolTip": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\Helper\\FrameworkElementHelper.cs",
+              "ToolTip": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\Helper\\FrameworkElementHelper.cs",
               "RelativeToolTip": "WPF_Piano\\Helper\\FrameworkElementHelper.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAUwC8AAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAABUAAAAAAAAAAAAowD0AAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T06:13:07.089Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "PianoPlaySound.cs",
-              "DocumentMoniker": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\PianoPlaySound.cs",
-              "RelativeDocumentMoniker": "WPF_Piano\\PianoPlaySound.cs",
-              "ToolTip": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\PianoPlaySound.cs",
-              "RelativeToolTip": "WPF_Piano\\PianoPlaySound.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAEgAAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-20T12:53:40.12Z"
+              "WhenOpened": "2026-02-26T20:54:28.194Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\appsettings.json",
+              "RelativeDocumentMoniker": "WPF_Piano\\appsettings.json",
+              "ToolTip": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\appsettings.json",
+              "RelativeToolTip": "WPF_Piano\\appsettings.json",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAACEAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-03-02T00:27:07.355Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "PianoButton.cs",
+              "DocumentMoniker": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\Model\\PianoButton.cs",
+              "RelativeDocumentMoniker": "WPF_Piano\\Model\\PianoButton.cs",
+              "ToolTip": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\Model\\PianoButton.cs",
+              "RelativeToolTip": "WPF_Piano\\Model\\PianoButton.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T09:03:52.443Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "RelayCommand.cs",
+              "DocumentMoniker": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\ViewModel\\RelayCommand.cs",
+              "RelativeDocumentMoniker": "WPF_Piano\\ViewModel\\RelayCommand.cs",
+              "ToolTip": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\ViewModel\\RelayCommand.cs",
+              "RelativeToolTip": "WPF_Piano\\ViewModel\\RelayCommand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T21:55:28.753Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "NoteValue.cs",
-              "DocumentMoniker": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\StaticValue\\NoteValue.cs",
+              "DocumentMoniker": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\StaticValue\\NoteValue.cs",
               "RelativeDocumentMoniker": "WPF_Piano\\StaticValue\\NoteValue.cs",
-              "ToolTip": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\StaticValue\\NoteValue.cs",
+              "ToolTip": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\StaticValue\\NoteValue.cs",
               "RelativeToolTip": "WPF_Piano\\StaticValue\\NoteValue.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-14T05:28:41.06Z"
+              "WhenOpened": "2026-02-27T22:41:47.773Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Template.xaml",
-              "DocumentMoniker": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\Template.xaml",
-              "RelativeDocumentMoniker": "WPF_Piano\\Template.xaml",
-              "ToolTip": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\Template.xaml",
-              "RelativeToolTip": "WPF_Piano\\Template.xaml",
+              "DocumentIndex": 13,
+              "Title": "SongVM.cs",
+              "DocumentMoniker": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\ViewModel\\SongVM.cs",
+              "RelativeDocumentMoniker": "WPF_Piano\\ViewModel\\SongVM.cs",
+              "ToolTip": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\ViewModel\\SongVM.cs",
+              "RelativeToolTip": "WPF_Piano\\ViewModel\\SongVM.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T22:29:38.661Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "OemStringMapper.cs",
+              "DocumentMoniker": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\Helper\\OemStringMapper.cs",
+              "RelativeDocumentMoniker": "WPF_Piano\\Helper\\OemStringMapper.cs",
+              "ToolTip": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\Helper\\OemStringMapper.cs",
+              "RelativeToolTip": "WPF_Piano\\Helper\\OemStringMapper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T22:18:52.149Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Song.cs",
+              "DocumentMoniker": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\Model\\Song.cs",
+              "RelativeDocumentMoniker": "WPF_Piano\\Model\\Song.cs",
+              "ToolTip": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\Model\\Song.cs",
+              "RelativeToolTip": "WPF_Piano\\Model\\Song.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T21:00:26.847Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "App.xaml",
+              "DocumentMoniker": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\App.xaml",
+              "RelativeDocumentMoniker": "WPF_Piano\\App.xaml",
+              "ToolTip": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\App.xaml",
+              "RelativeToolTip": "WPF_Piano\\App.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-08-21T22:44:13.83Z"
-            },
+              "WhenOpened": "2025-11-14T02:20:29.146Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 123,
+          "SelectedChildIndex": -1,
+          "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\MainWindow.xaml.cs",
-              "RelativeDocumentMoniker": "WPF_Piano\\MainWindow.xaml.cs",
-              "ToolTip": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\MainWindow.xaml.cs",
-              "RelativeToolTip": "WPF_Piano\\MainWindow.xaml.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAqwDAAAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-14T01:53:21.985Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "PianoUIRender.cs",
-              "DocumentMoniker": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\PianoUIRender.cs",
-              "RelativeDocumentMoniker": "WPF_Piano\\PianoUIRender.cs",
-              "ToolTip": "D:\\DevTools\\Repository\\WPF_Piano\\WPF_Piano\\PianoUIRender.cs",
-              "RelativeToolTip": "WPF_Piano\\PianoUIRender.cs",
-              "ViewState": "AgIAAGIAAAAAAAAAAAAqwLYAAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-25T07:00:43.052Z"
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             }
           ]
         }
