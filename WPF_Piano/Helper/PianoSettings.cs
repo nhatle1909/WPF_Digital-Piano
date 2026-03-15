@@ -18,6 +18,7 @@ namespace WPF_Piano.Helper
         }
         public IConfiguration Configuration { get; set; }
         public Dictionary<string, string> PianoMapping = new();
+        
         public PianoSettings()
         {
             var builder = new ConfigurationBuilder()
@@ -37,6 +38,10 @@ namespace WPF_Piano.Helper
         public string GetNote(string key)
         {
             return PianoMapping[key];
+        }
+        public bool CheckNote(string note)
+        {
+            return PianoMapping.ContainsValue(note);
         }
         public bool CheckKey(string key)
         {

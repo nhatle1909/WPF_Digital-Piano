@@ -13,14 +13,14 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="{TemplateBinding KeyLabel}"
-                   FontSize="12" FontWeight="Bold"
+                   FontSize="16" FontWeight="Bold"
                    Margin="0,15,0,0"
                    Foreground="Black"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Grid.Row="0"/>
                     <TextBlock Text="{TemplateBinding NoteLabel}"
-                   FontSize="12"
+                   FontSize="14"
                    Margin="0,0,0,15"
                    Foreground="Black"
                    HorizontalAlignment="Center"
@@ -42,14 +42,14 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="{TemplateBinding KeyLabel}"
-                 FontSize="12" FontWeight="Bold"
+                 FontSize="16" FontWeight="Bold"
                  Margin="0,15,0,0"
                  Foreground="White"
                  HorizontalAlignment="Center"
                  VerticalAlignment="Center"
                  Grid.Row="0"/>
                     <TextBlock Text="{TemplateBinding NoteLabel}"
-                 FontSize="12"
+                 FontSize="14"
                  Margin="0,0,0,15"
                  Foreground="White"
                  HorizontalAlignment="Center"

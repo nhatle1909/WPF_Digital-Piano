@@ -18,9 +18,9 @@ namespace WPF_Piano
 
 
         public MainViewVM MainViewVM = new();
-        private MidiFile midiFile;
+   
         private Playback playback;
-        private Queue<NoteTileInfo> noteTiles;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -36,14 +36,17 @@ namespace WPF_Piano
         public void Key_Pressed(object sender, KeyEventArgs e)
         {
             MainViewVM.PianoButtonVM.PlayNote(e);
-
+            //if (Keyboard.Modifiers.HasFlag(ModifierKeys.Control) && e.Key == Key.S)
+            //{
+            //    MessageBox.Show("Ctrl+S pressed!");
+            //}
         }
 
 
         public void HighlightKey(object sender, KeyEventArgs e)
         {
             var buttonPressed = e.Key.ToString();
-            // if keyname is number layout ( such as D1 ) , convert it to "1"
+           
             var button = FEHelper.FindTheButton(this, buttonPressed);
             var background = FEHelper.FindElementByName(button, "Background") as Button;
             if (background != null)
@@ -54,8 +57,9 @@ namespace WPF_Piano
         }
         public void UnhighlightKey(object sender, KeyEventArgs e)
         {
+            
             var buttonPressed = e.Key.ToString();
-            // if keyname is number layout ( such as D1 ) , convert it to "1"
+          
             var button = FEHelper.FindTheButton(this, buttonPressed);
 
             if (button == null) return;
@@ -78,58 +82,56 @@ namespace WPF_Piano
                 if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     filePath = dialog.FileName;
-                    //midiNoteControl = new UserControl1();
-                    //midiNoteControl.MidiEvents = new NAudio.Midi.MidiFile(filePath, true).Events;
+
+                    this.NoteControl.MidiEventCollection = new NAudio.Midi.MidiFile(filePath, true).Events;
+                    NoteFrame.ScrollToBottom();
                 }
             }
             if (filePath == string.Empty) return;
-            //Read MIDI file 
-            midiFile = MidiFile.Read(filePath);
+          
 
         }
 
         public async void PlayTest(object sender, RoutedEventArgs e)
         {
+     
+            //if (midiFile == null)
+            //{
+            //    MessageBox.Show("Please choose a music file before playing");
+            //    return;
+            //}
+            //if (playback != null && playback.IsRunning)
+            //{
+            //    playback.Stop();
+            //    playback.Dispose();
+            //}
 
-            if (midiFile == null)
-            {
-                MessageBox.Show("Please choose a music file before playing");
-                return;
-            }
-            if (playback != null && playback.IsRunning)
-            {
-                playback.Stop();
-                playback.Dispose();
-            }
+            //playback = midiFile.GetPlayback();
 
-            playback = midiFile.GetPlayback();
+            //playback.Speed = 1;
 
-            playback.Speed = 1;
+            //playback.EventPlayed += (obj, args) =>
+            //{
+            //    if (args.Event is NoteOnEvent noteOnEvent)
+            //    {
 
-            playback.EventPlayed += (obj, args) =>
-            {
-                if (args.Event is NoteOnEvent noteOnEvent)
-                {
-                    var noteTile = noteTiles.Dequeue();
-                    Dispatcher.Invoke(() =>
-                    {
+            //        Dispatcher.Invoke(() =>
+            //        {
 
-                        //PianoUIRender.RenderNoteTile(this, NoteTileFrame, noteTile);
-                    });
+            //            //PianoUIRender.RenderNoteTile(this, NoteTileFrame, noteTile);
+            //        });
 
-                    _ = Task.Run(() => PianoPlaySound.Instance.PlaySound(NoteValue.GetFrequency(GetNoteName(noteOnEvent.NoteNumber)), 1000)); // new
+            //        _ = Task.Run(() => PianoPlaySound.Instance.PlaySound(NoteValue.GetFrequency
+            //            (PianoPlaySound.Instance.GetNoteName(noteOnEvent.NoteNumber)), 1000)); // new
 
-                }
-            };
-            playback.Start();
+            //    }
+            //};
+            //playback.Start();
         }
-        public string GetNoteName(int noteNumber)
+
+        private void NoteControl_Loaded(object sender, RoutedEventArgs e)
         {
-            string[] noteNames = { "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" };
-            int octave = (noteNumber / 12) - 1;
-            string name = noteNames[noteNumber % 12];
-            return $"{name}{octave}";
-        }
 
+        }
     }
 }

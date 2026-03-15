@@ -35,8 +35,8 @@
 
     <Grid Margin="20">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.25*" />
-            <ColumnDefinition Width="0.75*" />
+            <ColumnDefinition Width="0.15*" />
+            <ColumnDefinition Width="0.85*" />
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0" Margin="0,0,20,0">
@@ -54,50 +54,36 @@
 
             </StackPanel>
 
-            <Border Background="White" CornerRadius="6" Padding="8" 
-                    Effect="{DynamicResource DropShadow}" Margin="0,10,0,10">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ListView Name="SongList" BorderThickness="0" Background="Transparent"
-                              ItemContainerStyle="{StaticResource CompactListItemStyle }">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="1" Margin="5,0" VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding Name}" FontWeight="SemiBold" FontSize="12" Foreground="#333"/>
-                                        <TextBlock Text="{Binding Description}" FontSize="10" Foreground="#888"/>
-                                    </StackPanel>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </ScrollViewer>
-            </Border>
+      
         </StackPanel>
 
         <Grid Grid.Column="1">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0.85*" />
-                    <RowDefinition Height="0.15*" />
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="0">
-
-                   
-                </Grid>
-
-                <Grid Grid.Row="1">
-                    <Border CornerRadius="4" BorderThickness="2,0,2,2" BorderBrush="Black">
-                        <Viewbox Stretch="Fill" >
-                            <StackPanel x:Name="PianoButtonOctave" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
-                        </Viewbox>
-                    </Border>
-                </Grid>
-            </Grid>
+            <Viewbox Stretch="Uniform" SnapsToDevicePixels="True" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="NearestNeighbor">
+                <Border BorderBrush="Black" BorderThickness="2" Width="2520" Height="1400">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0*"/>
+                            <RowDefinition Height="1240*"/>
+                            <RowDefinition Height="160*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Background="Transparent" Grid.Row="0">
+                            <Button ></Button>
+                        </Grid>
+                        <ScrollViewer Grid.Row="1" Name="NoteFrame" 
+                              VerticalScrollBarVisibility="Hidden"
+                              HorizontalScrollBarVisibility="Hidden"
+                              VerticalAlignment="Stretch">
+                            <local:NoteControl x:Name="NoteControl" Width="2520" Loaded="NoteControl_Loaded" />
+                        </ScrollViewer>
+                        <Grid Grid.Row="2" Background="Transparent" Height="160">
+                            <Viewbox Stretch="Fill" >
+                                <StackPanel x:Name="PianoButtonOctave" Orientation="Horizontal"/>
+                            </Viewbox>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Viewbox>
         </Grid>
     </Grid>
+
 </Window>

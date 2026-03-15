@@ -17,91 +17,68 @@ namespace WPF_Piano.Deprecated
         }
         private readonly Dictionary<string, string> pianoMapping = PianoSettings.Instance.PianoMapping;
 
-        public PianoUIRender()
-        {
-        }
         public void RenderButton(FrameworkElement Fe, StackPanel PianoButtonOctave)
         {
-
-            for (int i = 0; i < 4; i++)
+            
+            PianoButtonOctave.Children.Clear();
+            for (int i = 0; i < 6; i++)
             {
-                var Grid = new Grid
+                var octaveGrid = new Grid
                 {
                     Name = $"PianoOctave{i}",
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    VerticalAlignment = VerticalAlignment.Stretch,
-                    //Margin = new Thickness(0, 0, 10, 0),
+                    Width = 420,
+                    Height = 180,
+                    HorizontalAlignment = HorizontalAlignment.Left
                 };
-                var newOctaveWhite = new StackPanel
-                {
-                    Name = $"WhiteButtonLayout{i}",
-                    Orientation = Orientation.Horizontal,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    HorizontalAlignment = HorizontalAlignment.Center
-                };
-                var newOctaveBlack = new StackPanel
-                {
-                    Name = $"BlackButtonLayout{i}",
-                    Orientation = Orientation.Horizontal,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    HorizontalAlignment = HorizontalAlignment.Center
-                };
+                var whiteLayout = new StackPanel { Orientation = Orientation.Horizontal };
+                var blackLayout = new Canvas { IsHitTestVisible = false };
 
-                Grid.SetColumn(newOctaveWhite, 0);
-                Grid.SetColumn(newOctaveBlack, 1);
-                PianoButtonOctave.Children.Add(Grid);
-                Grid.Children.Add(newOctaveWhite);
-                Grid.Children.Add(newOctaveBlack);
+                octaveGrid.Children.Add(whiteLayout);
+                octaveGrid.Children.Add(blackLayout);
+                PianoButtonOctave.Children.Add(octaveGrid);
+
                 for (int i2 = 1; i2 <= 12; i2++)
                 {
-                    CustomPianoButton btn;
                     var displayKeyAndNote = GetDisplayKeyAndNote(i, i2 - 1);
                     var keyName = pianoMapping.ElementAt(i2 - 1 + i * 12).Key;
 
-                    if (i2 == 2 || i2 == 4 || i2 == 7 || i2 == 9 || i2 == 11)
+                    if (new[] { 2, 4, 7, 9, 11 }.Contains(i2)) // Black Keys
                     {
-                        // Add a black key
-                        btn = new CustomPianoButton
+                        var btn = new CustomPianoButton
                         {
                             Template = (ControlTemplate)Fe.FindResource("BlackPianoButton"),
-                            MinWidth = 30,
-                            MinHeight = 90,
-                            Margin = ReturnBlackButtonMargin(i2),
-                            HorizontalAlignment = HorizontalAlignment.Center,
-                            VerticalAlignment = VerticalAlignment.Center,
-                            KeyLabel = displayKeyAndNote.Item1, // Set the key label
-                            NoteLabel = displayKeyAndNote.Item2, // Set the note label
+                            Width = 30,
+                            Height = 110,
+                            KeyLabel = displayKeyAndNote.Item1,
+                            NoteLabel = displayKeyAndNote.Item2,
                             Name = $"Black{keyName}",
-                            FontSize = 12
+                            FontSize = 10
                         };
-                        newOctaveBlack.Children.Add(btn);
+
+                     
+                        double leftPos = i2 switch { 2 => 45, 4 => 105, 7 => 225, 9 => 285, 11 => 345, _ => 0 };
+                        Canvas.SetLeft(btn, leftPos);
+                        blackLayout.Children.Add(btn);
                     }
-                    else
+                    else // White Keys
                     {
-                        // Add a white key
-                        btn = new CustomPianoButton
+                        var btn = new CustomPianoButton
                         {
                             Template = (ControlTemplate)Fe.FindResource("WhitePianoButton"),
-                            MinWidth = 60,
-                            MinHeight = 180,
-                            Margin = new Thickness(0, 0, 0, 0),
-                            HorizontalAlignment = HorizontalAlignment.Center,
-                            VerticalAlignment = VerticalAlignment.Center,
-                            KeyLabel = displayKeyAndNote.Item1, // Set the key label
-                            NoteLabel = displayKeyAndNote.Item2, // Set the note label        
+                            Width = 60,
+                            Height = 180,
+                            KeyLabel = displayKeyAndNote.Item1,
+                            NoteLabel = displayKeyAndNote.Item2,
                             Name = $"White{keyName}",
-                            FontSize = 12,
-
+                            FontSize = 12
                         };
-                        newOctaveWhite.Children.Add(btn);
+                        whiteLayout.Children.Add(btn);
                     }
                 }
             }
         }
 
-
-
-        private Tuple<string, string> GetDisplayKeyAndNote(int octave, int noteIndex)
+        public Tuple<string, string> GetDisplayKeyAndNote(int octave, int noteIndex)
         {
             int displayKeyAndNoteIndex = octave * 12 + noteIndex;
             var displayKeyAndNote = pianoMapping.ElementAt(displayKeyAndNoteIndex);
@@ -112,162 +89,99 @@ namespace WPF_Piano.Deprecated
             }
             return Tuple.Create(displayKeyAndNote.Key, displayKeyAndNote.Value);
         }
-        public Thickness ReturnBlackButtonMargin(int index)
-        {
-            // Calculate the margin for black keys based on their position
-            switch (index)
-            {
-                case 2: return new Thickness(0, 0, 0, 20); // First black key
-                case 4: return new Thickness(30, 0, 0, 20); // Second black key
-                case 7: return new Thickness(90, 0, 0, 20); // Third black key
-                case 9: return new Thickness(30, 0, 0, 20); // Fourth black key
-                case 11: return new Thickness(30, 0, 0, 20); // Default margin for other keys
-                default: return new Thickness(0, 0, 0, 0); // Default margin for other keys
-            }
-        }
-        public Tuple<HorizontalAlignment, int> ReturnWhiteTileAlignment(int index)
-        {
-            var align = new Tuple<HorizontalAlignment, int>(HorizontalAlignment.Center, 0);
-            if (index == 0) return new Tuple<HorizontalAlignment, int>(HorizontalAlignment.Left, 45);
-            var modIndex = index % 12;
-            switch (modIndex)
-            {
-                case 0: align = new Tuple<HorizontalAlignment, int>(HorizontalAlignment.Left, 45); break; // First black key
-                case 2: align = new Tuple<HorizontalAlignment, int>(HorizontalAlignment.Center, 30); break; // Second black key
-                case 4: align = new Tuple<HorizontalAlignment, int>(HorizontalAlignment.Right, 45); break; // Third black key
-                case 5: align = new Tuple<HorizontalAlignment, int>(HorizontalAlignment.Left, 45); break; // Fourth black key
-                case 7: align = new Tuple<HorizontalAlignment, int>(HorizontalAlignment.Center, 30); break; // Default margin for other keys
-                case 9: align = new Tuple<HorizontalAlignment, int>(HorizontalAlignment.Center, 30); break; // Default margin for other keys
-                case 11: align = new Tuple<HorizontalAlignment, int>(HorizontalAlignment.Right, 45); break; // Default margin for other keys
-                default: align = new Tuple<HorizontalAlignment, int>(HorizontalAlignment.Center, 30); break; // Default margin for other keys
-            }
-            return align;
-        }
-        #region Deprecated Code
-        //public void RenderNoteTileFrame(FrameworkElement Fe, StackPanel NoteTileFrame, bool isRealKey)
+        #region Deprecated 
+        // This method is no longer used due to the new Canvas-based layout for black keys, which allows for precise positioning without needing margin adjustments.
+        //public Thickness ReturnBlackButtonMargin(int index)
         //{
-        //    if (NoteTileFrame == null) return;
-        //    NoteTileFrame.Children.Clear();
-        //    if (isRealKey)
+        //    // Calculate the margin for black keys based on their position
+        //    switch (index)
         //    {
-        //        for (int i = 0; i < 4; i++)
+        //        case 2: return new Thickness(0, 0, 0, 20); // First black key
+        //        case 4: return new Thickness(30, 0, 0, 20); // Second black key
+        //        case 7: return new Thickness(90, 0, 0, 20); // Third black key
+        //        case 9: return new Thickness(30, 0, 0, 20); // Fourth black key
+        //        case 11: return new Thickness(30, 0, 0, 20); // Fifth black key
+        //        default: return new Thickness(0, 0, 0, 0); // Default margin for other keys
+        //    }
+        //}
+        //public void RenderButton(FrameworkElement Fe, StackPanel PianoButtonOctave)
+        //{
+
+        //    for (int i = 0; i < 6; i++)
+        //    {
+        //        var Grid = new Grid
         //        {
-        //            var Grid = new Grid
-        //            {
-        //                Name = $"PianoOctave{i}",
-        //                HorizontalAlignment = HorizontalAlignment.Center,
-        //                VerticalAlignment = VerticalAlignment.Top,
-        //                //Margin = new Thickness(0, 0, 10, 0),
-        //            };
-        //            var newOctaveWhite = new StackPanel
-        //            {
-        //                Name = $"WhiteButtonLayout{i}",
-        //                Orientation = Orientation.Horizontal,
-        //                VerticalAlignment = VerticalAlignment.Top,
-        //                HorizontalAlignment = HorizontalAlignment.Center
-        //            };
-        //            var newOctaveBlack = new StackPanel
-        //            {
-        //                Name = $"BlackButtonLayout{i}",
-        //                Orientation = Orientation.Horizontal,
-        //                VerticalAlignment = VerticalAlignment.Top,
-        //                HorizontalAlignment = HorizontalAlignment.Center
-        //            };
+        //            Name = $"PianoOctave{i}",
+        //            HorizontalAlignment = HorizontalAlignment.Stretch,
+        //            VerticalAlignment = VerticalAlignment.Stretch,
+        //            //Margin = new Thickness(0, 0, 10, 0),
+        //        };
+        //        var newOctaveWhite = new StackPanel
+        //        {
+        //            Name = $"WhiteButtonLayout{i}",
+        //            Orientation = Orientation.Horizontal,
+        //            VerticalAlignment = VerticalAlignment.Center,
+        //            HorizontalAlignment = HorizontalAlignment.Center
+        //        };
+        //        var newOctaveBlack = new StackPanel
+        //        {
+        //            Name = $"BlackButtonLayout{i}",
+        //            Orientation = Orientation.Horizontal,
+        //            VerticalAlignment = VerticalAlignment.Top,
+        //            HorizontalAlignment = HorizontalAlignment.Center
 
-        //            Grid.SetColumn(newOctaveWhite, 0);
-        //            Grid.SetColumn(newOctaveBlack, 1);
-        //            NoteTileFrame.Children.Add(Grid);
-        //            Grid.Children.Add(newOctaveWhite);
-        //            Grid.Children.Add(newOctaveBlack);
-        //            for (int i2 = 1; i2 <= 12; i2++)
+        //        };
+
+        //        Grid.SetColumn(newOctaveWhite, 0);
+        //        Grid.SetColumn(newOctaveBlack, 1);
+        //        PianoButtonOctave.Children.Add(Grid);
+        //        Grid.Children.Add(newOctaveWhite);
+        //        Grid.Children.Add(newOctaveBlack);
+        //        for (int i2 = 1; i2 <= 12; i2++)
+        //        {
+        //            CustomPianoButton btn;
+        //            var displayKeyAndNote = GetDisplayKeyAndNote(i, i2 - 1);
+        //            var keyName = pianoMapping.ElementAt(i2 - 1 + i * 12).Key;
+
+        //            if (i2 == 2 || i2 == 4 || i2 == 7 || i2 == 9 || i2 == 11)
         //            {
-        //                Grid noteTile;
-        //                var displayKeyAndNote = GetDisplayKeyAndNote(i, i2 - 1);
-        //                var keyName = pianoMapping.ElementAt(i2 - 1 + i * 12).Key;
-        //                if (i2 == 2 || i2 == 4 || i2 == 7 || i2 == 9 || i2 == 11)
+        //                // Add a black key
+        //                btn = new CustomPianoButton
         //                {
-        //                    // Add a black key
-        //                    noteTile = new Grid
-        //                    {
-        //                        MinWidth = 30,
-        //                        MinHeight = 180,
-        //                        Margin = new Thickness(ReturnBlackButtonMargin(i2).Left, 0, 0, 0),
-        //                        HorizontalAlignment = HorizontalAlignment.Center,
-        //                        VerticalAlignment = VerticalAlignment.Top,
-        //                        Name = $"NoteTile{keyName}",
-
-        //                    };
-
-        //                    newOctaveBlack.Children.Add(noteTile);
-
-        //                }
-        //                else
+        //                    Template = (ControlTemplate)Fe.FindResource("BlackPianoButton"),
+        //                    MinWidth = 30,
+        //                    MinHeight = 90,
+        //                    Margin = ReturnBlackButtonMargin(i2),
+        //                    HorizontalAlignment = HorizontalAlignment.Center,
+        //                    VerticalAlignment = VerticalAlignment.Center,
+        //                    KeyLabel = displayKeyAndNote.Item1, // Set the key label
+        //                    NoteLabel = displayKeyAndNote.Item2, // Set the note label
+        //                    Name = $"Black{keyName}",
+        //                    FontSize = 12
+        //                };
+        //                newOctaveBlack.Children.Add(btn);
+        //            }
+        //            else
+        //            {
+        //                // Add a white key
+        //                btn = new CustomPianoButton
         //                {
-        //                    noteTile = new Grid
-        //                    {
-        //                        MinWidth = 60,
-        //                        MinHeight = 180,
-        //                        Margin = new Thickness(0, 0, 0, 0),
-        //                        HorizontalAlignment = HorizontalAlignment.Center,
-        //                        VerticalAlignment = VerticalAlignment.Top,
-        //                        Name = $"NoteTile{keyName}",
+        //                    Template = (ControlTemplate)Fe.FindResource("WhitePianoButton"),
+        //                    MinWidth = 60,
+        //                    MinHeight = 180,
+        //                    Margin = new Thickness(0, 0, 0, 0),
+        //                    HorizontalAlignment = HorizontalAlignment.Center,
+        //                    VerticalAlignment = VerticalAlignment.Center,
+        //                    KeyLabel = displayKeyAndNote.Item1, // Set the key label
+        //                    NoteLabel = displayKeyAndNote.Item2, // Set the note label        
+        //                    Name = $"White{keyName}",
+        //                    FontSize = 12,
 
-        //                    };
-
-        //                    newOctaveWhite.Children.Add(noteTile);
-
-        //                }
+        //                };
+        //                newOctaveWhite.Children.Add(btn);
         //            }
         //        }
         //    }
-        //}
-        //public void RenderNoteTile(FrameworkElement Fe, StackPanel NoteTilesFrame, NoteTileInfo noteTileInfo)
-        //{
-
-        //    // Create storyboard
-        //    var keyList = pianoMapping.ToList();
-        //    var keyName = pianoMapping.FirstOrDefault(x => x.Value == noteTileInfo.NoteName).Key;
-        //    var frame = FindElementByName(NoteTilesFrame, $"NoteTile{keyName}") as Grid;
-        //    if (frame == null) return;
-        //    var noteTile = new Rectangle
-        //    {
-        //        RenderTransform = new TranslateTransform(),
-
-        //        // Width: narrow for sharp notes, wider for naturals
-        //        Width = noteTileInfo.NoteName.Contains("#") ? 30 : 60,
-
-        //        // Height: scale velocity to a visible range (e.g., 0–127 → 10–100)
-        //        Height = Math.Max(10, noteTileInfo.Velocity * 0.4),
-        //        Stroke = Brushes.Black,
-        //        StrokeThickness = 0.5,
-        //        Fill = Brushes.LightGreen,
-
-
-        //        VerticalAlignment = VerticalAlignment.Top,
-        //        HorizontalAlignment = HorizontalAlignment.Left // or Center if needed
-        //    };
-
-
-        //    var animation = new DoubleAnimation
-        //    {
-        //        From = 0,
-        //        To = frame.ActualHeight,
-        //        Duration = TimeSpan.FromSeconds(5),
-
-
-        //    };
-
-        //    animation.Completed += (s, e) =>
-        //    {
-        //        frame.Children.Remove(noteTile);
-        //        float noteFrequency = NoteValue.NoteFrequencies.ContainsKey(noteTileInfo.NoteName) ? NoteValue.NoteFrequencies[noteTileInfo.NoteName] : 0;
-
-        //            PianoPlaySound.PlaySound(noteFrequency, 1000);
-        //    };
-        //    frame.Children.Add(noteTile);
-        //    var renderTransform = noteTile.RenderTransform as TranslateTransform;
-        //    renderTransform.BeginAnimation(TranslateTransform.YProperty, animation);
-
         //}
         #endregion
 
