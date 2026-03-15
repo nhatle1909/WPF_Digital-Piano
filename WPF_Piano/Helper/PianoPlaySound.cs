@@ -62,7 +62,13 @@ namespace WPF_Piano.Helper
             bufferProvider.AddMixerInput(new RawSourceWaveStream(new MemoryStream(buffer), new WaveFormat(sampleRate, 16, 1)).ToSampleProvider());
 
         }
-
+        public string GetNoteName(int noteNumber)
+        {
+            string[] noteNames = { "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" };
+            int octave = (noteNumber / 12) - 1;
+            string name = noteNames[noteNumber % 12];
+            return $"{name}{octave}";
+        }
     }
 
 }
