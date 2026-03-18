@@ -1,7 +1,6 @@
 ﻿
 
-using Melanchall.DryWetMidi.Core;
-using Melanchall.DryWetMidi.Multimedia;
+
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -19,7 +18,6 @@ namespace WPF_Piano
 
         public MainViewVM MainViewVM = new();
    
-        private Playback playback;
 
         public MainWindow()
         {
@@ -30,7 +28,7 @@ namespace WPF_Piano
             this.KeyDown += HighlightKey;
             this.KeyUp += UnhighlightKey;
             PianoUIRender.Instance.RenderButton(this, PianoButtonOctave);
-
+            NoteFrame.ScrollToBottom();
         }
 
         public void Key_Pressed(object sender, KeyEventArgs e)
@@ -83,7 +81,7 @@ namespace WPF_Piano
                 {
                     filePath = dialog.FileName;
 
-                    this.NoteControl.MidiEventCollection = new NAudio.Midi.MidiFile(filePath, true).Events;
+                    this.NoteControl.MidiFile = new NAudio.Midi.MidiFile(filePath, true); ;
                     NoteFrame.ScrollToBottom();
                 }
             }
@@ -129,9 +127,5 @@ namespace WPF_Piano
             //playback.Start();
         }
 
-        private void NoteControl_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
