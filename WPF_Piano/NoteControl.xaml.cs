@@ -27,116 +27,188 @@ namespace WPF_Piano
 
         double xScale = 30;
         double yScale = 0.1;
-        double yEnhancedScale = 0.1;
-            
-        MidiEventCollection midiEventCollection;
-        public NoteControl()
-        {
-            InitializeComponent();
-            Dispatcher.BeginInvoke(new Action(() =>
-            {
-                RenderTileBorder();
-            }), System.Windows.Threading.DispatcherPriority.Loaded);
-        }
-        private void RenderTileBorder()
-        {
-
-            var noteCount = PianoSettings.Instance.PianoMapping.Count;
-            var octaveCount = (int)Math.Ceiling(noteCount / 12.0);
-            for (int i = 1; i < octaveCount; i++) // Use <= to get the last border
-            {
-                Rectangle border = new Rectangle
-                {
-                    Width = 2,
-                    Height = 10000,
-                    Fill = Brushes.Blue, // Use Fill for a solid 2px line
-                    SnapsToDevicePixels = true
-                };
-
-                // Set scaling hint to keep lines sharp in Viewbox
-                RenderOptions.SetEdgeMode(border, EdgeMode.Aliased);
-
-                // Align exactly to the 420px octave boundary
-                Canvas.SetLeft(border, (i * 420 - 2));
-                Canvas.SetBottom(border, 0);
-                NoteCanvas.Children.Add(border);
-            }
-
-        }
-        public MidiEventCollection MidiEventCollection
+        private MidiFile midiFile;
+        private int pixelsPerSecond = 150;
+        private double songDuration = 10;
+        public MidiFile MidiFile
         {
             get
             {
-                return midiEventCollection;
+                return midiFile;
             }
             set
             {
-                yScale = (20.0 / value.DeltaTicksPerQuarterNote);
-                midiEventCollection = value;
                 NoteCanvas.Children.Clear();
+                midiFile = value;
+                yScale = (20.0 / value.DeltaTicksPerQuarterNote) * 2;
+                songDuration = CalculateSongDuration();
+                RenderTiles(value.Events);
+                RenderTileBorder();
+                RenderTimelines();
+            }
+        }
 
-                long lastPosition = 0;
+        public NoteControl()
+        {
+            InitializeComponent();
+            this.Height = songDuration * pixelsPerSecond;
+            this.Width = 128 * xScale;
+            RenderTileBorder();
+            RenderTimelines();
+        }
+        public void RenderTiles(MidiEventCollection midiEvents)
+        {
+            long lastPosition = 0;
 
-                for (int track = 0; track < midiEventCollection.Tracks; track++)
+            for (int track = 0; track < midiEvents.Tracks; track++)
+            {
+                foreach (MidiEvent midiEvent in midiEvents[track])
                 {
-                    // Inside your MidiEventCollection set logic:
-                    foreach (MidiEvent midiEvent in value[track])
+                    if (midiEvent.CommandCode == MidiCommandCode.NoteOn)
                     {
-                        if (midiEvent.CommandCode == MidiCommandCode.NoteOn)
+                        NoteOnEvent noteOn = (NoteOnEvent)midiEvent;
+                        if (noteOn.OffEvent != null)
                         {
-                            NoteOnEvent noteOn = (NoteOnEvent)midiEvent;
-                            if (noteOn.OffEvent != null)
-                            {
-                                string note = PianoPlaySound.Instance.GetNoteName(noteOn.NoteNumber);
-                                if (!PianoSettings.Instance.CheckNote(note))
-                                {
-                                    continue;
-                                }
+                            string note = PianoPlaySound.Instance.GetNoteName(noteOn.NoteNumber);
 
-                                FrameworkElement tile = MakeNoteBorder(note, noteOn.NoteNumber, noteOn.AbsoluteTime, noteOn.NoteLength, noteOn.Channel);
-                                NoteCanvas.Children.Add(tile);
+                            FrameworkElement tile = MakeNoteBorder(note, noteOn.NoteNumber, noteOn.AbsoluteTime, noteOn.NoteLength, noteOn.Channel);
+                            NoteCanvas.Children.Add(tile);
 
-                                lastPosition = Math.Max(lastPosition, noteOn.AbsoluteTime + noteOn.NoteLength);
-                            }
+                            lastPosition = Math.Max(lastPosition, noteOn.AbsoluteTime + noteOn.NoteLength);
                         }
                     }
                 }
-                this.Height = lastPosition * yScale * 2 * 1.275;
-                // 2 is the enhancedYScale multiplier, 1.275  = 1.25 (vertical spread) * 1.02 (extra padding for visual comfort)
-                this.Width = 128 * xScale;
-                Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    RenderTileBorder();
-                }), System.Windows.Threading.DispatcherPriority.Loaded);
             }
+            this.Height = lastPosition * yScale * 1.28;
+            // 1.28 = 1.25 (vertical spread) + 0.03 (extra padding for visual comfort)
+        }
+        private void RenderTileBorder()
+        {
+            var noteCount = PianoSettings.Instance.PianoMapping.Count;
+            var octaveCount = (int)Math.Ceiling(noteCount / 12.0);
+            double octaveWidth = 2520 / octaveCount;
+            for (int i = 1; i < octaveCount; i++)
+            {
+                double xPos = i * octaveWidth;
+
+                Line border = new Line
+                {
+                    X1 = xPos - 2,
+                    Y1 = 0,
+                    X2 = xPos - 2,
+                    Y2 = this.Height,
+                    Stroke = Brushes.Black,
+                    StrokeThickness = 2,
+                    SnapsToDevicePixels = true
+                };
+                if (i == 1)
+                {
+                    border.X1 = xPos;
+                    border.X2 = xPos;
+                }
+                if (i == octaveCount - 1)
+                {
+                    border.X1 = xPos - 4;
+                    border.X2 = xPos - 4;
+                }  
+                RenderOptions.SetEdgeMode(border, EdgeMode.Aliased);
+                NoteCanvas.Children.Add(border);
+            }
+        }
+        public void RenderTimelines()
+        {
+            double totalSeconds = (midiFile == null) ? 10 : songDuration;
+            for (int s = 0; s <= totalSeconds; s++)
+            {
+                double yPos = s * pixelsPerSecond;
+
+                Line timeline = new Line
+                {
+                    X1 = 0,
+                    X2 = this.Width,
+                    Y1 = yPos,
+                    Y2 = yPos,
+                    Stroke = Brushes.Lime,
+                    StrokeThickness = 2,
+                    StrokeDashArray = new DoubleCollection { 4, 4 },
+  
+                    SnapsToDevicePixels = true,
+                    
+                };
+                if (midiFile != null && s > 0) {
+                    TextBlock timeLabel = new TextBlock
+                    {
+                        Text = $"{s}s",
+                        Foreground = Brushes.Lime,
+                        FontSize = 20,
+                  
+                       
+                    };
+                    RenderOptions.SetEdgeMode(timeLabel, EdgeMode.Aliased);
+                    Canvas.SetLeft(timeLabel, 5);
+                    Canvas.SetBottom(timeLabel, yPos + 55);
+                    NoteCanvas.Children.Add(timeLabel);
+                }
+                RenderOptions.SetEdgeMode(timeline, EdgeMode.Aliased);
+             
+                NoteCanvas.Children.Add(timeline);
+            }
+        }
+        private double CalculateSongDuration()
+        {
+            long maxTick = 0;
+            foreach (var track in midiFile.Events)
+            {
+                if (track.Count > 0)
+                {
+                    long lastEventTick = track.Max(e => e.AbsoluteTime);
+                    if (lastEventTick > maxTick) maxTick = lastEventTick;
+                }
+            }
+
+            int ticksPerQuarterNote = midiFile.DeltaTicksPerQuarterNote;
+
+          
+            double bpm = 120.0;
+            foreach (var track in midiFile.Events)
+            {
+                var tempoEvent = track.OfType<TempoEvent>().FirstOrDefault();
+                if (tempoEvent != null)
+                {
+                    bpm = tempoEvent.Tempo;
+                    break;
+                }
+            }
+            double ticksPerSecond = (ticksPerQuarterNote * bpm) / 60.0;
+
+            return  (double)maxTick / ticksPerSecond;
         }
         private FrameworkElement MakeNoteBorder(string noteName, int noteNumber, long startTime, int duration, int channel)
         {
 
             bool isBlack = noteName.Contains("#");
-            double enhancedYScale = yScale * 2.0;
-
-            // Create the Border control
+         
             Border noteTile = new Border
             {
-                // Width and Height logic (matching your previous specific 26/56 offset)
+              
                 Width = isBlack ? 30 : 60,
-                Height = (double)duration * enhancedYScale,
+                Height = (double)duration * yScale,
 
-                // Border styling
+             
                 BorderThickness = new Thickness(2),
-                CornerRadius = new CornerRadius(6), // Adds slightly rounded corners
+                CornerRadius = new CornerRadius(6), 
                 BorderBrush = new SolidColorBrush(isBlack ? Color.FromRgb(0, 255, 255) : Color.FromRgb(0, 200, 255)),
 
-                // Inner fill
+          
                 Background = new SolidColorBrush(Color.FromArgb(100, 0, 255, 255)),
 
-                // Optimization
+          
                 IsHitTestVisible = false
             };
 
             // Mapping Logic: relativeNote 0 = MIDI 36 (C2)
             int relativeNote = noteNumber - 36;
+       
             int octave = relativeNote / 12;
             int noteInOctave = relativeNote % 12;
 
@@ -157,16 +229,14 @@ namespace WPF_Piano
                 _ => 0
             };
 
-            // Position on Canvas
             Canvas.SetLeft(noteTile, (octave * 420) + xOffset);
-            // Applying your 1.25x vertical spread multiplier
-            Canvas.SetBottom(noteTile, (double)startTime * enhancedYScale * 1.25);
+            // Applying 1.25x vertical spread multiplier
+            Canvas.SetBottom(noteTile, (double)startTime * yScale * 1.25);
 
-            // Visual Effect (Glow)
             noteTile.Effect = new DropShadowEffect
             {
                 Color = ((SolidColorBrush)noteTile.BorderBrush).Color,
-                BlurRadius = 10,
+                BlurRadius = 5,
                 ShadowDepth = 0,
                 Opacity = 0.6
             };

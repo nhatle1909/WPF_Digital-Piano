@@ -58,22 +58,20 @@
         </StackPanel>
 
         <Grid Grid.Column="1">
-            <Viewbox Stretch="Uniform" SnapsToDevicePixels="True" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="NearestNeighbor">
-                <Border BorderBrush="Black" BorderThickness="2" Width="2520" Height="1400">
+            <Viewbox Stretch="Fill" SnapsToDevicePixels="True">
+                <Border BorderBrush="Black" BorderThickness="2" Width="2520" Height="1400" >
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="0*"/>
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="1240*"/>
                             <RowDefinition Height="160*"/>
                         </Grid.RowDefinitions>
-                        <Grid Background="Transparent" Grid.Row="0">
-                            <Button ></Button>
-                        </Grid>
+                       
                         <ScrollViewer Grid.Row="1" Name="NoteFrame" 
                               VerticalScrollBarVisibility="Hidden"
                               HorizontalScrollBarVisibility="Hidden"
                               VerticalAlignment="Stretch">
-                            <local:NoteControl x:Name="NoteControl" Width="2520" Loaded="NoteControl_Loaded" />
+                            <local:NoteControl x:Name="NoteControl" Width="2520" RenderOptions.EdgeMode="Aliased" />
                         </ScrollViewer>
                         <Grid Grid.Row="2" Background="Transparent" Height="160">
                             <Viewbox Stretch="Fill" >

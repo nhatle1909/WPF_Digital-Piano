@@ -6001,11 +6001,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\WPF_Piano.csproj",
+      "projectUniqueName": "D:\\DevTools\\WPF_Piano\\WPF_Digital-Piano\\WPF_Piano\\WPF_Piano.csproj",
       "projectName": "WPF_Piano",
-      "projectPath": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\WPF_Piano.csproj",
+      "projectPath": "D:\\DevTools\\WPF_Piano\\WPF_Digital-Piano\\WPF_Piano\\WPF_Piano.csproj",
       "packagesPath": "C:\\Users\\nle75\\.nuget\\packages\\",
-      "outputPath": "D:\\DevTools\\WPF_Piano\\WPF_Piano\\obj\\",
+      "outputPath": "D:\\DevTools\\WPF_Piano\\WPF_Digital-Piano\\WPF_Piano\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
