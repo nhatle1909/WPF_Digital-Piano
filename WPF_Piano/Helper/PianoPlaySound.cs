@@ -1,4 +1,5 @@
 ﻿using NAudio.CoreAudioApi;
+using NAudio.Midi;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using System.IO;
@@ -61,6 +62,35 @@ namespace WPF_Piano.Helper
             // Create wave file and play
             bufferProvider.AddMixerInput(new RawSourceWaveStream(new MemoryStream(buffer), new WaveFormat(sampleRate, 16, 1)).ToSampleProvider());
 
+        }
+        public double CalculateSongDuration(MidiFile midiFile)
+        {
+            long maxTick = 0;
+            foreach (var track in midiFile.Events)
+            {
+                if (track.Count > 0)
+                {
+                    long lastEventTick = track.Max(e => e.AbsoluteTime);
+                    if (lastEventTick > maxTick) maxTick = lastEventTick;
+                }
+            }
+
+            int ticksPerQuarterNote = midiFile.DeltaTicksPerQuarterNote;
+
+
+            double bpm = 120.0;
+            foreach (var track in midiFile.Events)
+            {
+                var tempoEvent = track.OfType<TempoEvent>().FirstOrDefault();
+                if (tempoEvent != null)
+                {
+                    bpm = tempoEvent.Tempo;
+                    break;
+                }
+            }
+            double ticksPerSecond = (ticksPerQuarterNote * bpm) / 60.0;
+
+            return (double)maxTick / ticksPerSecond;
         }
         public string GetNoteName(int noteNumber)
         {

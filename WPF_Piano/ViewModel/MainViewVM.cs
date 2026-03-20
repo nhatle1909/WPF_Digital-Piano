@@ -3,6 +3,7 @@
     public class MainViewVM
     {
         public PianoButtonVM PianoButtonVM;
+        public SongPlayerVM SongPlayerVM;
 
         public MainViewVM()
         {

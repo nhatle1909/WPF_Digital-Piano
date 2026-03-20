@@ -41,7 +41,7 @@ namespace WPF_Piano
                 NoteCanvas.Children.Clear();
                 midiFile = value;
                 yScale = (20.0 / value.DeltaTicksPerQuarterNote) * 2;
-                songDuration = CalculateSongDuration();
+                songDuration = PianoPlaySound.Instance.CalculateSongDuration(value);
                 RenderTiles(value.Events);
                 RenderTileBorder();
                 RenderTimelines();
@@ -69,6 +69,7 @@ namespace WPF_Piano
                         NoteOnEvent noteOn = (NoteOnEvent)midiEvent;
                         if (noteOn.OffEvent != null)
                         {
+                            if (noteOn.NoteNumber - 36 < 0) continue; // Skip notes below C2 (MIDI 36)
                             string note = PianoPlaySound.Instance.GetNoteName(noteOn.NoteNumber);
 
                             FrameworkElement tile = MakeNoteBorder(note, noteOn.NoteNumber, noteOn.AbsoluteTime, noteOn.NoteLength, noteOn.Channel);
@@ -128,24 +129,24 @@ namespace WPF_Piano
                     X2 = this.Width,
                     Y1 = yPos,
                     Y2 = yPos,
-                    Stroke = Brushes.Lime,
+                    Stroke = Brushes.LimeGreen,
                     StrokeThickness = 2,
                     StrokeDashArray = new DoubleCollection { 4, 4 },
   
                     SnapsToDevicePixels = true,
                     
                 };
-                if (midiFile != null && s > 0) {
+                if (midiFile != null ) {
                     TextBlock timeLabel = new TextBlock
                     {
                         Text = $"{s}s",
-                        Foreground = Brushes.Lime,
+                        Foreground = Brushes.LimeGreen,
                         FontSize = 20,
                   
                        
                     };
                     RenderOptions.SetEdgeMode(timeLabel, EdgeMode.Aliased);
-                    Canvas.SetLeft(timeLabel, 5);
+                    Canvas.SetLeft(timeLabel, 0);
                     Canvas.SetBottom(timeLabel, yPos + 55);
                     NoteCanvas.Children.Add(timeLabel);
                 }
@@ -154,35 +155,7 @@ namespace WPF_Piano
                 NoteCanvas.Children.Add(timeline);
             }
         }
-        private double CalculateSongDuration()
-        {
-            long maxTick = 0;
-            foreach (var track in midiFile.Events)
-            {
-                if (track.Count > 0)
-                {
-                    long lastEventTick = track.Max(e => e.AbsoluteTime);
-                    if (lastEventTick > maxTick) maxTick = lastEventTick;
-                }
-            }
-
-            int ticksPerQuarterNote = midiFile.DeltaTicksPerQuarterNote;
-
-          
-            double bpm = 120.0;
-            foreach (var track in midiFile.Events)
-            {
-                var tempoEvent = track.OfType<TempoEvent>().FirstOrDefault();
-                if (tempoEvent != null)
-                {
-                    bpm = tempoEvent.Tempo;
-                    break;
-                }
-            }
-            double ticksPerSecond = (ticksPerQuarterNote * bpm) / 60.0;
-
-            return  (double)maxTick / ticksPerSecond;
-        }
+     
         private FrameworkElement MakeNoteBorder(string noteName, int noteNumber, long startTime, int duration, int channel)
         {
 
