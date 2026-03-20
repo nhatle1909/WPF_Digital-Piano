@@ -1,6 +1,7 @@
 ﻿
 
 
+using NAudio.Midi;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -17,8 +18,10 @@ namespace WPF_Piano
 
 
         public MainViewVM MainViewVM = new();
-   
-
+        MidiFile midiFile;
+        double songDuration;
+        double currentTime;
+        bool IsPlaying = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -80,8 +83,8 @@ namespace WPF_Piano
                 if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     filePath = dialog.FileName;
-
-                    this.NoteControl.MidiFile = new NAudio.Midi.MidiFile(filePath, true); ;
+                    midiFile = new NAudio.Midi.MidiFile(filePath, true);
+                    this.NoteControl.MidiFile = midiFile;
                     NoteFrame.ScrollToBottom();
                 }
             }
@@ -90,41 +93,55 @@ namespace WPF_Piano
 
         }
 
-        public async void PlayTest(object sender, RoutedEventArgs e)
+        public async void Play(object sender, RoutedEventArgs e)
         {
-     
-            //if (midiFile == null)
-            //{
-            //    MessageBox.Show("Please choose a music file before playing");
-            //    return;
-            //}
-            //if (playback != null && playback.IsRunning)
-            //{
-            //    playback.Stop();
-            //    playback.Dispose();
-            //}
+        
+            double frameRate = 60.0;
+            double frameTime = 1.0 / frameRate; // ~0.0166 seconds
+            songDuration = PianoPlaySound.Instance.CalculateSongDuration(midiFile); 
+         
+            double startScroll = NoteFrame.ExtentHeight - NoteFrame.ViewportHeight;
 
-            //playback = midiFile.GetPlayback();
+         
+            double scrollPixelsPerSecond = 150.0;
 
-            //playback.Speed = 1;
+            IsPlaying = true;
+            if (currentTime == 0)
+            {
+                for (double time = 0; time < songDuration; time += frameTime)
+                {
+                    if (IsPlaying == false) break;
+                 
+                    double currentScroll = startScroll - (time * scrollPixelsPerSecond);
 
-            //playback.EventPlayed += (obj, args) =>
-            //{
-            //    if (args.Event is NoteOnEvent noteOnEvent)
-            //    {
+                    if (currentScroll < 0) currentScroll = 0;
 
-            //        Dispatcher.Invoke(() =>
-            //        {
+                    NoteFrame.ScrollToVerticalOffset(currentScroll);
+                    currentTime = time;
+                   
+                    await Task.Delay(TimeSpan.FromSeconds(frameTime));
+                }
+            }
+            else
+            {
+                for (double time = currentTime; time < songDuration; time += frameTime)
+                {
+                    if (IsPlaying == false) break;
 
-            //            //PianoUIRender.RenderNoteTile(this, NoteTileFrame, noteTile);
-            //        });
-
-            //        _ = Task.Run(() => PianoPlaySound.Instance.PlaySound(NoteValue.GetFrequency
-            //            (PianoPlaySound.Instance.GetNoteName(noteOnEvent.NoteNumber)), 1000)); // new
-
-            //    }
-            //};
-            //playback.Start();
+                    double currentScroll = startScroll - (time * scrollPixelsPerSecond);
+                    
+                    if (currentScroll < 0) currentScroll = 0;
+                    
+                    NoteFrame.ScrollToVerticalOffset(currentScroll);                    
+                    currentTime = time;
+                    
+                    await Task.Delay(TimeSpan.FromSeconds(frameTime));
+                }
+            }
+        }
+        public async void Pause(object sender, RoutedEventArgs e)
+        {
+            IsPlaying = false;
         }
 
     }
