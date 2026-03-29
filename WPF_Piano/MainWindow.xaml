@@ -3,28 +3,27 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:WPF_Piano"
         Title="Piano Studio Pro" Height="950" Width="1600"
-        Background="#121212">
-
-    <Grid Margin="10">
+        Background="#0A0A0A">
+    <Grid Margin="15">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="280" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Column="0" Background="#181818" CornerRadius="12" Margin="5">
-            <Grid Margin="15">
+        <Border Grid.Column="0" Background="#121212" CornerRadius="12" BorderBrush="#252525" BorderThickness="1">
+            <Grid Margin="20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="LIBRARY" Foreground="#555" FontWeight="Bold" Margin="5,0,0,10"/>
+                <TextBlock Text="LIBRARY" Foreground="#EEEEEE" FontSize="11"  FontWeight="Black" Margin="5,0,0,15"/>
 
-                <Button Grid.Row="1" Click="Button_Click" Height="40" Background="#252525" Foreground="White" BorderThickness="0" Margin="0,0,0,15">
+                <Button Grid.Row="1" Command="{Binding SongPlayerVM.LoadCommand}" Height="45" Background="#1E1E1E" Foreground="White" BorderThickness="1" BorderBrush="#333" Margin="0,0,0,20">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="+" FontWeight="Bold" FontSize="18" Margin="0,-2,10,0"/>
-                        <TextBlock Text="Import MIDI File" VerticalAlignment="Center"/>
+                        <TextBlock Text="+" FontWeight="Bold" FontSize="20" Foreground="#00FFCC" Margin="0,-2,10,0"/>
+                        <TextBlock Text="Import MIDI File" VerticalAlignment="Center" FontWeight="SemiBold"/>
                     </StackPanel>
                     <Button.Resources>
                         <Style TargetType="Border">
@@ -33,72 +32,94 @@
                     </Button.Resources>
                 </Button>
 
-                <ListView x:Name="SongListView" Grid.Row="2" Background="Transparent" BorderThickness="0" Foreground="#AAA">
+                <ListView x:Name="SongListView" 
+                          Grid.Row="2" 
+                          ItemTemplate="{StaticResource SongItemTemplate }"
+                          ItemsSource="{Binding SongVM.Songs}"
+                          SelectedItem="{Binding SongVM.SelectedSong,Mode=TwoWay}"
+                          Background="Transparent" 
+                          BorderThickness="0" 
+                          VirtualizingStackPanel.IsVirtualizing="True">
+                   
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListViewItem">
+                                        <ContentPresenter />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
                 </ListView>
             </Grid>
         </Border>
 
-        <Grid Grid.Column="1" Margin="5">
+        <Grid Grid.Column="1" Margin="10,0,0,0">
             <Viewbox Stretch="Fill" SnapsToDevicePixels="True">
-
-                <Border BorderBrush="White" BorderThickness="5" CornerRadius="0,0,12,12" Width="2520" Height="1400" >
+                <Border BorderBrush="#1E1E1E" BorderThickness="2" CornerRadius="12" Width="2520" Height="1400" Background="#111111" ClipToBounds="True">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
-                            <RowDefinition Height="160"/>
-                            <RowDefinition Height="80"/>
+                            <RowDefinition Height="180"/>
+                            <RowDefinition Height="100"/>
                         </Grid.RowDefinitions>
 
-                        <Border Grid.Row="0"  ClipToBounds="True" BorderBrush="#222" BorderThickness="1">
-                            <ScrollViewer Name="NoteFrame" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
-                                <local:NoteControl x:Name="NoteControl" Width="2520" />
+                        <Border Grid.Row="0" ClipToBounds="True" Background="#050505" BorderBrush="#222" BorderThickness="0,0,0,1" Opacity="0.5">
+                            <ScrollViewer Name="NoteFrame" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" IsHitTestVisible="False" VirtualizingPanel.ScrollUnit="Pixel">
+                                <local:NoteControl x:Name="NoteControl" MidiFile="{Binding SongPlayerVM.LoadedMidi}" Width="2520" />
                             </ScrollViewer>
                         </Border>
 
-                        <Border Grid.Row="1" Background="#111" BorderBrush="#222" BorderThickness="1,0,1,1">
+                        <Border Grid.Row="1" Background="#000000">
                             <Viewbox Stretch="Fill">
                                 <StackPanel x:Name="PianoButtonOctave" Orientation="Horizontal"/>
                             </Viewbox>
                         </Border>
 
-                        <Border Grid.Row="2" Background="#1A1A1A" CornerRadius="0,0,9,9" BorderBrush="#222" >
-                            <Grid Margin="20,0">
+                        <Border Grid.Row="2" Background="#121212" BorderBrush="#222" BorderThickness="0,1,0,0">
+                            <Grid Margin="40,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="250"/>
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Button RenderOptions.EdgeMode="Aliased" SnapsToDevicePixels="True" Click="Play" Width="60" Height="60" Background="#00FFCC" BorderThickness="2" BorderBrush="#00FFCC">
-                                        <Image Source="/Resources/play-button.png"  Stretch="Fill"></Image>
+                                    <Button Command="{Binding SongPlayerVM.PlayCommand}" Width="70" Height="70" Background="#00FFCC" BorderThickness="0">
+                                        <Image Source="/Resources/play-button.png" Margin="7" Stretch="Uniform"/>
                                         <Button.Resources>
                                             <Style TargetType="Border">
-                                                <Setter Property="CornerRadius" Value="30"/>
+                                                <Setter Property="CornerRadius" Value="35"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
 
-                                    <Button Click="Pause" Width="60" Height="60" Background="#333" BorderThickness="0" Margin="10,0">
+                                    <Button Command="{Binding SongPlayerVM.PauseCommand}" Width="70" Height="70" Background="#252525" BorderThickness="1" BorderBrush="#444" Margin="20,0">
                                         <StackPanel Orientation="Horizontal">
-                                            <Rectangle Width="4" Height="16" Fill="White" Margin="2"/>
-                                            <Rectangle Width="4" Height="16" Fill="White" Margin="2"/>
+                                            <Rectangle Width="6" Height="22" Fill="White" Margin="4"/>
+                                            <Rectangle Width="6" Height="22" Fill="White" Margin="4"/>
                                         </StackPanel>
                                         <Button.Resources>
                                             <Style TargetType="Border">
-                                                <Setter Property="CornerRadius" Value="30"/>
+                                                <Setter Property="CornerRadius" Value="35"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
                                 </StackPanel>
 
                                 <Slider Grid.Column="1" x:Name="TimelineSlider" 
-                            VerticalAlignment="Center" Margin="30,0"
-                            Minimum="0" Maximum="100" />
+                                        IsHitTestVisible="False"
+                                        VerticalAlignment="Center" Margin="40,0"
+                                        Minimum="0"
+                                        Value="{Binding SongPlayerVM.CurrentTime}" 
+                                        Maximum="{Binding SongPlayerVM.TotalDuration}" />
 
                                 <TextBlock Grid.Column="2" x:Name="TimeDisplay" 
-                               Text="00:00 / 00:00" VerticalAlignment="Center" 
-                               Foreground="#888" FontSize="20" HorizontalAlignment="Right"/>
+                                           VerticalAlignment="Center" 
+                                           Foreground="#FFFFFF" FontWeight="Light" FontSize="24" HorizontalAlignment="Right"
+                                           Text="{Binding SongPlayerVM.TimeDisplayText}"/>
                             </Grid>
                         </Border>
                     </Grid>

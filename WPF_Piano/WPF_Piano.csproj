@@ -8,14 +8,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <!-- NuGet packages -->
   <ItemGroup>
-    <None Remove="Resources\find.png" />
-    <None Remove="Resources\play-button.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="CSCore" Version="1.2.1.2" />
-    <PackageReference Include="Melanchall.DryWetMidi" Version="8.0.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.8" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.8" />
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="9.0.8" />
@@ -24,15 +18,30 @@
     <PackageReference Include="XamlFlair.WPF" Version="1.2.13" />
   </ItemGroup>
 
+  <!-- Ensure folders exist in build output -->
+  <Target Name="CreateOutputFolders" AfterTargets="Build">
+    <MakeDir Directories="$(OutDir)Resources" />
+    <MakeDir Directories="$(OutDir)Song" />
+    <MakeDir Directories="$(OutDir)Settings" />
+  </Target>
+
+  <!-- Copy all files from Resources folder -->
   <ItemGroup>
-    <Resource Include="Resources\find.png" />
-    <Resource Include="Resources\play-button.png" />
+    <Content Include="Resources\**\*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
+  <!-- Copy appsettings.json -->
   <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
+	<!-- Only for build in local when puttin midi file into Song folder in project  -->
+  <ItemGroup>
+	  <Content Include="Song\**\*">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+  </ItemGroup>
 </Project>

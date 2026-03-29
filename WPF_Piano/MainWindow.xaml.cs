@@ -30,6 +30,16 @@ namespace WPF_Piano
             this.KeyDown += Key_Pressed;
             this.KeyDown += HighlightKey;
             this.KeyUp += UnhighlightKey;
+            MainViewVM.SongPlayerVM.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == "ScrollOffset")
+                {
+                    double totalExtent = NoteFrame.ExtentHeight;
+                    double viewport = NoteFrame.ViewportHeight;
+               
+                    NoteFrame.ScrollToVerticalOffset(totalExtent - viewport - MainViewVM.SongPlayerVM.ScrollOffset);
+                }
+            };
             PianoUIRender.Instance.RenderButton(this, PianoButtonOctave);
             NoteFrame.ScrollToBottom();
         }
@@ -72,77 +82,7 @@ namespace WPF_Piano
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            string filePath = string.Empty;
-            using (System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog())
-            {
-                dialog.Filter = "MIDI files (*.mid)|*.mid|All files (*.*)|*.*";
-                dialog.Title = "Select a MIDI File";
 
-                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    filePath = dialog.FileName;
-                    midiFile = new NAudio.Midi.MidiFile(filePath, true);
-                    this.NoteControl.MidiFile = midiFile;
-                    NoteFrame.ScrollToBottom();
-                }
-            }
-            if (filePath == string.Empty) return;
-          
-
-        }
-
-        public async void Play(object sender, RoutedEventArgs e)
-        {
-        
-            double frameRate = 60.0;
-            double frameTime = 1.0 / frameRate; // ~0.0166 seconds
-            songDuration = PianoPlaySound.Instance.CalculateSongDuration(midiFile); 
-         
-            double startScroll = NoteFrame.ExtentHeight - NoteFrame.ViewportHeight;
-
-         
-            double scrollPixelsPerSecond = 150.0;
-
-            IsPlaying = true;
-            if (currentTime == 0)
-            {
-                for (double time = 0; time < songDuration; time += frameTime)
-                {
-                    if (IsPlaying == false) break;
-                 
-                    double currentScroll = startScroll - (time * scrollPixelsPerSecond);
-
-                    if (currentScroll < 0) currentScroll = 0;
-
-                    NoteFrame.ScrollToVerticalOffset(currentScroll);
-                    currentTime = time;
-                   
-                    await Task.Delay(TimeSpan.FromSeconds(frameTime));
-                }
-            }
-            else
-            {
-                for (double time = currentTime; time < songDuration; time += frameTime)
-                {
-                    if (IsPlaying == false) break;
-
-                    double currentScroll = startScroll - (time * scrollPixelsPerSecond);
-                    
-                    if (currentScroll < 0) currentScroll = 0;
-                    
-                    NoteFrame.ScrollToVerticalOffset(currentScroll);                    
-                    currentTime = time;
-                    
-                    await Task.Delay(TimeSpan.FromSeconds(frameTime));
-                }
-            }
-        }
-        public async void Pause(object sender, RoutedEventArgs e)
-        {
-            IsPlaying = false;
-        }
 
     }
 }

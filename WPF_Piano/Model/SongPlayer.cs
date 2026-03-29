@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NAudio.Midi;
 
 namespace WPF_Piano.Model
 {
     public class SongPlayer
     {
-        public bool IsPlaying;
-        public double CurrentTimeOffSet;
-        public SongPlayer() { }
+        public bool IsPlaying { get; set; }
+        public double CurrentTime { get; set; }
+        public double TotalDuration { get; set; }
+        public MidiFile? CurrentMidiFile { get; set; }
     }
 }
