@@ -1,7 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using Microsoft.Win32;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using WPF_Piano.Model;
@@ -11,6 +13,9 @@ namespace WPF_Piano.ViewModel
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         public ObservableCollection<Song> Songs { get; set; } = new ObservableCollection<Song>();
+        private string _path;
+        private bool isCopy = true;
+
         public event Action<Song>? SongSelected;
         private Song? _selectedSong;
 
@@ -28,26 +33,25 @@ namespace WPF_Piano.ViewModel
                 }
             }
         }
-        private string path;
-        public ICommand LoadSongCommand;
-        public ICommand PlaySongCommand;
-      
+        public bool IsCopy
+        {
+            get => isCopy;
+            set { isCopy = value; OnPropertyChanged(nameof(IsCopy)); }
+        }
+  
+        public ICommand AddSongCommand { get; }
+
         public SongVM()
         {
-            LoadSongCommand = new RelayCommand(LoadSong);
-            PlaySongCommand = new RelayCommand(PlaySong);
-            path = AppDomain.CurrentDomain.BaseDirectory;
-            path = Path.Combine(path, "Song");
-            LoadSong(path);
+            AddSongCommand = new RelayCommand(AddSong);
+            _path = AppDomain.CurrentDomain.BaseDirectory;
+            _path = Path.Combine(_path, "Song");
+            LoadSong(_path);
         }
         private void LoadSong(object parameter)
         {
             if (parameter is string path)
             {
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                }
                 Songs.Clear();
                 var files = Directory.GetFiles(path, "*.mid");
                 foreach (var file in files)
@@ -61,21 +65,32 @@ namespace WPF_Piano.ViewModel
                     });
                 }
             }
-
-          
         }
         private void AddSong(object parameter)
         {
-            // Implement song adding logic here
+            OpenFileDialog dialog = new() { Filter = "MIDI files (*.mid)|*.mid" };
+            if (dialog.ShowDialog() == true)
+            {                 
+                var newSong = new Song
+                {
+                    Name = Path.GetFileNameWithoutExtension(dialog.FileName),
+                    FilePath = dialog.FileName,
+                    Icon = "pack://application:,,,/Resources/song_icon.png",
+                    Description = "A new MIDI file",
+                };
+                Songs.Add(newSong);
+                if (isCopy)
+                {
+                    var sourcePath = dialog.FileName;
+                    var destinationPath = Path.Combine(_path, Path.GetFileName(sourcePath));
+                    File.Copy(sourcePath, destinationPath, true);
+                }
+            }         
         }
-        private void PlaySong(object parameter)
-        {
-            // Implement song playing logic here
-        }
+       
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-
     }
 }

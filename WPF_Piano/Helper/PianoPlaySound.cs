@@ -63,34 +63,66 @@ namespace WPF_Piano.Helper
             bufferProvider.AddMixerInput(new RawSourceWaveStream(new MemoryStream(buffer), new WaveFormat(sampleRate, 16, 1)).ToSampleProvider());
 
         }
-        public double CalculateSongDuration(MidiFile midiFile)
-        {
-            long maxTick = 0;
-            foreach (var track in midiFile.Events)
-            {
-                if (track.Count > 0)
-                {
-                    long lastEventTick = track.Max(e => e.AbsoluteTime);
-                    if (lastEventTick > maxTick) maxTick = lastEventTick;
-                }
-            }
+        //public double CalculateSongDuration(MidiFile midiFile)
+        //{
+        //    int ticksPerQuarterNote = midiFile.DeltaTicksPerQuarterNote;
+        //    long maxTick = 0;
+        //    foreach (var track in midiFile.Events)
+        //    {
+        //        if (track.Count > 0)
+        //        {
+        //            long lastEventTick = track.Max(e => e.AbsoluteTime);
+        //            if (lastEventTick > maxTick) maxTick = lastEventTick;
+        //        }
+        //    }
+          
+     
 
+
+        //    double bpm = 120.0;
+        //    foreach (var track in midiFile.Events)
+        //    {
+        //        var tempoEvent = track.OfType<TempoEvent>().FirstOrDefault();
+        //        if (tempoEvent != null)
+        //        {
+        //            bpm = tempoEvent.Tempo;
+        //            break;
+        //        }
+        //    }
+        //    double ticksPerSecond = (ticksPerQuarterNote * bpm) / 60.0;
+
+        //    return (double)maxTick / ticksPerSecond;
+        //}
+        public int CalculateSongDuration(MidiFile midiFile)
+        {
+          
             int ticksPerQuarterNote = midiFile.DeltaTicksPerQuarterNote;
 
+            double totalSeconds = 0;
+            double currentBpm = 120;
+            int lastTick = 0;
 
-            double bpm = 120.0;
-            foreach (var track in midiFile.Events)
+            var events = midiFile.Events.SelectMany(track => track)
+                                        .OrderBy(e => e.AbsoluteTime);
+
+            foreach (var midiEvent in events)
             {
-                var tempoEvent = track.OfType<TempoEvent>().FirstOrDefault();
-                if (tempoEvent != null)
+                int deltaTicks = (int)midiEvent.AbsoluteTime - lastTick;
+                if (deltaTicks > 0)
                 {
-                    bpm = tempoEvent.Tempo;
-                    break;
+                    totalSeconds += (double)deltaTicks / ticksPerQuarterNote * (60.0 / currentBpm);
+                }
+
+                lastTick = (int)midiEvent.AbsoluteTime;
+
+                if (midiEvent is TempoEvent tempoEvent)
+                {
+                    currentBpm = tempoEvent.Tempo;
                 }
             }
-            double ticksPerSecond = (ticksPerQuarterNote * bpm) / 60.0;
 
-            return (double)maxTick / ticksPerSecond;
+            // Convert double seconds to an integer of your choice
+            return (int)Math.Round(totalSeconds ); // Returns Total Milliseconds
         }
         public string GetNoteName(int noteNumber)
         {
@@ -98,6 +130,15 @@ namespace WPF_Piano.Helper
             int octave = (noteNumber / 12) - 1;
             string name = noteNames[noteNumber % 12];
             return $"{name}{octave}";
+        }
+        public List<TempoEvent> GetTempoEvents(MidiFile midiFile)
+        {
+            List<TempoEvent> tempoEvents = new List<TempoEvent>();
+            foreach (var track in midiFile.Events)
+            {
+                tempoEvents.AddRange(track.OfType<TempoEvent>());
+            }
+            return tempoEvents.OrderBy(e => e.AbsoluteTime).ToList();
         }
     }
 

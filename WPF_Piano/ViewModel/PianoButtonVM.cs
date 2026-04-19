@@ -23,7 +23,7 @@ namespace WPF_Piano.ViewModel
         }
         public void PlayNote(object parameter)
         {
-            if (parameter is System.Windows.Input.KeyEventArgs e)
+            if (parameter is KeyEventArgs e)
             {
                 string keyName = e.Key.ToString();
 

@@ -17,12 +17,12 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-
+                
                 <TextBlock Text="LIBRARY" Foreground="#EEEEEE" FontSize="11"  FontWeight="Black" Margin="5,0,0,15"/>
 
-                <Button Grid.Row="1" Command="{Binding SongPlayerVM.LoadCommand}" Height="45" Background="#1E1E1E" Foreground="White" BorderThickness="1" BorderBrush="#333" Margin="0,0,0,20">
+                <Button Grid.Row="1" Command="{Binding SongVM.AddSongCommand}" Height="45" Background="#1E1E1E" Foreground="White" BorderThickness="1" BorderBrush="#333" Margin="0,0,0,20">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="+" FontWeight="Bold" FontSize="20" Foreground="#00FFCC" Margin="0,-2,10,0"/>
+                        <TextBlock Text="+" FontWeight="Bold" FontSize="26" Foreground="#00FFCC" Margin="0,-5,10,0"/>
                         <TextBlock Text="Import MIDI File" VerticalAlignment="Center" FontWeight="SemiBold"/>
                     </StackPanel>
                     <Button.Resources>
@@ -67,7 +67,15 @@
                         </Grid.RowDefinitions>
 
                         <Border Grid.Row="0" ClipToBounds="True" Background="#050505" BorderBrush="#222" BorderThickness="0,0,0,1" Opacity="0.5">
-                            <ScrollViewer Name="NoteFrame" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" IsHitTestVisible="False" VirtualizingPanel.ScrollUnit="Pixel">
+                            <ScrollViewer Name="NoteFrame" 
+                                          local:ScrollViewerBehavior.AutoScroll="{Binding SongPlayerVM.IsFinished}"
+                                          local:ScrollViewerBehavior.ChangeTrigger ="{Binding SongPlayerVM.LoadedMidi}"
+                                          VerticalScrollBarVisibility="Hidden" 
+                                          HorizontalScrollBarVisibility="Hidden"
+                                          CanContentScroll="False" 
+                                          VirtualizingPanel.ScrollUnit="Pixel"
+                                          IsHitTestVisible="False"
+                                          PanningMode="None">           
                                 <local:NoteControl x:Name="NoteControl" MidiFile="{Binding SongPlayerVM.LoadedMidi}" Width="2520" />
                             </ScrollViewer>
                         </Border>

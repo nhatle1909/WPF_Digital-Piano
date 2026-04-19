@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using WPF_Piano.Helper;
 using WPF_Piano.Model;
 
@@ -14,7 +16,12 @@ namespace WPF_Piano.ViewModel
     {
         private SongPlayer _model = new();
         private double _scrollOffset;
-  
+        private bool isFinished = false;
+        public bool IsFinished
+        {
+            get => isFinished;
+            set { isFinished = value; OnPropertyChanged(nameof(IsFinished)); }
+        }
         public bool IsPlaying
         {
             get => _model.IsPlaying;
@@ -56,7 +63,7 @@ namespace WPF_Piano.ViewModel
         {
             LoadCommand = new RelayCommand(_ => LoadMidiFile());
             PlayCommand = new RelayCommand(_ => Play());
-            PauseCommand = new RelayCommand(_ => _model.IsPlaying = false);
+            PauseCommand = new RelayCommand(_ => Pause());
             SkipCommand = new RelayCommand(_ => Skip());
         }
 
@@ -68,27 +75,33 @@ namespace WPF_Piano.ViewModel
                 LoadedMidi = new MidiFile(dialog.FileName, true);
                 TotalDuration = PianoPlaySound.Instance.CalculateSongDuration(LoadedMidi);
                 CurrentTime = 0;
+              
             }
         }
         public void LoadMidiFile(string path)
         {
             if (File.Exists(path))
             {
-                
                 LoadedMidi = new MidiFile(path, true);
                 TotalDuration = PianoPlaySound.Instance.CalculateSongDuration(LoadedMidi);
+                var listTempo = PianoPlaySound.Instance.GetTempoEvents(LoadedMidi);
                 CurrentTime = 0;
-               
-            }
+             
+            }    
+        
         }
         private async void Play()
         {
             if (LoadedMidi == null || IsPlaying) return;
 
             IsPlaying = true;
-            double frameRate = 120.0;
+            isFinished = false;
+
+
+            double frameRate = 60.0;
             double frameTime = 1.0 / frameRate;
-            double pixelsPerSecond = 150.0;
+            double pixelsPerSecond = 200;
+            double pixelsPerFrame = pixelsPerSecond * frameTime;
             while (IsPlaying && CurrentTime < TotalDuration)
             {
                 CurrentTime += frameTime;
@@ -97,17 +110,25 @@ namespace WPF_Piano.ViewModel
                 await Task.Delay(TimeSpan.FromSeconds(frameTime));
                 if (CurrentTime >= TotalDuration)
                 {
-                  
-                        IsPlaying = false;
-                 
+
+                    IsPlaying = false;
+                    await Task.Delay(500);
+                    isFinished = true;
+                    CurrentTime = 0;
+
                 }
             }
+        }
+        private async void Pause()
+        {
+            IsPlaying = false;
         }
         private async void Skip()
         {
 
         }
 
+     
         private string FormatTime(double seconds)
         {
             TimeSpan t = TimeSpan.FromSeconds(seconds);
