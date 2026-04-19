@@ -8,6 +8,8 @@
             >
 
 
-        <Grid Background="Transparent" SnapsToDevicePixels="True" />
+    <Canvas x:Name="NoteCanvas" Background="Transparent" Width="100" Height="100">
+       
+    </Canvas> 
 
 </UserControl>

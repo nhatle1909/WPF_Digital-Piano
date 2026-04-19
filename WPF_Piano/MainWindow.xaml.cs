@@ -36,10 +36,11 @@ namespace WPF_Piano
                 {
                     double totalExtent = NoteFrame.ExtentHeight;
                     double viewport = NoteFrame.ViewportHeight;
-               
+
                     NoteFrame.ScrollToVerticalOffset(totalExtent - viewport - MainViewVM.SongPlayerVM.ScrollOffset);
                 }
             };
+           
             PianoUIRender.Instance.RenderButton(this, PianoButtonOctave);
             NoteFrame.ScrollToBottom();
         }
@@ -81,8 +82,6 @@ namespace WPF_Piano
                 background.Background = button.Name.Contains("Black") ? Brushes.Black : Brushes.White;
             }
         }
-
-
 
     }
 }

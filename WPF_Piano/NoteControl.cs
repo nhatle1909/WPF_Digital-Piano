@@ -18,10 +18,14 @@ namespace WPF_Piano
 
         // Visual Constants
         private const double X_SCALE = 30;
-        private const int PIXELS_PER_SECOND = 150;
+        private const int PIXELS_PER_SECOND = 200;
         private double _yScale = 0.1;
         private double _songDuration = 10;
 
+        Brush noteBrush = new SolidColorBrush(Color.FromArgb(160, 0, 255, 255));
+        Pen notePen = new Pen(new SolidColorBrush(Color.FromRgb(0, 200, 255)), 2);
+        Pen borderPen = new Pen(Brushes.Gray, 2);
+        Pen timelinePen = new Pen(Brushes.LimeGreen, 2) { DashStyle = DashStyles.Dash };
         public static readonly DependencyProperty MidiFileProperty =
             DependencyProperty.Register(
                 nameof(MidiFile),
@@ -53,25 +57,31 @@ namespace WPF_Piano
             Render();
         }
 
-        // Required overrides for WPF to recognize the DrawingVisual
+    
         protected override int VisualChildrenCount => _visuals.Count;
         protected override Visual GetVisualChild(int index) => _visuals[index];
 
         private void UpdateMetricsAndRender(MidiFile midi)
         {
-            // Calculate timing scales
-            _yScale = (20.0 / midi.DeltaTicksPerQuarterNote) * 2;
+            
+            _yScale = (20.0 / midi.DeltaTicksPerQuarterNote) * 4;
             _songDuration = PianoPlaySound.Instance.CalculateSongDuration(midi);
             _visuals.Clear();
             _visuals.Add(_drawingVisual);
-            // Calculate total height based on last note
+         
             long lastPosition = 0;
             foreach (var track in midi.Events)
             {
-                foreach (var e in track)
+                foreach (var midiEvent in track)
                 {
-                    if (e is NoteOnEvent n)
-                        lastPosition = Math.Max(lastPosition, n.AbsoluteTime + n.NoteLength);
+                    if (midiEvent.CommandCode == MidiCommandCode.NoteOn)
+                    {
+                        NoteOnEvent noteOn = (NoteOnEvent)midiEvent;
+                        if (noteOn.OffEvent != null)
+                        {
+                            lastPosition = Math.Max(lastPosition, noteOn.AbsoluteTime + noteOn.NoteLength);
+                        }
+                    }
                 }
             }
 
@@ -85,10 +95,9 @@ namespace WPF_Piano
         {
             using (DrawingContext dc = _drawingVisual.RenderOpen())
             {
-                // 1. Draw Background Grid & Timelines
+               
                 DrawGrid(dc);
-
-                // 2. Draw Midi Notes
+               
                 if (MidiFile != null)
                 {
                     DrawNotes(dc);
@@ -98,11 +107,11 @@ namespace WPF_Piano
 
         private void DrawGrid(DrawingContext dc)
         {
-            // Draw Octave Dividers (Vertical)
+        
             var noteCount = PianoSettings.Instance.PianoMapping.Count;
             var octaveCount = (int)Math.Ceiling(noteCount / 12.0);
             double octaveWidth = 2520 / (double)octaveCount;
-            Pen borderPen = new Pen(Brushes.Gray, 2);
+       
             borderPen.Freeze();
 
             for (int i = 1; i < octaveCount; i++)
@@ -111,9 +120,6 @@ namespace WPF_Piano
                 x = i >= 2 ? x - 2 : x;
                 dc.DrawLine(borderPen, new Point(x, 0), new Point(x, this.Height));
             }
-
-            // Draw Timelines (Horizontal)
-            Pen timelinePen = new Pen(Brushes.LimeGreen, 2) { DashStyle = DashStyles.Dash };
             timelinePen.Freeze();
 
             for (int s = 0; s <= _songDuration; s++)
@@ -136,8 +142,7 @@ namespace WPF_Piano
 
         private void DrawNotes(DrawingContext dc)
         {
-            Brush noteBrush = new SolidColorBrush(Color.FromArgb(160, 0, 255, 255));
-            Pen notePen = new Pen(new SolidColorBrush(Color.FromRgb(0, 200, 255)), 2);
+         
             noteBrush.Freeze();
             notePen.Freeze();
 
@@ -176,6 +181,8 @@ namespace WPF_Piano
                         double y = this.Height - (noteOn.AbsoluteTime * _yScale * 1.25) - height;
 
                         dc.DrawRoundedRectangle(noteBrush, notePen, new Rect(x, y, width, height), 6, 6);
+
+                        
                     }
                 }
             }

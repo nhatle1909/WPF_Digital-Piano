@@ -1,4 +1,6 @@
-﻿namespace WPF_Piano.ViewModel
+﻿using System.Windows.Media;
+
+namespace WPF_Piano.ViewModel
 {
     public class MainViewVM
     {
@@ -14,6 +16,7 @@
             {
                 SongPlayerVM.LoadMidiFile(song.FilePath);
             };
+           
         }
     }
 }
