@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WPF_Piano")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6d078f28324f650b6388733dab38da561793cb79")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+525f1de50701532995817ea369d25db4858fc0b4")]
 [assembly: System.Reflection.AssemblyProductAttribute("WPF_Piano")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WPF_Piano")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

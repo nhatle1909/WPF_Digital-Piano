@@ -82,6 +82,7 @@ namespace WPF_Piano.ViewModel
         {
             if (File.Exists(path))
             {
+                IsPlaying = false;
                 LoadedMidi = new MidiFile(path, true);
                 TotalDuration = PianoPlaySound.Instance.CalculateSongDuration(LoadedMidi);
                 var listTempo = PianoPlaySound.Instance.GetTempoEvents(LoadedMidi);
