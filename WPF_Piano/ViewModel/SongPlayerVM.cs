@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using WPF_Piano.Helper;
 using WPF_Piano.Model;
 
@@ -15,8 +16,15 @@ namespace WPF_Piano.ViewModel
     public class SongPlayerVM : INotifyPropertyChanged
     {
         private SongPlayer _model = new();
+   
+        private double _width;
         private double _scrollOffset;
         private bool isFinished = false;
+        public double Width
+        {
+            get => _width;
+            set { _width = value; OnPropertyChanged(nameof(Width)); }
+        }
         public bool IsFinished
         {
             get => isFinished;
@@ -72,8 +80,11 @@ namespace WPF_Piano.ViewModel
             OpenFileDialog dialog = new() { Filter = "MIDI files (*.mid)|*.mid" };
             if (dialog.ShowDialog() == true)
             {
-                LoadedMidi = new MidiFile(dialog.FileName, true);
                 TotalDuration = PianoPlaySound.Instance.CalculateSongDuration(LoadedMidi);
+                LoadedMidi = new MidiFile(dialog.FileName, true);
+            
+                IsPlaying = false;
+                isFinished = false;
                 CurrentTime = 0;
               
             }
@@ -82,10 +93,11 @@ namespace WPF_Piano.ViewModel
         {
             if (File.Exists(path))
             {
-                IsPlaying = false;
+                TotalDuration = PianoPlaySound.Instance.CalculateSongDuration(new MidiFile(path, true));
                 LoadedMidi = new MidiFile(path, true);
-                TotalDuration = PianoPlaySound.Instance.CalculateSongDuration(LoadedMidi);
-                var listTempo = PianoPlaySound.Instance.GetTempoEvents(LoadedMidi);
+
+                IsPlaying = false;
+                isFinished = false;
                 CurrentTime = 0;
              
             }    
@@ -100,25 +112,31 @@ namespace WPF_Piano.ViewModel
 
 
             double frameRate = 60.0;
-            double frameTime = 1.0 / frameRate;
             double pixelsPerSecond = 200;
-            double pixelsPerFrame = pixelsPerSecond * frameTime;
-            while (IsPlaying && CurrentTime < TotalDuration)
+            double frameTime = 1.0 / frameRate;
+
+            await Task.Run(async () =>
             {
-                CurrentTime += frameTime;
-                double newOffset = CurrentTime * pixelsPerSecond;
-                ScrollOffset = newOffset;
-                await Task.Delay(TimeSpan.FromSeconds(frameTime));
-                if (CurrentTime >= TotalDuration)
+                while (IsPlaying && CurrentTime < TotalDuration)
                 {
+                    CurrentTime += frameTime;
+                    await Task.Delay(TimeSpan.FromSeconds(frameTime));
 
-                    IsPlaying = false;
-                    await Task.Delay(500);
-                    isFinished = true;
-                    CurrentTime = 0;
+                    if (CurrentTime >= TotalDuration)
+                    {
+                        IsPlaying = false;
+                        await Task.Delay(500);
+                        isFinished = true;
 
+                        // Reset on UI thread
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            CurrentTime = 0;
+                        });
+                    }
                 }
-            }
+            });
+
         }
         private async void Pause()
         {
