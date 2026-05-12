@@ -120,24 +120,24 @@ namespace WPF_Piano
                 x = i >= 2 ? x - 2 : x;
                 dc.DrawLine(borderPen, new Point(x, 0), new Point(x, this.Height));
             }
-            timelinePen.Freeze();
+            //timelinePen.Freeze();
 
-            for (int s = 0; s <= _songDuration; s++)
-            {
-                double y = this.Height - (s * PIXELS_PER_SECOND);
-                dc.DrawLine(timelinePen, new Point(0, y), new Point(this.Width, y));
+            //for (int s = 0; s <= _songDuration; s++)
+            //{
+            //    double y = this.Height - (s * PIXELS_PER_SECOND);
+            //    dc.DrawLine(timelinePen, new Point(0, y), new Point(this.Width, y));
 
-                var text = new FormattedText(
-                    $"{s}s",
-                    CultureInfo.InvariantCulture,
-                    FlowDirection.LeftToRight,
-                    new Typeface("Segoe UI"),
-                    20,
-                    Brushes.LimeGreen,
-                    VisualTreeHelper.GetDpi(this).PixelsPerDip);
+            //    var text = new FormattedText(
+            //        $"{s}s",
+            //        CultureInfo.InvariantCulture,
+            //        FlowDirection.LeftToRight,
+            //        new Typeface("Segoe UI"),
+            //        20,
+            //        Brushes.LimeGreen,
+            //        VisualTreeHelper.GetDpi(this).PixelsPerDip);
 
-                dc.DrawText(text, new Point(5, y - 25));
-            }
+            //    dc.DrawText(text, new Point(5, y - 25));
+            //}
         }
 
         private void DrawNotes(DrawingContext dc)
@@ -173,7 +173,7 @@ namespace WPF_Piano
                         };
 
                         double x = ((relativeNote / 12) * 420) + xOffset;
-                        bool isBlack = PianoPlaySound.Instance.GetNoteName(noteOn.NoteNumber).Contains("#");
+                        bool isBlack = (noteOn.NoteNumber % 12) is 1 or 3 or 6 or 8 or 10;
                         double width = isBlack ? 30 : 60;
                         double height = noteOn.NoteLength * _yScale;
 

@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using WPF_Piano.Deprecated;
 using WPF_Piano.Helper;
@@ -18,42 +19,65 @@ namespace WPF_Piano
 
 
         public MainViewVM MainViewVM = new();
-        MidiFile midiFile;
-        double songDuration;
-        double currentTime;
-        bool IsPlaying = false;
+        public Storyboard storyBoard = new();
+
         public MainWindow()
         {
             InitializeComponent();
-            // Set up the key event handler for the window
             this.DataContext = MainViewVM;
             this.KeyDown += Key_Pressed;
             this.KeyDown += HighlightKey;
+            System.Windows.Media.RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.Default;
             this.KeyUp += UnhighlightKey;
             MainViewVM.SongPlayerVM.PropertyChanged += (s, e) =>
             {
-                if (e.PropertyName == "ScrollOffset")
+                if (e.PropertyName == "LoadedMidi")
                 {
-                    double totalExtent = NoteFrame.ExtentHeight;
-                    double viewport = NoteFrame.ViewportHeight;
-
-                    NoteFrame.ScrollToVerticalOffset(totalExtent - viewport - MainViewVM.SongPlayerVM.ScrollOffset);
+                    NoteFrame.ScrollToBottom();
+                    NoteFrame.UpdateLayout();
+                    storyBoard.Children.Clear();
                 }
+          
             };
-           
             PianoUIRender.Instance.RenderButton(this, PianoButtonOctave);
             NoteFrame.ScrollToBottom();
         }
 
         public void Key_Pressed(object sender, KeyEventArgs e)
         {
+           
             MainViewVM.PianoButtonVM.PlayNote(e);
             //if (Keyboard.Modifiers.HasFlag(ModifierKeys.Control) && e.Key == Key.S)
             //{
             //    MessageBox.Show("Ctrl+S pressed!");
             //}
         }
+        public void Play_Song(object sender, RoutedEventArgs e)
+        {
+            if (storyBoard.Children.Count == 0)
+            {
+                DoubleAnimation verticalAnimation = new DoubleAnimation
+                {
+                    From = NoteFrame.ScrollableHeight, // Start at the bottom
+                    To = 0,          // Move to the top
+                    Duration = TimeSpan.FromSeconds(MainViewVM.SongPlayerVM.TotalDuration),
 
+                };
+                storyBoard.Children.Add(verticalAnimation);
+                Storyboard.SetTarget(verticalAnimation, NoteFrame);
+
+                Storyboard.SetTargetProperty(verticalAnimation, new PropertyPath(ScrollViewerBehavior.VerticalOffsetProperty));
+                storyBoard.Begin();
+                return;
+            }
+            storyBoard.Resume();
+         
+               
+        }
+        public void Pause_Song(object sender, RoutedEventArgs e)
+        {
+            storyBoard.Pause();
+        }
 
         public void HighlightKey(object sender, KeyEventArgs e)
         {
@@ -82,6 +106,5 @@ namespace WPF_Piano
                 background.Background = button.Name.Contains("Black") ? Brushes.Black : Brushes.White;
             }
         }
-
     }
 }

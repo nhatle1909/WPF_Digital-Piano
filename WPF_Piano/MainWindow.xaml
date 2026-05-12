@@ -4,6 +4,7 @@
         xmlns:local="clr-namespace:WPF_Piano"
         Title="Piano Studio Pro" Height="950" Width="1600"
         Background="#0A0A0A">
+
     <Grid Margin="15">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="280" />
@@ -40,7 +41,7 @@
                           Background="Transparent" 
                           BorderThickness="0" 
                           VirtualizingStackPanel.IsVirtualizing="True">
-                   
+                        
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="Template">
@@ -68,15 +69,22 @@
 
                         <Border Grid.Row="0" ClipToBounds="True" Background="#050505" BorderBrush="#222" BorderThickness="0,0,0,1" Opacity="0.5">
                             <ScrollViewer Name="NoteFrame" 
-                                          local:ScrollViewerBehavior.AutoScroll="{Binding SongPlayerVM.IsFinished}"
+                                          local:ScrollViewerBehavior.FinishTrigger="{Binding SongPlayerVM.IsFinished}"
                                           local:ScrollViewerBehavior.ChangeTrigger ="{Binding SongPlayerVM.LoadedMidi}"
-                                          VerticalScrollBarVisibility="Hidden" 
+                                 
+                                           VirtualizingPanel.VirtualizationMode="Recycling"
+                                         VerticalScrollBarVisibility="Hidden"
                                           HorizontalScrollBarVisibility="Hidden"
                                           CanContentScroll="False" 
                                           VirtualizingPanel.ScrollUnit="Pixel"
-                                          IsHitTestVisible="False"
-                                          PanningMode="None">           
-                                <local:NoteControl x:Name="NoteControl" MidiFile="{Binding SongPlayerVM.LoadedMidi}" Width="2520" />
+                          
+                                          PanningMode="None">
+                                <ScrollViewer.CacheMode>
+                                    <BitmapCache />
+                                </ScrollViewer.CacheMode>
+                                <local:NoteControl x:Name="NoteControl" MidiFile="{Binding SongPlayerVM.LoadedMidi}" Width="2520" >
+                                
+                                </local:NoteControl>
                             </ScrollViewer>
                         </Border>
 
@@ -95,7 +103,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Button Command="{Binding SongPlayerVM.PlayCommand}" Width="70" Height="70" Background="#00FFCC" BorderThickness="0">
+                                    <Button Command="{Binding SongPlayerVM.PlayCommand}" Click="Play_Song" Width="70" Height="70" Background="#00FFCC" BorderThickness="0">
                                         <Image Source="/Resources/play-button.png" Margin="7" Stretch="Uniform"/>
                                         <Button.Resources>
                                             <Style TargetType="Border">
@@ -103,8 +111,7 @@
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-
-                                    <Button Command="{Binding SongPlayerVM.PauseCommand}" Width="70" Height="70" Background="#252525" BorderThickness="1" BorderBrush="#444" Margin="20,0">
+                                    <Button Command="{Binding SongPlayerVM.PauseCommand}" Click="Pause_Song" Width="70" Height="70" Background="#252525" BorderThickness="1" BorderBrush="#444" Margin="20,0">
                                         <StackPanel Orientation="Horizontal">
                                             <Rectangle Width="6" Height="22" Fill="White" Margin="4"/>
                                             <Rectangle Width="6" Height="22" Fill="White" Margin="4"/>
