@@ -8,8 +8,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/find.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/play-button.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/play.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/settings.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/song.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("song/anyconv.com__radiant_force_off_vocal.mid")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("song/composed%20by%20taniyama%20hiroko_singer_%20aoi%20teshima_arranged%20by%20wy" +
     "ndersyde@youtube_transcripted%20by%20hanguyen%20-%20ai%20wo%20komete%20umi.mid")]

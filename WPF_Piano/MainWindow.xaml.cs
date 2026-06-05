@@ -106,5 +106,14 @@ namespace WPF_Piano
                 background.Background = button.Name.Contains("Black") ? Brushes.Black : Brushes.White;
             }
         }
+
+        private void Tabbar_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender == SettingsButton)
+            {
+                SettingsWindow settingsWindow = new SettingsWindow();
+                settingsWindow.ShowDialog();
+            }
+        }
     }
 }
