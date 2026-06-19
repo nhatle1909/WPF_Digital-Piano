@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPF_Piano.ViewModel;
 
 namespace WPF_Piano
 {
@@ -22,6 +23,9 @@ namespace WPF_Piano
         public SettingsWindow()
         {
             InitializeComponent();
+            var settingsVM = new SettingsVM();
+            System.Diagnostics.Debug.WriteLine($"Total keys loaded: {settingsVM.PianoKeys.Count}");
+            this.DataContext = settingsVM;
         }
         public void Save_Click(object sender, RoutedEventArgs e)
         {

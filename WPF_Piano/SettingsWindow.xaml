@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Piano"
         mc:Ignorable="d"
-        Title="Settings" Height="500" Width="700"
+        Title="Settings" Height="700" Width="700"
         WindowStartupLocation="CenterOwner"
-        Background="#0B0B0B" Foreground="#E0E0E0"
+        Background="#0B0B0B" 
         WindowStyle="None" ResizeMode="NoResize">
     <Window.Resources>
         <Style TargetType="TabControl">
@@ -73,7 +73,7 @@
 
         <Grid Grid.Row="0" Margin="0,0,0,15">
             <TextBlock Text="Preferences" FontSize="22" FontWeight="Light" Foreground="#FFFFFF"/>
-            <Button Content="✕" HorizontalAlignment="Right" Background="Transparent" BorderThickness="0" Foreground="#444444" FontSize="16" Click="Close_Click" Cursor="Hand">
+            <Button Content="✕" HorizontalAlignment="Right" Background="Transparent" BorderThickness="0" Foreground="#fff" FontSize="16" Click="Close_Click" Cursor="Hand">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Style.Triggers>
@@ -126,7 +126,25 @@
                         </ComboBox>
                     </Grid>
                     <TextBlock Text="Keyboard mapping" Foreground="#555555" FontSize="11" FontWeight="Bold" Margin="0,0,0,15" />
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="322" Margin="15,0,0,0">
 
+                        <ItemsControl ItemsSource="{Binding PianoKeys}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="#EEEEEE" BorderThickness="0,0,0,1" Padding="5">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Note: " Foreground="Gray"/>
+                                            <TextBlock Text="{Binding Note}" Width="60" FontWeight="Bold"/>
+
+                                            <TextBlock Text="PC Key: " Foreground="Gray" Margin="10,0,0,0"/>
+                                            <TextBlock Text="{Binding Key}" FontWeight="Bold" Foreground="Blue"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                    </ScrollViewer>
                 </StackPanel>
             </TabItem>
 
