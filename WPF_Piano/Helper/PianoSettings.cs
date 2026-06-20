@@ -1,24 +1,18 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System.IO;
+using WPF_Piano.Model;
 namespace WPF_Piano.Helper
 {
     public class PianoSettings
     {
         private static PianoSettings _Instance;
-        public static PianoSettings Instance
-        {
-            get
-            {
-                if (_Instance == null)
-                {
-                    _Instance = new PianoSettings();
-                }
-                return _Instance;
-            }
-        }
+        public static PianoSettings Instance => _Instance ??= new PianoSettings();
+
+        public event Action? MappingUpdated;
+
         public IConfiguration Configuration { get; set; }
         public Dictionary<string, string> PianoMapping = new();
-        
+
         public PianoSettings()
         {
             var builder = new ConfigurationBuilder()
@@ -27,13 +21,22 @@ namespace WPF_Piano.Helper
             Configuration = builder.Build();
             SetPianoMapping();
         }
+
+     
+   
+
         private void SetPianoMapping()
         {
-
             var pianoMapping = Configuration.GetRequiredSection("RealMappingSettings").Get<List<PianoKey>>();
             if (pianoMapping != null)
+            {
                 PianoMapping = pianoMapping.ToDictionary(k => k.Key, k => k.Note);
-
+                MappingUpdated?.Invoke(); 
+            }
+        }
+        public List<PianoKey> GetPianoMapping()
+        {
+            return PianoMapping.Select(kvp => new PianoKey { Key = kvp.Key, Note = kvp.Value }).ToList();
         }
         public string GetNote(string key)
         {
@@ -47,33 +50,31 @@ namespace WPF_Piano.Helper
         {
             return PianoMapping.ContainsKey(key);
         }
-        public void UpdateKeyMapping(string key, string note)
+
+        #region SettingsBuilder
+        public void SaveConfig()
         {
-            var pianoMapping = Configuration.GetRequiredSection("RealMappingSettings").Get<List<PianoKey>>();
-            if (pianoMapping != null)
-            {
-                var keyToUpdate = pianoMapping.FirstOrDefault(k => k.Key == key);
-                if (keyToUpdate != null)
+            string configFilePath = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
+            var json = System.Text.Json.JsonSerializer.Serialize(
+                new
                 {
-                    keyToUpdate.Note = note;
-                    var json = System.Text.Json.JsonSerializer.Serialize(new { RealMappingSettings = pianoMapping }, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
-                    File.WriteAllText("appsettings.json", json);
-                }
-            }
+                    RealMappingSettings = PianoMapping.Select(kvp => new PianoKey { Key = kvp.Key, Note = kvp.Value }).ToList()
+                },
+                new System.Text.Json.JsonSerializerOptions { WriteIndented = true }
+                );
+            File.WriteAllText(configFilePath, json);
         }
-        public void CreateKeyMappingProfile(string profileName, Dictionary<string, string> keyMappings)
+
+        public PianoSettings UpdateMapping(Dictionary<string, string> newMapping)
         {
-            var profiles = Configuration.GetRequiredSection("KeyMappingProfiles").Get<Dictionary<string, Dictionary<string, string>>>() ?? new Dictionary<string, Dictionary<string, string>>();
-            profiles[profileName] = keyMappings;
-            var json = System.Text.Json.JsonSerializer.Serialize(new { RealMappingSettings = Configuration.GetRequiredSection("RealMappingSettings").Get<List<PianoKey>>(), KeyMappingProfiles = profiles }, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText($"{profileName}.json", json);
+            PianoMapping = newMapping;
+
+            // Notify the entire app that the layout changed!
+            MappingUpdated?.Invoke();
+
+            return this;
         }
+        #endregion
+
     }
 }
-public class PianoKey
-{
-    public string Key { get; set; }
-    public string Note { get; set; }
-}
-
-
