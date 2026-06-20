@@ -8,7 +8,6 @@ namespace WPF_Piano.Helper
         private static PianoSettings _Instance;
         public static PianoSettings Instance => _Instance ??= new PianoSettings();
 
-        // 1. Declare the event that other view models will listen to
         public event Action? MappingUpdated;
 
         public IConfiguration Configuration { get; set; }
@@ -23,14 +22,8 @@ namespace WPF_Piano.Helper
             SetPianoMapping();
         }
 
-        // 2. Trigger the event when updating configuration layers
-        public void UpdateMapping(Dictionary<string, string> newMapping)
-        {
-            PianoMapping = newMapping;
-
-            // Notify the entire app that the layout changed!
-            MappingUpdated?.Invoke();
-        }
+     
+   
 
         private void SetPianoMapping()
         {
@@ -38,7 +31,7 @@ namespace WPF_Piano.Helper
             if (pianoMapping != null)
             {
                 PianoMapping = pianoMapping.ToDictionary(k => k.Key, k => k.Note);
-                MappingUpdated?.Invoke(); // Fire on initial startup load
+                MappingUpdated?.Invoke(); 
             }
         }
         public List<PianoKey> GetPianoMapping()
@@ -57,26 +50,31 @@ namespace WPF_Piano.Helper
         {
             return PianoMapping.ContainsKey(key);
         }
-        //public void UpdateKeyMapping(string key, string note)
-        //{
-        //    var pianoMapping = Configuration.GetRequiredSection("RealMappingSettings").Get<List<PianoKey>>();
-        //    if (pianoMapping != null)
-        //    {
-        //        var keyToUpdate = pianoMapping.FirstOrDefault(k => k.Key == key);
-        //        if (keyToUpdate != null)
-        //        {
-        //            keyToUpdate.Note = note;
-        //            var json = System.Text.Json.JsonSerializer.Serialize(new { RealMappingSettings = pianoMapping }, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
-        //            File.WriteAllText("appsettings.json", json);
-        //        }
-        //    }
-        //}
-        //public void CreateKeyMappingProfile(string profileName, Dictionary<string, string> keyMappings)
-        //{
-        //    var profiles = Configuration.GetRequiredSection("KeyMappingProfiles").Get<Dictionary<string, Dictionary<string, string>>>() ?? new Dictionary<string, Dictionary<string, string>>();
-        //    profiles[profileName] = keyMappings;
-        //    var json = System.Text.Json.JsonSerializer.Serialize(new { RealMappingSettings = Configuration.GetRequiredSection("RealMappingSettings").Get<List<PianoKey>>(), KeyMappingProfiles = profiles }, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
-        //    File.WriteAllText($"{profileName}.json", json);
-        //}
+
+        #region SettingsBuilder
+        public void SaveConfig()
+        {
+            string configFilePath = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
+            var json = System.Text.Json.JsonSerializer.Serialize(
+                new
+                {
+                    RealMappingSettings = PianoMapping.Select(kvp => new PianoKey { Key = kvp.Key, Note = kvp.Value }).ToList()
+                },
+                new System.Text.Json.JsonSerializerOptions { WriteIndented = true }
+                );
+            File.WriteAllText(configFilePath, json);
+        }
+
+        public PianoSettings UpdateMapping(Dictionary<string, string> newMapping)
+        {
+            PianoMapping = newMapping;
+
+            // Notify the entire app that the layout changed!
+            MappingUpdated?.Invoke();
+
+            return this;
+        }
+        #endregion
+
     }
 }

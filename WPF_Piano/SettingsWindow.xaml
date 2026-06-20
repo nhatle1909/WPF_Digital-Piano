@@ -62,6 +62,35 @@
           
             <Setter Property="HorizontalAlignment" Value="Left"/>
         </Style>
+        <Style x:Key="PianoRowSelectionStyle" TargetType="ListBoxItem">
+            <Setter Property="Background" Value="#111111"/>
+            <Setter Property="BorderBrush" Value="#1A1A1A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="4" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#161616"/>
+                    <Setter Property="BorderBrush" Value="#00FFCC"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#1A1A1A"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
     <Grid Margin="15,15,15,15">
@@ -126,24 +155,34 @@
                         </ComboBox>
                     </Grid>
                     <TextBlock Text="Keyboard mapping" Foreground="#555555" FontSize="11" FontWeight="Bold" Margin="0,0,0,15" />
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="322" Margin="15,0,0,0">
+                    <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Height="322" Margin="15,0,15,0">
 
-                        <ItemsControl ItemsSource="{Binding PianoKeys}">
-                            <ItemsControl.ItemTemplate>
+                        <ListBox x:Name="MappingList"
+                                 ItemsSource="{Binding PianoKeys}" 
+                                 SelectedItem="{Binding SelectedPianoKey, Mode=TwoWay}"
+                                 ItemContainerStyle="{StaticResource PianoRowSelectionStyle}"
+                                 Background="Transparent" 
+                                 BorderThickness="0"
+                                 KeyDown="MappingList_KeyDown">
+                            <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Border BorderBrush="#EEEEEE" BorderThickness="0,0,0,1" Padding="5">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Note: " Foreground="Gray"/>
-                                            <TextBlock Text="{Binding Note}" Width="60" FontWeight="Bold"/>
+                                    <Grid Width="580">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="60"/>
+                                            <ColumnDefinition Width="180"/>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
 
-                                            <TextBlock Text="PC Key: " Foreground="Gray" Margin="10,0,0,0"/>
-                                            <TextBlock Text="{Binding Key}" FontWeight="Bold" Foreground="Blue"/>
-                                        </StackPanel>
-                                    </Border>
+                                        <TextBlock Grid.Column="0" Text="NOTE" Foreground="#444444" FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Note}" Foreground="#FFFFFF" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+
+                                        <TextBlock Grid.Column="2" Text="ASSIGNED" Foreground="#444444" FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="3" Text="{Binding Key}" Foreground="#00FFCC" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+                                    </Grid>
                                 </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </ScrollViewer>
                 </StackPanel>
             </TabItem>
@@ -152,7 +191,9 @@
 
         <Grid Grid.Row="2" Margin="0,15,0,0">
             <Border BorderBrush="#1A1A1A" BorderThickness="0,1,0,0" VerticalAlignment="Top"/>
-            <Button Content="Done" Width="90" Height="34" HorizontalAlignment="Right" Background="#FFFFFF" Foreground="#0A0A0A" FontWeight="Medium" FontSize="13" BorderThickness="0" Click="Save_Click" Margin="0,15,0,0">
+            <Button Click="Save_Click"
+                    Content="Done" Width="90" Height="34" HorizontalAlignment="Right" Background="#FFFFFF"
+                    Foreground="#0A0A0A" FontWeight="Medium" FontSize="13" BorderThickness="0" Margin="0,15,0,0">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="4"/>

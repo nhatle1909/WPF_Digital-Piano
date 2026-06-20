@@ -20,18 +20,21 @@ namespace WPF_Piano
     /// </summary>
     public partial class SettingsWindow : Window
     {
+        SettingsVM settingsVM = new SettingsVM();
+
         public SettingsWindow()
         {
             InitializeComponent();
-            var settingsVM = new SettingsVM();
             System.Diagnostics.Debug.WriteLine($"Total keys loaded: {settingsVM.PianoKeys.Count}");
             this.DataContext = settingsVM;
         }
+        public void MappingList_KeyDown(object sender, KeyEventArgs e)
+        {
+          settingsVM.UpdateKey(e.Key.ToString());
+        }
         public void Save_Click(object sender, RoutedEventArgs e)
         {
-            // Save settings logic here
-            MessageBox.Show("Settings saved!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-            
+            settingsVM.SaveSettings();
             this.Close();
         }
         public void Close_Click(object sender, RoutedEventArgs e)
