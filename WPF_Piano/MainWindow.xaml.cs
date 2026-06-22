@@ -7,8 +7,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Threading;
-using WPF_Piano.Deprecated;
 using WPF_Piano.Helper;
 using WPF_Piano.ViewModel;
 
@@ -18,12 +16,13 @@ namespace WPF_Piano
     {
 
 
-        public MainViewVM MainViewVM = new();
+        public MainViewVM MainViewVM ;
         public Storyboard storyBoard = new();
 
         public MainWindow()
         {
             InitializeComponent();
+            MainViewVM = new MainViewVM(this, PianoButtonOctave);
             this.DataContext = MainViewVM;
             this.KeyDown += Key_Pressed;
             this.KeyDown += HighlightKey;
@@ -39,7 +38,7 @@ namespace WPF_Piano
                 }
           
             };
-            PianoUIRender.Instance.RenderButton(this, PianoButtonOctave);
+            MainViewVM.PianoButtonVM.RenderButton();
             NoteFrame.ScrollToBottom();
         }
 

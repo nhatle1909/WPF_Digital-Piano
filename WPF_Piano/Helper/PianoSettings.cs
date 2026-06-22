@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System.Diagnostics;
 using System.IO;
 using WPF_Piano.Model;
 namespace WPF_Piano.Helper
@@ -22,9 +23,9 @@ namespace WPF_Piano.Helper
             SetPianoMapping();
         }
 
-     
-   
 
+
+        #region GetterSetter
         private void SetPianoMapping()
         {
             var pianoMapping = Configuration.GetRequiredSection("RealMappingSettings").Get<List<PianoKey>>();
@@ -42,6 +43,10 @@ namespace WPF_Piano.Helper
         {
             return PianoMapping[key];
         }
+        public string GetKey(string note)
+        {
+            return PianoMapping.FirstOrDefault(kvp => kvp.Value == note).Key;
+        }
         public bool CheckNote(string note)
         {
             return PianoMapping.ContainsValue(note);
@@ -50,11 +55,13 @@ namespace WPF_Piano.Helper
         {
             return PianoMapping.ContainsKey(key);
         }
-
+        #endregion
         #region SettingsBuilder
         public void SaveConfig()
         {
             string configFilePath = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
+            string projectDir = System.IO.Path.Combine(configFilePath, "..", "..", "..");
+            string sourceConfigPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(projectDir, "appsettings.json"));
             var json = System.Text.Json.JsonSerializer.Serialize(
                 new
                 {
@@ -63,6 +70,7 @@ namespace WPF_Piano.Helper
                 new System.Text.Json.JsonSerializerOptions { WriteIndented = true }
                 );
             File.WriteAllText(configFilePath, json);
+            File.WriteAllText(sourceConfigPath, json);
         }
 
         public PianoSettings UpdateMapping(Dictionary<string, string> newMapping)
