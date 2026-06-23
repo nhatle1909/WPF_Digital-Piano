@@ -142,13 +142,15 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Octave Range" VerticalAlignment="Center" Foreground="#A0A0A0"/>
                         <TextBlock Grid.Column="1" Text="From" VerticalAlignment="Center" Foreground="#A0A0A0"/>
-                        <ComboBox Grid.Column="2" Margin="0,0,10,0" SelectedIndex="0">
+                        <ComboBox Grid.Column="2" Margin="0,0,10,0" SelectedValue="{Binding PianoOctave.From, Mode=TwoWay}"
+                                  SelectedValuePath="Content">
                             <ComboBoxItem Content="C1"/>
                             <ComboBoxItem Content="C2"/>
                             <ComboBoxItem Content="C3"/>
                         </ComboBox>
                         <TextBlock Grid.Column="3" Text="To" VerticalAlignment="Center" Foreground="#A0A0A0"/>
-                        <ComboBox Grid.Column="4" Margin="0,0,10,0" SelectedIndex="2">
+                        <ComboBox Grid.Column="4" Margin="0,0,10,0" SelectedValue="{Binding PianoOctave.To , Mode=TwoWay}"
+                                  SelectedValuePath="Content">
                             <ComboBoxItem Content="C6"/>
                             <ComboBoxItem Content="C7"/>
                             <ComboBoxItem Content="C8"/>

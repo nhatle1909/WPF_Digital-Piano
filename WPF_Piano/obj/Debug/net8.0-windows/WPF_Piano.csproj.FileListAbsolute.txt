@@ -118,3 +118,4 @@ D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\refin
 D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\WPF_Piano.pdb
 D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\WPF_Piano.genruntimeconfig.cache
 D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\ref\WPF_Piano.dll
+D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\bin\Debug\net8.0-windows\appsettings - Copy.json

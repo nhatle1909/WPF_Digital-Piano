@@ -13,7 +13,7 @@ namespace WPF_Piano.Helper
 
         public IConfiguration Configuration { get; set; }
         public Dictionary<string, string> PianoMapping = new();
-
+        public PianoOctave PianoOctave = new();
         public PianoSettings()
         {
             var builder = new ConfigurationBuilder()
@@ -39,6 +39,11 @@ namespace WPF_Piano.Helper
         {
             return PianoMapping.Select(kvp => new PianoKey { Key = kvp.Key, Note = kvp.Value }).ToList();
         }
+        public PianoOctave GetOctaveRange()
+        {
+            var range = Configuration.GetRequiredSection("OctaveSettings").Get<PianoOctave>();
+            return range;
+        }
         public string GetNote(string key)
         {
             return PianoMapping[key];
@@ -59,27 +64,33 @@ namespace WPF_Piano.Helper
         #region SettingsBuilder
         public void SaveConfig()
         {
-            string configFilePath = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
-            string projectDir = System.IO.Path.Combine(configFilePath, "..", "..", "..");
-            string sourceConfigPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(projectDir, "appsettings.json"));
+            string buildConfigPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
+            var projectConfigPath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
             var json = System.Text.Json.JsonSerializer.Serialize(
                 new
                 {
-                    RealMappingSettings = PianoMapping.Select(kvp => new PianoKey { Key = kvp.Key, Note = kvp.Value }).ToList()
+                    RealMappingSettings = PianoMapping.Select(kvp => new PianoKey { Key = kvp.Key, Note = kvp.Value }).ToList(),
+                    OctaveSettings = PianoOctave
                 },
                 new System.Text.Json.JsonSerializerOptions { WriteIndented = true }
                 );
-            File.WriteAllText(configFilePath, json);
-            File.WriteAllText(sourceConfigPath, json);
+            File.WriteAllText(buildConfigPath, json);
+            File.WriteAllText(projectConfigPath, json);
+            MappingUpdated?.Invoke();
         }
 
         public PianoSettings UpdateMapping(Dictionary<string, string> newMapping)
         {
             PianoMapping = newMapping;
-
-            // Notify the entire app that the layout changed!
-            MappingUpdated?.Invoke();
-
+            return this;
+        }
+        public PianoSettings UpdateOctave(PianoOctave newOctaveRange)
+        {
+            PianoOctave = newOctaveRange;
+            return this;
+        }
+        public PianoSettings UpdatePiano()
+        {
             return this;
         }
         #endregion

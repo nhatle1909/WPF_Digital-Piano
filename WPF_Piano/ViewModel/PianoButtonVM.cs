@@ -32,6 +32,8 @@ namespace WPF_Piano.ViewModel
         }
         public void RenderButton()
         {
+            var octave = PianoSettings.Instance.GetOctaveRange();
+           
             PianoButtonOctave.Children.Clear();
             for (int i = 0; i < 6; i++)
             {
