@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using WPF_Piano.Helper;
 using WPF_Piano.Model;
 namespace WPF_Piano.ViewModel
 {
@@ -14,7 +15,7 @@ namespace WPF_Piano.ViewModel
         public event PropertyChangedEventHandler? PropertyChanged;
         public ObservableCollection<Song> Songs { get; set; } = new ObservableCollection<Song>();
         private string _path;
-        private bool isCopy = true;
+       
 
         public event Action<Song>? SongSelected;
         private Song? _selectedSong;
@@ -33,11 +34,7 @@ namespace WPF_Piano.ViewModel
                 }
             }
         }
-        public bool IsCopy
-        {
-            get => isCopy;
-            set { isCopy = value; OnPropertyChanged(nameof(IsCopy)); }
-        }
+     
   
         public ICommand AddSongCommand { get; }
 
@@ -79,7 +76,7 @@ namespace WPF_Piano.ViewModel
                     Description = "A new MIDI file",
                 };
                 Songs.Add(newSong);
-                if (isCopy)
+                if (PianoSettings.Instance.GetMiscSettings().IsCopyingFile)
                 {
                     var sourcePath = dialog.FileName;
                     var destinationPath = Path.Combine(_path, Path.GetFileName(sourcePath));

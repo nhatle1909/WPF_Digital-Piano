@@ -14,24 +14,28 @@ namespace WPF_Piano.Helper
         public IConfiguration Configuration { get; set; }
         public Dictionary<string, string> PianoMapping = new();
         public PianoOctave PianoOctave = new();
+        public MiscSettings Misc = new();
         public PianoSettings()
         {
             var builder = new ConfigurationBuilder()
                  .SetBasePath(Directory.GetCurrentDirectory())
                  .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             Configuration = builder.Build();
-            SetPianoMapping();
+            SetPianoSettings();
         }
 
 
 
         #region GetterSetter
-        private void SetPianoMapping()
+        private void SetPianoSettings()
         {
             var pianoMapping = Configuration.GetRequiredSection("RealMappingSettings").Get<List<PianoKey>>();
+            PianoOctave = Configuration.GetRequiredSection("OctaveSettings").Get<PianoOctave>();
+            Misc = Configuration.GetRequiredSection("MiscSettings").Get<MiscSettings>();
             if (pianoMapping != null)
             {
                 PianoMapping = pianoMapping.ToDictionary(k => k.Key, k => k.Note);
+
                 MappingUpdated?.Invoke(); 
             }
         }
@@ -41,8 +45,11 @@ namespace WPF_Piano.Helper
         }
         public PianoOctave GetOctaveRange()
         {
-            var range = Configuration.GetRequiredSection("OctaveSettings").Get<PianoOctave>();
-            return range;
+            return PianoOctave;
+        }
+        public MiscSettings GetMiscSettings()
+        {
+            return Misc;
         }
         public string GetNote(string key)
         {
@@ -64,18 +71,20 @@ namespace WPF_Piano.Helper
         #region SettingsBuilder
         public void SaveConfig()
         {
-            string buildConfigPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
-            var projectConfigPath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
+            string configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
+     
             var json = System.Text.Json.JsonSerializer.Serialize(
                 new
                 {
                     RealMappingSettings = PianoMapping.Select(kvp => new PianoKey { Key = kvp.Key, Note = kvp.Value }).ToList(),
-                    OctaveSettings = PianoOctave
+                    OctaveSettings = PianoOctave,
+                    MiscSettings = Misc
+
                 },
                 new System.Text.Json.JsonSerializerOptions { WriteIndented = true }
                 );
-            File.WriteAllText(buildConfigPath, json);
-            File.WriteAllText(projectConfigPath, json);
+            File.WriteAllText(configPath, json);
+   
             MappingUpdated?.Invoke();
         }
 
@@ -87,6 +96,11 @@ namespace WPF_Piano.Helper
         public PianoSettings UpdateOctave(PianoOctave newOctaveRange)
         {
             PianoOctave = newOctaveRange;
+            return this;
+        }
+        public PianoSettings UpdateMiscSettings(MiscSettings newMiscSettings)
+        {
+            Misc = newMiscSettings;
             return this;
         }
         public PianoSettings UpdatePiano()

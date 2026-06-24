@@ -26,7 +26,7 @@ namespace WPF_Piano
             this.DataContext = MainViewVM;
             this.KeyDown += Key_Pressed;
             this.KeyDown += HighlightKey;
-            System.Windows.Media.RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.Default;
+            RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.Default;
             this.KeyUp += UnhighlightKey;
             MainViewVM.SongPlayerVM.PropertyChanged += (s, e) =>
             {
@@ -38,7 +38,7 @@ namespace WPF_Piano
                 }
           
             };
-            MainViewVM.PianoButtonVM.RenderButton();
+       
             NoteFrame.ScrollToBottom();
         }
 

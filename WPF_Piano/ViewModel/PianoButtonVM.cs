@@ -28,14 +28,15 @@ namespace WPF_Piano.ViewModel
             }
             this.Fe = fe;
             this.PianoButtonOctave = pianoButtonOctave;
+            RenderButton();
             PianoSettings.Instance.MappingUpdated += RenderButton;
         }
         public void RenderButton()
         {
             var octave = PianoSettings.Instance.GetOctaveRange();
-           
+            var firstOctaveIndex = Int32.Parse(octave.From.ToString().Last().ToString()) - 1;
             PianoButtonOctave.Children.Clear();
-            for (int i = 0; i < 6; i++)
+            for (int i = firstOctaveIndex; i < 6; i++)
             {
                 var octaveGrid = new Grid
                 {

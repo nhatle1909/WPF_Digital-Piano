@@ -44,22 +44,32 @@ namespace WPF_Piano.ViewModel
                 OnPropertyChanged(nameof(SelectedPianoKey));
             }
         }
-
+        private MiscSettings miscSettings { get; set; } = new();
+        public MiscSettings MiscSettings
+        {
+            get => miscSettings;
+            set
+            {
+                miscSettings = value;
+                OnPropertyChanged(nameof(MiscSettings));
+            }
+        }
         public SettingsVM()
         {
             var keysConfig = PianoSettings.Instance.GetPianoMapping();
-            var octaveConfig = PianoSettings.Instance.GetOctaveRange();
+           
             for (int keyIndex = 0; keyIndex < keysConfig.Count; keyIndex++)
             {
                 keysConfig[keyIndex].Key = OemStringMapper.Convert(keysConfig[keyIndex].Key);
                 pianoKeys.Add(keysConfig[keyIndex]);
             }
-            PianoOctave = octaveConfig;
+            pianoOctave = PianoSettings.Instance.GetOctaveRange();
+            miscSettings = PianoSettings.Instance.GetMiscSettings();
         }
         public void UpdateKey(string key)
         {
             var convertedKey = OemStringMapper.Convert(key);
-            pianoKeys.FirstOrDefault(p => p == SelectedKey).Key = key;
+            pianoKeys.FirstOrDefault(p => p == SelectedKey).Key = convertedKey;
            
         }
         public void UpdateOctave(string from, string to)
@@ -74,6 +84,7 @@ namespace WPF_Piano.ViewModel
                 .UpdatePiano()
                 .UpdateOctave(pianoOctave)
                 .UpdateMapping(updatedMapping)
+                .UpdateMiscSettings(miscSettings)
                 .SaveConfig();
         }
 

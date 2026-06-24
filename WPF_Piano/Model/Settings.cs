@@ -78,4 +78,27 @@ namespace WPF_Piano.Model
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
+    public class MiscSettings : INotifyPropertyChanged
+    {
+        private bool isCopyingFile;
+        public bool IsCopyingFile
+        {
+            get => isCopyingFile;
+            set
+            {
+                if (isCopyingFile != value)
+                {
+                    isCopyingFile = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+       
+     
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
 }
