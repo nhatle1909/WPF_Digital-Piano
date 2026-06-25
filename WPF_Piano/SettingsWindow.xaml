@@ -9,7 +9,19 @@
         WindowStartupLocation="CenterOwner"
         Background="#0B0B0B" 
         WindowStyle="None" ResizeMode="NoResize">
+
     <Window.Resources>
+        <SolidColorBrush x:Key="WindowBgBrush" Color="#0B0B0B"/>
+        <SolidColorBrush x:Key="SurfaceBgBrush" Color="#141414"/>
+        <SolidColorBrush x:Key="SurfaceHoverBrush" Color="#1E1E1E"/>
+        <SolidColorBrush x:Key="BorderBrush" Color="#222222"/>
+
+        <SolidColorBrush x:Key="AccentCyanBrush" Color="#00FFCC"/>
+        <SolidColorBrush x:Key="TextPrimaryBrush" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="TextSecondaryBrush" Color="#A0A0A0"/>
+        <SolidColorBrush x:Key="TextMutedBrush" Color="#444444"/>
+        <SolidColorBrush x:Key="TextDisabledBrush" Color="#555555"/>
+
         <Style TargetType="TabControl">
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Background" Value="Transparent"/>
@@ -19,7 +31,7 @@
             <Setter Property="HeaderTemplate">
                 <Setter.Value>
                     <DataTemplate>
-                        <TextBlock Text="{Binding}" FontSize="13" FontWeight="Medium" Margin="0,0,0,0"/>
+                        <TextBlock Text="{Binding}" FontSize="13" FontWeight="Medium"/>
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
@@ -31,14 +43,11 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="Border" Property="BorderBrush" Value="#00FFCC"/>
-                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource AccentCyanBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
                             </Trigger>
                             <Trigger Property="IsSelected" Value="False">
-                                <Setter Property="Foreground" Value="#555555"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Foreground" Value="#BBBBBB"/>
+                                <Setter Property="Foreground" Value="{StaticResource TextDisabledBrush}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -47,24 +56,38 @@
         </Style>
 
         <Style TargetType="CheckBox">
-            <Setter Property="Foreground" Value="#A0A0A0"/>
+            <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}"/>
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="Margin" Value="0,0,0,16"/>
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         </Style>
 
         <Style TargetType="ComboBox">
-            <Setter Property="Background" Value="#141414"/>
-            <Setter Property="Foreground" Value="#000000"/>
-            <Setter Property="BorderBrush" Value="#222222"/>
+            <Setter Property="Background" Value="{StaticResource SurfaceBgBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
             <Setter Property="Padding" Value="10,6"/>
             <Setter Property="Width" Value="200"/>
-          
             <Setter Property="HorizontalAlignment" Value="Left"/>
         </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="{StaticResource SurfaceBgBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="5,0"/>
+            <Setter Property="SelectionBrush" Value="{StaticResource AccentCyanBrush}"/>
+        </Style>
+
+        <Style TargetType="Slider">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        </Style>
+
         <Style x:Key="PianoRowSelectionStyle" TargetType="ListBoxItem">
-            <Setter Property="Background" Value="#111111"/>
-            <Setter Property="BorderBrush" Value="#1A1A1A"/>
+            <Setter Property="Background" Value="{StaticResource SurfaceBgBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Margin" Value="0,0,0,6"/>
             <Setter Property="Padding" Value="12,10"/>
@@ -83,17 +106,17 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="#161616"/>
-                    <Setter Property="BorderBrush" Value="#00FFCC"/>
+                    <Setter Property="Background" Value="{StaticResource SurfaceHoverBrush}"/>
+                    <Setter Property="BorderBrush" Value="{StaticResource AccentCyanBrush}"/>
                 </Trigger>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#1A1A1A"/>
+                    <Setter Property="Background" Value="{StaticResource SurfaceHoverBrush}"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
     </Window.Resources>
 
-    <Grid Margin="15,15,15,15">
+    <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -101,13 +124,13 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Margin="0,0,0,15">
-            <TextBlock Text="Preferences" FontSize="22" FontWeight="Light" Foreground="#FFFFFF"/>
-            <Button Content="✕" HorizontalAlignment="Right" Background="Transparent" BorderThickness="0" Foreground="#fff" FontSize="16" Click="Close_Click" Cursor="Hand">
+            <TextBlock Text="Preferences" FontSize="22" FontWeight="Light" Foreground="{StaticResource TextPrimaryBrush}"/>
+            <Button Content="✕" HorizontalAlignment="Right" Background="Transparent" BorderThickness="0" Foreground="{StaticResource TextPrimaryBrush}" FontSize="16" Click="Close_Click" Cursor="Hand">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                                <Setter Property="Foreground" Value="{StaticResource AccentCyanBrush}"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -116,21 +139,73 @@
         </Grid>
 
         <TabControl Grid.Row="1" Margin="0,10,0,0">
+            <TabItem Header="Sound">
+                <StackPanel Margin="15,25,0,0">
+                    <TextBlock Text="SOUND PRESET" Foreground="{StaticResource TextPrimaryBrush}" FontSize="11" FontWeight="Bold" Margin="0,0,0,15" />
+                    <Grid Margin="15,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Piano Synthesis Preset" VerticalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}"/>
+                        <ComboBox Grid.Column="1"/>
+                    </Grid>
+
+                    <TextBlock Text="SYNTHESIS PARAMETER" Foreground="{StaticResource TextPrimaryBrush}" FontSize="11" FontWeight="Bold" Margin="0,0,0,15" />
+
+                    <Grid Margin="15,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" MinWidth="80"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Volume" VerticalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,15"/>
+                        <Slider    Grid.Row="0" Grid.Column="2" Minimum="0" Maximum="100" Value="{Binding PianoSynthesis.Volume, Mode=TwoWay}" TickFrequency="1" IsSnapToTickEnabled="True" Margin="0,0,0,15"/>
+                        <TextBox   Grid.Row="0" Grid.Column="4" Text="{Binding PianoSynthesis.Volume, Mode=TwoWay}" Height="22" VerticalContentAlignment="Center" Margin="0,0,0,15"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Attack" VerticalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,15"/>
+                        <Slider    Grid.Row="1" Grid.Column="2" Minimum="0" Maximum="1" Value="{Binding  PianoSynthesis.Attack, Mode=TwoWay}" TickFrequency="0.01" IsSnapToTickEnabled="True" Margin="0,0,0,15"/>
+                        <TextBox   Grid.Row="1" Grid.Column="4" Text="{Binding PianoSynthesis.Attack, Mode=TwoWay}" Height="22" VerticalContentAlignment="Center" Margin="0,0,0,15"/>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Sustain" VerticalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,15"/>
+                        <Slider    Grid.Row="2" Grid.Column="2" Minimum="0" Maximum="1" Value="{Binding PianoSynthesis.Sustain, Mode=TwoWay}" TickFrequency="0.01" IsSnapToTickEnabled="True" Margin="0,0,0,15"/>
+                        <TextBox   Grid.Row="2" Grid.Column="4" Text="{Binding PianoSynthesis.Sustain, Mode=TwoWay}" Height="22" VerticalContentAlignment="Center" Margin="0,0,0,15"/>
+
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Decay" VerticalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,15"/>
+                        <Slider    Grid.Row="3" Grid.Column="2" Minimum="0" Maximum="1" Value="{Binding PianoSynthesis.Decay, Mode=TwoWay}" TickFrequency="0.01" IsSnapToTickEnabled="True" Margin="0,0,0,15"/>
+                        <TextBox   Grid.Row="3" Grid.Column="4" Text="{Binding PianoSynthesis.Decay, Mode=TwoWay}" Height="22" VerticalContentAlignment="Center" Margin="0,0,0,15"/>
+
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Release" VerticalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}"/>
+                        <Slider    Grid.Row="4" Grid.Column="2" Minimum="0" Maximum="1" Value="{Binding PianoSynthesis.Release, Mode=TwoWay}" TickFrequency="0.01" IsSnapToTickEnabled="True"/>
+                        <TextBox   Grid.Row="4" Grid.Column="4" Text="{Binding PianoSynthesis.Release, Mode=TwoWay}" Height="22" VerticalContentAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
 
             <TabItem Header="Keyboard">
-                <StackPanel Margin="0,25,0,0">
-                    <TextBlock Text="LAYOUT &amp; INPUT" Foreground="#555555" FontSize="11" FontWeight="Bold" Margin="0,0,0,15" />
+                <StackPanel Margin="15,25,0,0">
+                    <TextBlock Text="LAYOUT &amp; INPUT" Foreground="{StaticResource TextPrimaryBrush}" FontSize="11" FontWeight="Bold" Margin="0,0,0,15" />
 
                     <Grid Margin="15,0,0,20">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="200"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Keyboard Input Map" VerticalAlignment="Center" Foreground="#A0A0A0"/>
-                        <ComboBox Grid.Column="1">
-                           
-                        </ComboBox>
+                        <TextBlock Grid.Column="0" Text="Keyboard Input Map" VerticalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}"/>
+                        <ComboBox Grid.Column="1"/>
                     </Grid>
+
                     <Grid Margin="15,0,0,20">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="200"/>
@@ -138,27 +213,22 @@
                             <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="50"/>
                             <ColumnDefinition Width="100"/>
-                            
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Octave Range" VerticalAlignment="Center" Foreground="#A0A0A0"/>
-                        <TextBlock Grid.Column="1" Text="From" VerticalAlignment="Center" Foreground="#A0A0A0"/>
-                        <ComboBox Grid.Column="2" Margin="0,0,10,0" SelectedValue="{Binding PianoOctave.From, Mode=TwoWay}"
-                                  SelectedValuePath="Content">
+                        <TextBlock Grid.Column="0" Text="Octave Range" VerticalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}"/>
+                        <TextBlock Grid.Column="1" Text="From" VerticalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}"/>
+                        <ComboBox Grid.Column="2" Margin="0,0,10,0" SelectedValue="{Binding PianoOctave.From, Mode=TwoWay}" SelectedValuePath="Content">
                             <ComboBoxItem Content="C1"/>
                             <ComboBoxItem Content="C2"/>
                             <ComboBoxItem Content="C3"/>
                         </ComboBox>
-                        <TextBlock Grid.Column="3" Text="To" VerticalAlignment="Center" Foreground="#A0A0A0"/>
-                        <ComboBox Grid.Column="4" Margin="0,0,10,0" SelectedValue="{Binding PianoOctave.To , Mode=TwoWay}"
-                                 
-                                  SelectedValuePath="Content">
-
+                        <TextBlock Grid.Column="3" Text="To" VerticalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}"/>
+                        <ComboBox Grid.Column="4" Margin="0,0,10,0" SelectedValue="{Binding PianoOctave.To , Mode=TwoWay}" SelectedValuePath="Content">
                             <ComboBoxItem Content="C6"/>
                         </ComboBox>
                     </Grid>
-                    <TextBlock Text="Keyboard mapping" Foreground="#555555" FontSize="11" FontWeight="Bold" Margin="0,0,0,15" />
-                    <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Height="322" Margin="15,0,15,0">
 
+                    <TextBlock Text="KEYBOARD MAPPING" Foreground="{StaticResource TextPrimaryBrush}" FontSize="11" FontWeight="Bold" Margin="0,0,0,15" />
+                    <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Height="322" Margin="15,0">
                         <ListBox x:Name="MappingList"
                                  ItemsSource="{Binding PianoKeys}" 
                                  SelectedItem="{Binding SelectedPianoKey, Mode=TwoWay}"
@@ -175,12 +245,10 @@
                                             <ColumnDefinition Width="80"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-
-                                        <TextBlock Grid.Column="0" Text="NOTE" Foreground="#444444" FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <TextBlock Grid.Column="1" Text="{Binding Note}" Foreground="#FFFFFF" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
-
-                                        <TextBlock Grid.Column="2" Text="ASSIGNED" Foreground="#444444" FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <TextBlock Grid.Column="3" Text="{Binding Key}" Foreground="#00FFCC" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="0" Text="NOTE" Foreground="{StaticResource TextMutedBrush}" FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Note}" Foreground="{StaticResource TextPrimaryBrush}" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" Text="ASSIGNED" Foreground="{StaticResource TextMutedBrush}" FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="3" Text="{Binding Key}" Foreground="{StaticResource AccentCyanBrush}" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
                                     </Grid>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
@@ -188,22 +256,20 @@
                     </ScrollViewer>
                 </StackPanel>
             </TabItem>
+
             <TabItem Header="Misc">
-                <StackPanel Margin="0,25,0,0">
-                    <TextBlock Text="MISCELLANEOUS SETTINGS" Foreground="#555555" FontSize="11" FontWeight="Bold" Margin="0,0,0,15" />
+                <StackPanel Margin="15,25,0,0">
+                    <TextBlock Text="MISCELLANEOUS SETTINGS" Foreground="{StaticResource TextPrimaryBrush}" FontSize="11" FontWeight="Bold" Margin="0,0,0,15" />
                     <StackPanel Margin="15,0,0,20">
-                        <CheckBox Content="Enable copying file on loading new file"
-                                  IsChecked="{Binding MiscSettings.IsCopyingFile ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <CheckBox Content="Enable copying file on loading new file" IsChecked="{Binding MiscSettings.IsCopyingFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
                 </StackPanel>
             </TabItem>
         </TabControl>
 
         <Grid Grid.Row="2" Margin="0,15,0,0">
-            <Border BorderBrush="#1A1A1A" BorderThickness="0,1,0,0" VerticalAlignment="Top"/>
-            <Button Click="Save_Click"
-                    Content="Done" Width="90" Height="34" HorizontalAlignment="Right" Background="#FFFFFF"
-                    Foreground="#0A0A0A" FontWeight="Medium" FontSize="13" BorderThickness="0" Margin="0,15,0,0">
+            <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0" VerticalAlignment="Top"/>
+            <Button Click="Save_Click" Content="Done" Width="90" Height="34" HorizontalAlignment="Right" Background="{StaticResource TextPrimaryBrush}" Foreground="{StaticResource WindowBgBrush}" FontWeight="Medium" FontSize="13" BorderThickness="0" Margin="0,15,0,0">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="4"/>

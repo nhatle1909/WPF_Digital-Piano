@@ -10,11 +10,15 @@ namespace WPF_Piano.Helper
         public static PianoSettings Instance => _Instance ??= new PianoSettings();
 
         public event Action? MappingUpdated;
+        public event Action? MiscUpdated;
+        public event Action? OctaveUpdated;
+        public event Action? SynthesisUpdated;
 
         public IConfiguration Configuration { get; set; }
         public Dictionary<string, string> PianoMapping = new();
         public PianoOctave PianoOctave = new();
         public MiscSettings Misc = new();
+        public PianoSynthesis Synthesis = new();
         public PianoSettings()
         {
             var builder = new ConfigurationBuilder()
@@ -32,6 +36,7 @@ namespace WPF_Piano.Helper
             var pianoMapping = Configuration.GetRequiredSection("RealMappingSettings").Get<List<PianoKey>>();
             PianoOctave = Configuration.GetRequiredSection("OctaveSettings").Get<PianoOctave>();
             Misc = Configuration.GetRequiredSection("MiscSettings").Get<MiscSettings>();
+            Synthesis = Configuration.GetRequiredSection("SynthesisSettings").Get<PianoSynthesis>();
             if (pianoMapping != null)
             {
                 PianoMapping = pianoMapping.ToDictionary(k => k.Key, k => k.Note);
@@ -42,6 +47,10 @@ namespace WPF_Piano.Helper
         public List<PianoKey> GetPianoMapping()
         {
             return PianoMapping.Select(kvp => new PianoKey { Key = kvp.Key, Note = kvp.Value }).ToList();
+        }
+        public PianoSynthesis GetPianoSynthesis()
+        {
+            return Synthesis;
         }
         public PianoOctave GetOctaveRange()
         {
@@ -78,29 +87,39 @@ namespace WPF_Piano.Helper
                 {
                     RealMappingSettings = PianoMapping.Select(kvp => new PianoKey { Key = kvp.Key, Note = kvp.Value }).ToList(),
                     OctaveSettings = PianoOctave,
-                    MiscSettings = Misc
+                    MiscSettings = Misc,
+                    SynthesisSettings = Synthesis
 
                 },
                 new System.Text.Json.JsonSerializerOptions { WriteIndented = true }
                 );
             File.WriteAllText(configPath, json);
    
-            MappingUpdated?.Invoke();
+    
         }
 
         public PianoSettings UpdateMapping(Dictionary<string, string> newMapping)
         {
             PianoMapping = newMapping;
+            MappingUpdated?.Invoke();
+            return this;
+        }
+        public PianoSettings UpdateSynthesis(PianoSynthesis synthesis)
+        {
+            Synthesis = synthesis;
+            SynthesisUpdated?.Invoke();
             return this;
         }
         public PianoSettings UpdateOctave(PianoOctave newOctaveRange)
         {
             PianoOctave = newOctaveRange;
+            OctaveUpdated?.Invoke();
             return this;
         }
         public PianoSettings UpdateMiscSettings(MiscSettings newMiscSettings)
         {
             Misc = newMiscSettings;
+            MiscUpdated?.Invoke();
             return this;
         }
         public PianoSettings UpdatePiano()

@@ -54,6 +54,19 @@ namespace WPF_Piano.ViewModel
                 OnPropertyChanged(nameof(MiscSettings));
             }
         }
+        private PianoSynthesis synthesis { get; set; }
+        public PianoSynthesis PianoSynthesis 
+        {
+            get => synthesis;
+            set
+            {
+                if (synthesis != value)
+                {
+                    synthesis = value;
+                    OnPropertyChanged(nameof(PianoSynthesis));
+                }
+            }
+        }
         public SettingsVM()
         {
             var keysConfig = PianoSettings.Instance.GetPianoMapping();
@@ -65,6 +78,7 @@ namespace WPF_Piano.ViewModel
             }
             pianoOctave = PianoSettings.Instance.GetOctaveRange();
             miscSettings = PianoSettings.Instance.GetMiscSettings();
+            synthesis = PianoSettings.Instance.GetPianoSynthesis();
         }
         public void UpdateKey(string key)
         {
@@ -84,6 +98,7 @@ namespace WPF_Piano.ViewModel
                 .UpdatePiano()
                 .UpdateOctave(pianoOctave)
                 .UpdateMapping(updatedMapping)
+                .UpdateSynthesis(synthesis)
                 .UpdateMiscSettings(miscSettings)
                 .SaveConfig();
         }

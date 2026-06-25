@@ -101,4 +101,80 @@ namespace WPF_Piano.Model
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
+    public class PianoSynthesis : INotifyPropertyChanged
+    {
+        private float volume;
+        private float attack;
+        private float decay;
+        private float sustain;
+        private float release;
+       
+
+        public float Volume
+        {
+            get => volume;
+            set
+            {
+                if (volume != value)
+                {
+                    volume = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public float Attack
+        {
+            get => attack;
+            set
+            {
+                if (attack != value)
+                {
+                    attack = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public float Decay
+        {
+            get => decay;
+            set
+            {
+                if (decay != value)
+                {
+                    decay = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public float Sustain 
+        {
+            get => sustain;
+            set
+            {
+                if (sustain != value)
+                {
+                    sustain = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public float Release
+        {
+            get => release;
+            set
+            {
+                if (release != value)
+                {
+                    release = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
 }
