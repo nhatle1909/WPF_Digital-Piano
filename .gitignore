@@ -1,3 +1,4 @@
 # Ignore Visual Studio .vs folder
 .vs/
 WPF_Piano/Song/*
+/WPF_Piano/appsettings - Copy.json

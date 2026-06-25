@@ -1,4 +1,6 @@
-﻿using System.Windows.Media;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace WPF_Piano.ViewModel
 {
@@ -7,9 +9,9 @@ namespace WPF_Piano.ViewModel
         public PianoButtonVM PianoButtonVM { get; set; }
         public SongPlayerVM SongPlayerVM { get; set; }
         public SongVM SongVM { get; set; } 
-        public MainViewVM()
+        public MainViewVM(FrameworkElement Fe, StackPanel PianoButtonOctave)
         {
-            PianoButtonVM = new PianoButtonVM();
+            PianoButtonVM = new PianoButtonVM(Fe, PianoButtonOctave);
             SongPlayerVM = new SongPlayerVM();
             SongVM = new SongVM();
             SongVM.SongSelected += (song) =>

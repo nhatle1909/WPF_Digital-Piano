@@ -14,6 +14,16 @@ namespace WPF_Piano.ViewModel
 {
     public class SettingsVM : INotifyPropertyChanged
     {
+        private PianoOctave pianoOctave { get; set; } = new();
+        public PianoOctave PianoOctave
+        {
+            get => pianoOctave;
+            set
+            {
+                pianoOctave = value;
+                OnPropertyChanged(nameof(PianoOctave));
+            }
+        }
         private List<PianoKey> pianoKeys { get; set; } = new();
         public List<PianoKey> PianoKeys
         {
@@ -34,27 +44,47 @@ namespace WPF_Piano.ViewModel
                 OnPropertyChanged(nameof(SelectedPianoKey));
             }
         }
-
+        private MiscSettings miscSettings { get; set; } = new();
+        public MiscSettings MiscSettings
+        {
+            get => miscSettings;
+            set
+            {
+                miscSettings = value;
+                OnPropertyChanged(nameof(MiscSettings));
+            }
+        }
         public SettingsVM()
         {
             var keysConfig = PianoSettings.Instance.GetPianoMapping();
+           
             for (int keyIndex = 0; keyIndex < keysConfig.Count; keyIndex++)
             {
                 keysConfig[keyIndex].Key = OemStringMapper.Convert(keysConfig[keyIndex].Key);
                 pianoKeys.Add(keysConfig[keyIndex]);
             }
+            pianoOctave = PianoSettings.Instance.GetOctaveRange();
+            miscSettings = PianoSettings.Instance.GetMiscSettings();
         }
         public void UpdateKey(string key)
         {
             var convertedKey = OemStringMapper.Convert(key);
-            pianoKeys.FirstOrDefault(p => p == SelectedKey).Key = key;
+            pianoKeys.FirstOrDefault(p => p == SelectedKey).Key = convertedKey;
            
+        }
+        public void UpdateOctave(string from, string to)
+        {
+            pianoOctave.From = from;
+            pianoOctave.To = to;
         }
         public void SaveSettings()
         {
             var updatedMapping = pianoKeys.ToDictionary(k => OemStringMapper.Normalize(k.Key), k => k.Note);
             PianoSettings.Instance
+                .UpdatePiano()
+                .UpdateOctave(pianoOctave)
                 .UpdateMapping(updatedMapping)
+                .UpdateMiscSettings(miscSettings)
                 .SaveConfig();
         }
 

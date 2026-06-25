@@ -25,13 +25,13 @@ namespace WPF_Piano
         public SettingsWindow()
         {
             InitializeComponent();
-            System.Diagnostics.Debug.WriteLine($"Total keys loaded: {settingsVM.PianoKeys.Count}");
             this.DataContext = settingsVM;
         }
         public void MappingList_KeyDown(object sender, KeyEventArgs e)
         {
           settingsVM.UpdateKey(e.Key.ToString());
         }
+        
         public void Save_Click(object sender, RoutedEventArgs e)
         {
             settingsVM.SaveSettings();

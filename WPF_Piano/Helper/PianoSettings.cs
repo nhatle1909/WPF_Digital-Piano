@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System.Diagnostics;
 using System.IO;
 using WPF_Piano.Model;
 namespace WPF_Piano.Helper
@@ -12,25 +13,29 @@ namespace WPF_Piano.Helper
 
         public IConfiguration Configuration { get; set; }
         public Dictionary<string, string> PianoMapping = new();
-
+        public PianoOctave PianoOctave = new();
+        public MiscSettings Misc = new();
         public PianoSettings()
         {
             var builder = new ConfigurationBuilder()
                  .SetBasePath(Directory.GetCurrentDirectory())
                  .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             Configuration = builder.Build();
-            SetPianoMapping();
+            SetPianoSettings();
         }
 
-     
-   
 
-        private void SetPianoMapping()
+
+        #region GetterSetter
+        private void SetPianoSettings()
         {
             var pianoMapping = Configuration.GetRequiredSection("RealMappingSettings").Get<List<PianoKey>>();
+            PianoOctave = Configuration.GetRequiredSection("OctaveSettings").Get<PianoOctave>();
+            Misc = Configuration.GetRequiredSection("MiscSettings").Get<MiscSettings>();
             if (pianoMapping != null)
             {
                 PianoMapping = pianoMapping.ToDictionary(k => k.Key, k => k.Note);
+
                 MappingUpdated?.Invoke(); 
             }
         }
@@ -38,9 +43,21 @@ namespace WPF_Piano.Helper
         {
             return PianoMapping.Select(kvp => new PianoKey { Key = kvp.Key, Note = kvp.Value }).ToList();
         }
+        public PianoOctave GetOctaveRange()
+        {
+            return PianoOctave;
+        }
+        public MiscSettings GetMiscSettings()
+        {
+            return Misc;
+        }
         public string GetNote(string key)
         {
             return PianoMapping[key];
+        }
+        public string GetKey(string note)
+        {
+            return PianoMapping.FirstOrDefault(kvp => kvp.Value == note).Key;
         }
         public bool CheckNote(string note)
         {
@@ -50,28 +67,44 @@ namespace WPF_Piano.Helper
         {
             return PianoMapping.ContainsKey(key);
         }
-
+        #endregion
         #region SettingsBuilder
         public void SaveConfig()
         {
-            string configFilePath = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
+            string configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
+     
             var json = System.Text.Json.JsonSerializer.Serialize(
                 new
                 {
-                    RealMappingSettings = PianoMapping.Select(kvp => new PianoKey { Key = kvp.Key, Note = kvp.Value }).ToList()
+                    RealMappingSettings = PianoMapping.Select(kvp => new PianoKey { Key = kvp.Key, Note = kvp.Value }).ToList(),
+                    OctaveSettings = PianoOctave,
+                    MiscSettings = Misc
+
                 },
                 new System.Text.Json.JsonSerializerOptions { WriteIndented = true }
                 );
-            File.WriteAllText(configFilePath, json);
+            File.WriteAllText(configPath, json);
+   
+            MappingUpdated?.Invoke();
         }
 
         public PianoSettings UpdateMapping(Dictionary<string, string> newMapping)
         {
             PianoMapping = newMapping;
-
-            // Notify the entire app that the layout changed!
-            MappingUpdated?.Invoke();
-
+            return this;
+        }
+        public PianoSettings UpdateOctave(PianoOctave newOctaveRange)
+        {
+            PianoOctave = newOctaveRange;
+            return this;
+        }
+        public PianoSettings UpdateMiscSettings(MiscSettings newMiscSettings)
+        {
+            Misc = newMiscSettings;
+            return this;
+        }
+        public PianoSettings UpdatePiano()
+        {
             return this;
         }
         #endregion
