@@ -40,7 +40,7 @@ namespace WPF_Piano.Helper
         public void PlaySound(float frequency, int durationInMiliSeconds)
         {
             int totalSamples = sampleRate * durationInMiliSeconds / 1000;
-
+         
 
             byte[] buffer = new byte[totalSamples * bytesPerSample];
 
@@ -48,7 +48,7 @@ namespace WPF_Piano.Helper
             {
                 double time = (double)i / sampleRate;
                 double envelope = Math.Exp(-decayRate * time);
-                double sampleValue = amplitudes[0] * Math.Sin(2 * Math.PI * frequency * time);
+                double sampleValue = (synthesis.Volume / 100.0) * Math.Sin(2 * Math.PI * frequency * time);
 
                 sampleValue *= envelope;
                 sampleValue = Math.Clamp(sampleValue, -1.0, 1.0);
@@ -58,9 +58,49 @@ namespace WPF_Piano.Helper
                 buffer[i * bytesPerSample + 1] = (byte)(sample >> 8 & 0xFF);
             }
 
-            // Create wave file and play
-            bufferProvider.AddMixerInput(new RawSourceWaveStream(new MemoryStream(buffer), new WaveFormat(sampleRate, 16, 1)).ToSampleProvider());
 
+            //// Extract slider settings (expected range: 0.0 to 1.0)
+            //double attackTime = (double)synthesis.Attack;
+            //double decayTime = (double)synthesis.Decay;
+            //double sustainLevel = (double)synthesis.Sustain;
+            //double volumeFactor = (double)synthesis.Volume / 100.0;
+
+            //// Safety guard rails to prevent division by zero on zeroed sliders
+            //if (attackTime <= 0) attackTime = 0.001;
+            //if (decayTime <= 0) decayTime = 0.001;
+
+            //for (int i = 0; i < totalSamples; i++)
+            //{
+            //    double time = (double)i / sampleRate;
+            //    double envelope = 0.0;
+
+            //    if (time < attackTime)
+            //    {
+            //        envelope = 1.0 - Math.Exp(-(5.0 / attackTime) * time);
+            //    }
+            //    else if (time < attackTime + decayTime)
+            //    {
+            //        double timeInDecay = time - attackTime;
+            //        double decayFactor = Math.Exp(-(5.0 / decayTime) * timeInDecay);
+            //        envelope = sustainLevel + (1.0 - sustainLevel) * decayFactor;
+            //    }
+            //    else
+            //    {
+            //        double sustainTime = time - (attackTime + decayTime);
+            //        envelope = sustainLevel * Math.Exp(-0.4 * sustainTime);
+            //    }
+
+            //    double sampleValue = volumeFactor * Math.Sin(2 * Math.PI * frequency * time);
+
+            //    sampleValue *= envelope;
+            //    sampleValue = Math.Clamp(sampleValue, -1.0, 1.0);
+
+            //    short sample = (short)(sampleValue * short.MaxValue);
+
+            //    buffer[i * bytesPerSample] = (byte)(sample & 0xFF);
+            //    buffer[i * bytesPerSample + 1] = (byte)((sample >> 8) & 0xFF);
+            //}
+            bufferProvider.AddMixerInput(new RawSourceWaveStream(new MemoryStream(buffer), new WaveFormat(sampleRate, 16, 1)).ToSampleProvider());
         }
 
         public int CalculateSongDuration(MidiFile midiFile)
