@@ -46,7 +46,7 @@ public class PianoButtonVM : INotifyPropertyChanged
         int firstOctaveIndex = int.Parse(octaveRange.From.Last().ToString()) - 1;
         targetOctavePanel.Children.Clear();
 
-        int totalKeyIndex = 0;
+        int index = firstOctaveIndex * 12;
 
         for (int i = firstOctaveIndex; i < 6; i++)
         {
@@ -67,13 +67,18 @@ public class PianoButtonVM : INotifyPropertyChanged
 
             for (int i2 = 1; i2 <= 12; i2++)
             {
-                var displayKeyAndNote = GetDisplayKeyAndNote(i, i2 - 1);
+                if (index >= _pianoMapping.Count) return;
 
-                string keyName = "Unknown";
-                if (totalKeyIndex < _pianoMapping.Count)
-                {
-                    keyName = _pianoMapping.ElementAt(totalKeyIndex).Key;
-                }
+                var rawMapping = _pianoMapping.ElementAt(index);
+
+                string finalKeyDisplay = rawMapping.Key.StartsWith("Oem") ||
+                                         rawMapping.Key.StartsWith("Left") ||
+                                         rawMapping.Key.StartsWith("Right")
+                                         ? OemStringMapper.Convert(rawMapping.Key)
+                                         : rawMapping.Key;
+
+                string keyName = rawMapping.Key;
+                string noteLabel = rawMapping.Value;
 
                 if (new[] { 2, 4, 7, 9, 11 }.Contains(i2))
                 {
@@ -82,10 +87,10 @@ public class PianoButtonVM : INotifyPropertyChanged
                         Template = (ControlTemplate)elementProvider.FindResource("BlackPianoButton"),
                         Width = 30,
                         Height = 110,
-                        KeyLabel = displayKeyAndNote.Item1,
-                        NoteLabel = displayKeyAndNote.Item2,
+                        KeyLabel = finalKeyDisplay,
+                        NoteLabel = noteLabel,
                         Name = $"Black{keyName}",
-                        FontSize = 10
+                        FontSize = 10,
                     };
 
                     double leftPos = i2 switch { 2 => 45, 4 => 105, 7 => 225, 9 => 285, 11 => 345, _ => 0 };
@@ -99,15 +104,15 @@ public class PianoButtonVM : INotifyPropertyChanged
                         Template = (ControlTemplate)elementProvider.FindResource("WhitePianoButton"),
                         Width = 60,
                         Height = 180,
-                        KeyLabel = displayKeyAndNote.Item1,
-                        NoteLabel = displayKeyAndNote.Item2,
+                        KeyLabel = finalKeyDisplay,
+                        NoteLabel = noteLabel,
                         Name = $"White{keyName}",
-                        FontSize = 12
+                        FontSize = 12,
                     };
                     whiteLayout.Children.Add(btn);
                 }
 
-                totalKeyIndex++;
+                index++;
             }
         }
     }
@@ -130,22 +135,6 @@ public class PianoButtonVM : INotifyPropertyChanged
     {
         Task.Run(() => PianoPlaySound.Instance.PlaySound(frequency, 1000));
     }
-
-    private Tuple<string, string> GetDisplayKeyAndNote(int octave, int noteIndex)
-    {
-        int displayKeyAndNoteIndex = octave * 12 + noteIndex;
-        if (displayKeyAndNoteIndex >= _pianoMapping.Count) return Tuple.Create(string.Empty, string.Empty);
-
-        var displayKeyAndNote = _pianoMapping.ElementAt(displayKeyAndNoteIndex);
-
-        bool isSpecialKey = displayKeyAndNote.Key.StartsWith("Oem") ||
-                            displayKeyAndNote.Key.StartsWith("Left") ||
-                            displayKeyAndNote.Key.StartsWith("Right");
-
-        string finalKeyDisplay = isSpecialKey ? OemStringMapper.Convert(displayKeyAndNote.Key) : displayKeyAndNote.Key;
-        return Tuple.Create(finalKeyDisplay, displayKeyAndNote.Value);
-    }
-
     private string NormalizeKeyName(string keyName)
     {
         if (keyName.StartsWith("D") && keyName.Length > 1 && char.IsDigit(keyName[1]))
