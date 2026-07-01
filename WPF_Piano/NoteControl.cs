@@ -55,6 +55,7 @@ namespace WPF_Piano
             this.Width = 128 * X_SCALE;
             this.Height = _songDuration * PIXELS_PER_SECOND;
             Render();
+            PianoSettings.Instance.OctaveUpdated += Render;
         }
 
     
@@ -108,10 +109,12 @@ namespace WPF_Piano
         private void DrawGrid(DrawingContext dc)
         {
         
-            var noteCount = PianoSettings.Instance.PianoMapping.Count;
-            var octaveCount = (int)Math.Ceiling(noteCount / 12.0);
-            double octaveWidth = 2520 / (double)octaveCount;
-       
+            var octave = PianoSettings.Instance.GetOctaveRange();
+            var octaveMax = Int32.Parse(octave.To.ElementAt(1).ToString());
+            var octaveMin = Int32.Parse(octave.From.ElementAt(1).ToString());
+            var octaveCount = octaveMax - octaveMin + 1;
+            double octaveWidth = 2520 / octaveCount;
+
             borderPen.Freeze();
 
             for (int i = 1; i < octaveCount; i++)
@@ -181,8 +184,6 @@ namespace WPF_Piano
                         double y = this.Height - (noteOn.AbsoluteTime * _yScale * 1.25) - height;
 
                         dc.DrawRoundedRectangle(noteBrush, notePen, new Rect(x, y, width, height), 6, 6);
-
-                        
                     }
                 }
             }

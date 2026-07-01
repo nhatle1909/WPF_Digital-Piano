@@ -55,15 +55,6 @@ D:\DevTools\Repository\WPF_Piano\WPF_Piano\obj\Debug\net8.0-windows\refint\WPF_P
 D:\DevTools\Repository\WPF_Piano\WPF_Piano\obj\Debug\net8.0-windows\WPF_Piano.pdb
 D:\DevTools\Repository\WPF_Piano\WPF_Piano\obj\Debug\net8.0-windows\WPF_Piano.genruntimeconfig.cache
 D:\DevTools\Repository\WPF_Piano\WPF_Piano\obj\Debug\net8.0-windows\ref\WPF_Piano.dll
-D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\WPF_Piano.csproj.AssemblyReference.cache
-D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\Deprecated\NoteControl.g.cs
-D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\MainWindow.g.cs
-D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\SettingsWindow.g.cs
-D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\App.g.cs
-D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\WPF_Piano_Content.g.cs
-D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.cs
-D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\WPF_Piano_MarkupCompile.cache
-D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\WPF_Piano_MarkupCompile.lref
 D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\bin\Debug\net8.0-windows\WPF_Piano.exe
 D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\bin\Debug\net8.0-windows\Resources\play.png
 D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\bin\Debug\net8.0-windows\Resources\settings.png
@@ -73,6 +64,8 @@ D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\bin\Debug\net8.0-windows\Song\
 D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\bin\Debug\net8.0-windows\Song\exterminate_ver2.mid
 D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\bin\Debug\net8.0-windows\Song\sorae_2-2.mid
 D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\bin\Debug\net8.0-windows\Song\Synchrogazer.mid
+D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\bin\Debug\net8.0-windows\appsettings - Copy.json
+D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\bin\Debug\net8.0-windows\appsettings.json
 D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\bin\Debug\net8.0-windows\WPF_Piano.deps.json
 D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\bin\Debug\net8.0-windows\WPF_Piano.runtimeconfig.json
 D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\bin\Debug\net8.0-windows\WPF_Piano.dll
@@ -100,6 +93,15 @@ D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\bin\Debug\net8.0-windows\Syste
 D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\bin\Debug\net8.0-windows\System.Text.Json.dll
 D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\bin\Debug\net8.0-windows\XamlFlair.WPF.dll
 D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\bin\Debug\net8.0-windows\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\WPF_Piano.csproj.AssemblyReference.cache
+D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\Deprecated\NoteControl.g.cs
+D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\MainWindow.g.cs
+D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\SettingsWindow.g.cs
+D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\App.g.cs
+D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\WPF_Piano_Content.g.cs
+D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.cs
+D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\WPF_Piano_MarkupCompile.cache
+D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\WPF_Piano_MarkupCompile.lref
 D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\App.baml
 D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\Deprecated\NoteControl.baml
 D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\MainWindow.baml
@@ -117,5 +119,3 @@ D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\refin
 D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\WPF_Piano.pdb
 D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\WPF_Piano.genruntimeconfig.cache
 D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\obj\Debug\net8.0-windows\ref\WPF_Piano.dll
-D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\bin\Debug\net8.0-windows\appsettings - Copy.json
-D:\DevTools\WPF_Piano\WPF_Digital-Piano\WPF_Piano\bin\Debug\net8.0-windows\appsettings.json
