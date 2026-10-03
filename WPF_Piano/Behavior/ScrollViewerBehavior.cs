@@ -29,6 +29,7 @@ namespace WPF_Piano
                 scrollViewer.ScrollToVerticalOffset((double)e.NewValue);
             }
         }
+        
         #region FinishTrigger
         public static readonly DependencyProperty FinishTriggerProperty =
             DependencyProperty.RegisterAttached(
@@ -60,25 +61,25 @@ namespace WPF_Piano
             }
         }
         #endregion
-        #region ChangeTrigger
+        //#region ChangeTrigger
 
-        public static readonly DependencyProperty ChangeTriggerProperty =
-            DependencyProperty.RegisterAttached(
-                "ChangeTrigger",
-                typeof(object),
-                typeof(ScrollViewerBehavior),
-                new PropertyMetadata(null, OnSignalTriggerChanged));
+        //public static readonly DependencyProperty ChangeTriggerProperty =
+        //    DependencyProperty.RegisterAttached(
+        //        "ChangeTrigger",
+        //        typeof(object),
+        //        typeof(ScrollViewerBehavior),
+        //        new PropertyMetadata(null, OnSignalTriggerChanged));
 
-        public static object GetChangeTrigger(DependencyObject obj) => obj.GetValue(ChangeTriggerProperty);
-        public static void SetChangeTrigger(DependencyObject obj, object value) => obj.SetValue(ChangeTriggerProperty, value);
+        //public static object GetChangeTrigger(DependencyObject obj) => obj.GetValue(ChangeTriggerProperty);
+        //public static void SetChangeTrigger(DependencyObject obj, object value) => obj.SetValue(ChangeTriggerProperty, value);
 
-        private static void OnSignalTriggerChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is ScrollViewer scrollViewer)
-            {
-                scrollViewer.ScrollToBottom();
-            }
-        }
-        #endregion
+        //private static void OnSignalTriggerChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    if (d is ScrollViewer scrollViewer)
+        //    {
+        //        scrollViewer.ScrollToBottom();
+        //    }
+        //}
+        //#endregion
     }
 }

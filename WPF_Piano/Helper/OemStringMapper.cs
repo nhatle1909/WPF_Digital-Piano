@@ -13,7 +13,7 @@
             { "Oem6", "]" },
             { "OemBackslash", "\\" },
             { "OemMinus", "-" },
-            { "OemPlus", "=" },
+            { "Back", "Backspace" },
             { "Oem3", "`" },
             {"Oem1", ";" },
             {"LeftShift","LS" },
@@ -31,7 +31,7 @@
             { "]", "Oem6" },
             { "\\", "OemBackslash" }, 
             { "-", "OemMinus" },
-            { "=", "OemPlus" },
+            { "Backspace", "Back" },
             { "`", "Oem3" },
 
             { "LS", "LeftShift" },

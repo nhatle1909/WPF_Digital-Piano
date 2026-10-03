@@ -14,6 +14,9 @@ namespace WPF_Piano.Helper
         private readonly WasapiOut output;
         private static PianoPlaySound _Instance;
         private PianoSynthesis synthesis;
+        // Active synth voices for held notes (support multiple simultaneous voices per MIDI note)
+        private readonly Dictionary<int, List<SynthVoice>> _activeVoices = new();
+        private const int MAX_VOICES_PER_NOTE = 6;
         public static PianoPlaySound Instance
         {
             get
@@ -36,6 +39,76 @@ namespace WPF_Piano.Helper
             output.Play();
             UpdateSynthesis(PianoSettings.Instance.GetPianoSynthesis());
             PianoSettings.Instance.SynthesisUpdated += () => UpdateSynthesis(PianoSettings.Instance.GetPianoSynthesis());
+        }
+
+        // Start a note and keep it sounding until StopNote is called
+        public void StartNote(int midiNote)
+        {
+            lock (_activeVoices)
+            {
+                double freq = MidiNumberToFrequency(midiNote);
+                var voice = new SynthVoice((float)freq, synthesis?.Volume ?? 80, 0.25f);
+                if (!_activeVoices.TryGetValue(midiNote, out var list))
+                {
+                    list = new List<SynthVoice>();
+                    _activeVoices[midiNote] = list;
+                }
+
+                // enforce per-note polyphony limit
+                if (list.Count >= MAX_VOICES_PER_NOTE)
+                {
+                    // retire the oldest voice (soft stop)
+                    var oldest = list[0];
+                    list.RemoveAt(0);
+                    oldest.NoteOff();
+                    Task.Run(async () =>
+                    {
+                        int waitMs = (int)(oldest.ReleaseSeconds * 1000) + 50;
+                        await Task.Delay(waitMs);
+                        lock (_activeVoices)
+                        {
+                            try { bufferProvider.RemoveMixerInput(oldest); } catch { }
+                        }
+                    });
+                }
+
+                list.Add(voice);
+                bufferProvider.AddMixerInput(voice);
+            }
+        }
+
+        // Trigger release for a held note; voice will be removed after its release finishes
+        public void StopNote(int midiNote)
+        {
+            SynthVoice? voice = null;
+            lock (_activeVoices)
+            {
+                if (!_activeVoices.TryGetValue(midiNote, out var list) || list.Count == 0) return;
+                // use LIFO: stop most recently started voice for this note
+                int idx = list.Count - 1;
+                voice = list[idx];
+                list.RemoveAt(idx);
+                if (list.Count == 0) _activeVoices.Remove(midiNote);
+            }
+
+            if (voice == null) return;
+            voice.NoteOff();
+
+            // Remove from mixer after estimated release time asynchronously
+            Task.Run(async () =>
+            {
+                int waitMs = (int)(voice.ReleaseSeconds * 1000) + 50;
+                await Task.Delay(waitMs);
+                lock (_activeVoices)
+                {
+                    try { bufferProvider.RemoveMixerInput(voice); } catch { }
+                }
+            });
+        }
+
+        private static double MidiNumberToFrequency(int noteNumber)
+        {
+            return 440.0 * Math.Pow(2.0, (noteNumber - 69) / 12.0);
         }
         public void PlaySound(float frequency, int durationInMiliSeconds)
         {
@@ -101,6 +174,52 @@ namespace WPF_Piano.Helper
             //    buffer[i * bytesPerSample + 1] = (byte)((sample >> 8) & 0xFF);
             //}
             bufferProvider.AddMixerInput(new RawSourceWaveStream(new MemoryStream(buffer), new WaveFormat(sampleRate, 16, 1)).ToSampleProvider());
+        }
+
+        // Simple synth voice providing sine wave with release envelope
+        private class SynthVoice : ISampleProvider
+        {
+            private readonly int sampleRate = 44100;
+            private readonly float frequency;
+            private readonly float amplitude;
+            private double phase;
+            private volatile bool releasing = false;
+            public readonly float ReleaseSeconds;
+            private double releaseProgress = 0.0;
+
+            public SynthVoice(float frequency, double volumePercent, float releaseSeconds)
+            {
+                this.frequency = frequency;
+                this.amplitude = (float)((volumePercent / 100.0) * 0.5);
+                this.ReleaseSeconds = releaseSeconds;
+                WaveFormat = WaveFormat.CreateIeeeFloatWaveFormat(sampleRate, 1);
+            }
+
+            public WaveFormat WaveFormat { get; }
+
+            public void NoteOff()
+            {
+                releasing = true;
+            }
+
+            public int Read(float[] buffer, int offset, int count)
+            {
+                for (int n = 0; n < count; n++)
+                {
+                    double env = 1.0;
+                    if (releasing)
+                    {
+                        releaseProgress += 1.0 / (ReleaseSeconds * sampleRate);
+                        env = Math.Max(0.0, 1.0 - releaseProgress);
+                    }
+
+                    double sample = amplitude * Math.Sin(2 * Math.PI * frequency * phase / sampleRate) * env;
+                    buffer[offset + n] = (float)sample;
+                    phase += 1.0;
+                    if (phase >= sampleRate) phase -= sampleRate;
+                }
+                return count;
+            }
         }
 
         public int CalculateSongDuration(MidiFile midiFile)

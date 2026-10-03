@@ -16,31 +16,35 @@ namespace WPF_Piano
     {
 
 
-        public MainViewVM MainViewVM ;
-        public Storyboard storyBoard = new();
+        public MainViewVM MainViewVM;
+        public Storyboard storyBoard;
 
         public MainWindow()
         {
             InitializeComponent();
             MainViewVM = new MainViewVM(this, PianoButtonOctave);
+            storyBoard = new();
             this.DataContext = MainViewVM;
             this.KeyDown += Key_Pressed;
             this.KeyDown += HighlightKey;
-            RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.Default;
+            
             this.KeyUp += UnhighlightKey;
+            RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.Default;
             MainViewVM.SongPlayerVM.PropertyChanged += (s, e) =>
             {
                 if (e.PropertyName == "LoadedMidi")
                 {
+                    RemoveSong();
                     NoteFrame.ScrollToBottom();
                     NoteFrame.UpdateLayout();
-                    storyBoard.Children.Clear();
+
                 }
-          
+
             };
-       
+
             NoteFrame.ScrollToBottom();
         }
+        
 
         public void Key_Pressed(object sender, KeyEventArgs e)
         {
@@ -62,11 +66,14 @@ namespace WPF_Piano
                     Duration = TimeSpan.FromSeconds(MainViewVM.SongPlayerVM.TotalDuration),
 
                 };
-                storyBoard.Children.Add(verticalAnimation);
+               
                 Storyboard.SetTarget(verticalAnimation, NoteFrame);
 
                 Storyboard.SetTargetProperty(verticalAnimation, new PropertyPath(ScrollViewerBehavior.VerticalOffsetProperty));
-                storyBoard.Begin();
+                storyBoard.Children.Add(verticalAnimation);
+                storyBoard.Begin(NoteControl,isControllable:true);
+                
+          
                 return;
             }
             storyBoard.Resume();
@@ -76,6 +83,16 @@ namespace WPF_Piano
         public void Pause_Song(object sender, RoutedEventArgs e)
         {
             storyBoard.Pause();
+        }
+        public void RemoveSong()
+        {
+            if (storyBoard.Children.Count == 0) return;
+
+            storyBoard.Stop(NoteFrame);
+            storyBoard.Remove(NoteFrame);
+            storyBoard = null;
+            storyBoard = new();
+
         }
 
         public void HighlightKey(object sender, KeyEventArgs e)
